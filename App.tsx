@@ -1,20 +1,33 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect, useState } from 'react';
+import { MainNavs, OnboardingNavs } from './navigators';
 
 export default function App() {
+  const [isOpended, setIsOpened] = useState<boolean>(false);
+
+  const storeDevice = async ():Promise<void> => {
+    await AsyncStorage.setItem('isOpened', 'true');
+  }
+
+  const changeViews = async ():Promise<void> => {
+    try {
+      await storeDevice();
+      setIsOpened(true);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(()=>{
+    (async function(){
+      const val = await AsyncStorage.getItem('isOpened');
+      if(val != null){
+        setIsOpened(true);
+      }
+    })();
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    ((isOpended)?<MainNavs />:<OnboardingNavs />)
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
