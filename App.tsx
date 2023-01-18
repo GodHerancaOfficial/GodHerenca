@@ -28,6 +28,6 @@ export default function App() {
   }, []);
 
   return (
-    ((isOpended)?<MainNavs />:<OnboardingNavs />)
+    ((isOpended)?<MainNavs />:<OnboardingNavs changeViews={changeViews} />)
   );
 }
