@@ -1,6 +1,6 @@
 import { useWindowDimensions } from 'react-native';
 import { useState } from 'react';
-import {TabView, SceneMap} from 'react-native-tab-view';
+import {TabView} from 'react-native-tab-view';
 import { One, Two, Three, Four } from '../screens/Onboarding';
 
 export default function OnboardingNavs(props:any): any {
@@ -10,7 +10,7 @@ export default function OnboardingNavs(props:any): any {
         {key: 'one', title: 'One'},
         {key: 'two', title: 'Two'},
         {key: 'three', title: 'Three'},
-        {key: 'four', title: 'Four'}
+        {key: 'four', title: 'Four'},
     ]);
 
     return (
@@ -18,10 +18,10 @@ export default function OnboardingNavs(props:any): any {
             navigationState={{index, routes}}
             onIndexChange={setIndex}
             initialLayout={{width: layout.width}}
-            renderScene={({route}): any=>{
+            renderScene={({route, jumpTo}): any=>{
                 switch(route.key){
                     case 'one':
-                        return <One changeViews={props.changeViews} />;
+                        return <One changeTabs={jumpTo} />;
                         break;
                     case 'two':
                         return <Two />

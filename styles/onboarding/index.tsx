@@ -1,3 +1,4 @@
-import Style from "./one_style";
+import Style from "./style";
+import MoreGeneral from "./two_style";
 
-export {Style};
+export { Style, MoreGeneral };
