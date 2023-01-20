@@ -9,9 +9,9 @@ export default function AuthNavs(): any{
     return (
         <NavigationContainer>
             <Stack.Navigator screenOptions={{headerShown: false}}>
-                <Stack.Screen name='Login Screen' component={Login} />
-                <Stack.Screen name='Signup Screen' component={Signup} />
-                <Stack.Screen name='Forgot Password Navigator' component={ForgotPwdNavs} />
+                <Stack.Screen name='Login' component={Login} />
+                <Stack.Screen name='Signup' component={Signup} />
+                <Stack.Screen name='Forgot' component={ForgotPwdNavs} />
             </Stack.Navigator>
         </NavigationContainer>
     )

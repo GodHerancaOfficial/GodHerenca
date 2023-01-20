@@ -1,9 +1,13 @@
 import { View, Text } from "react-native";
 import { AuthLayout } from "../../layouts";
 
-export default function Login(): any{
+interface Prop{
+    navigation?: any,
+}
+
+export default function Login({navigation}:Prop): any{
     return (
-        <AuthLayout section="Login">
+        <AuthLayout section="Login" navigate={navigation.navigate}>
             <Text>
                 This is the login
             </Text>

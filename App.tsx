@@ -8,6 +8,8 @@ export default function App() {
   const [loaded] = useFonts({
     Nunito: require('./assets/fonts/Nunito-Regular.ttf'),
     'Nunito-bold': require('./assets/fonts/Nunito-Bold.ttf'),
+    Raleway: require('./assets/fonts/Raleway-Regular.ttf'),
+    'Raleway-bold': require('./assets/fonts/Raleway-Bold.ttf'),
   });
 
   const storeDevice = async ():Promise<void> => {
