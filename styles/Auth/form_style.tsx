@@ -21,6 +21,10 @@ const FormStyle = StyleSheet.create({
         paddingLeft: 10,
         paddingVertical: 8,
         fontSize: 17,
+    },
+    formViewActive: {
+        borderWidth: 2,
+        borderColor: "#000000"
     }
 })
 
