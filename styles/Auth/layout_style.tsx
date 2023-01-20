@@ -31,6 +31,20 @@ const AuthLayout_Style = StyleSheet.create({
     },
     pBold: {
         fontFamily: 'Nunito-bold',
+    },
+    socialsContainer: {
+        paddingVertical: 10,
+        display: 'flex',
+        flexDirection: 'row',
+        marginBottom: 20,
+    },
+    socials: {
+        borderColor: "#DBDBDB",
+        paddingVertical: 8,
+        paddingHorizontal: 25,
+        borderRadius: 5,
+        borderWidth: 1,
+        marginHorizontal: 10,
     }
 })
 

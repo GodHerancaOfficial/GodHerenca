@@ -1,5 +1,5 @@
 import { Text, TouchableWithoutFeedback, View } from "react-native";
-import { IntroText, ActionButtons } from "../components/Auth";
+import { IntroText, ActionButtons, LoginWith } from "../components/Auth";
 import { AuthLayout_Style } from "../styles/Auth";
 
 interface Props{
@@ -14,6 +14,20 @@ export default function AuthLayout({children, section, navigate}:Props): any{
             <IntroText section={section} />
             {children}
             <ActionButtons section={section} />
+
+            {(section == "Login")?
+            <TouchableWithoutFeedback>
+                <Text style={[AuthLayout_Style.p, AuthLayout_Style.pBold]}>
+                    Forgot Password? {'\n'}
+                </Text>
+            </TouchableWithoutFeedback>
+            :null}
+
+            <Text style={AuthLayout_Style.p}>
+                {'\n'}Or Continue {'\n\n'}
+            </Text>
+
+            <LoginWith />
 
             {/**Footer section */}
             {((section=="Login")?
