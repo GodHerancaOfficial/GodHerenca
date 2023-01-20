@@ -6,12 +6,10 @@ const Stack = createNativeStackNavigator();
 
 export default function ForgotPwdNavs(): any{
     return (
-        <NavigationContainer>
-            <Stack.Navigator screenOptions={{headerShown:false}}>
-                <Stack.Screen name="forgot password" component={ForgotPassword} />
-                <Stack.Screen name="Enter OTP" component={OtpScreen} />
-                <Stack.Screen name="Create New Password" component={CreateNewPassword} />
-            </Stack.Navigator>
-        </NavigationContainer>
+        <Stack.Navigator screenOptions={{headerShown:false}}>
+            <Stack.Screen name="forgot password" component={ForgotPassword} />
+            <Stack.Screen name="Enter OTP" component={OtpScreen} />
+            <Stack.Screen name="Create New Password" component={CreateNewPassword} />
+        </Stack.Navigator>
     )
 }

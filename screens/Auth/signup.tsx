@@ -1,7 +1,6 @@
-import { Text } from "react-native"
-import { AuthLayout } from "../../layouts"
-import { Form } from "../../components/Auth"
-import { useState } from "react"
+import { AuthLayout } from "../../layouts";
+import { Form } from "../../components/Auth";
+import { useState } from "react";
 
 interface Prop{
     navigation?: any,

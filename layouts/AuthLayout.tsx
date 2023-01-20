@@ -15,9 +15,9 @@ export default function AuthLayout({children, section, navigate}:Props): any{
             <View style={AuthLayout_Style.container}>
                 <IntroText section={section} />
                 {children}
-                <ActionButtons section={section} />
+                <ActionButtons section={section} navigate={navigate} />
                 {(section == "Login")?
-                <TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={()=>{navigate('Forgot')}}>
                     <Text style={[AuthLayout_Style.p, AuthLayout_Style.pBold]}>
                         Forgot Password? {'\n'}
                     </Text>
