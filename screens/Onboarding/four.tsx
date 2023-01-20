@@ -1,7 +1,11 @@
 import { View, Text, Image, TouchableWithoutFeedback } from "react-native"
 import { Style, MoreGeneral } from "../../styles/onboarding"
 
-export default function Four(): any{
+interface FProps{
+    changeViews: any,
+};
+
+export default function Four({changeViews}:FProps): any{
     const image_four = require('../../assets/images/onboarding/image_three.png');
 
     return (
@@ -14,7 +18,7 @@ export default function Four(): any{
                 Lorem ipsum dolor sit amet. Ut maiores voluptate qui doloremque consequuntur in mo {'\n\n\n\n\n'}
             </Text>
 
-            <TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={()=>{changeViews()}}>
                     <Text style={Style.nextButton}>
                         NEXT
                     </Text>

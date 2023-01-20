@@ -3,7 +3,11 @@ import { useState } from 'react';
 import {TabView} from 'react-native-tab-view';
 import { One, Two, Three, Four } from '../screens/Onboarding';
 
-export default function OnboardingNavs(props:any): any {
+interface OnProps{
+    changeViews?: any,
+}
+
+export default function OnboardingNavs({changeViews}:OnProps): any {
     const layout = useWindowDimensions();
     const [index, setIndex] = useState<number>(0);
     const [routes] = useState<any[]>([
@@ -30,7 +34,7 @@ export default function OnboardingNavs(props:any): any {
                         return <Three />
                         break;
                     case 'four':
-                        return <Four />
+                        return <Four changeViews={changeViews} />
                         break;
                     default:
                         return null;

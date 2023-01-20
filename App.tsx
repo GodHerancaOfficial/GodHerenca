@@ -28,6 +28,7 @@ export default function App() {
       const val = await AsyncStorage.getItem('isOpened');
       if(val != null){
         setIsOpened(true);
+        console.log(val);
       }
     })();
   }, []);
