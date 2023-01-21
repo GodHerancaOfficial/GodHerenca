@@ -1,9 +1,22 @@
-import { View, Text } from "react-native"
+import { View, Text, ScrollView, TouchableWithoutFeedback } from "react-native";
+import Header from "../../components/accountSetup/header";
+import { SetupStyle } from "../../styles/Auth";
 
-export default function AccountSetup(): any {
+interface Prop{
+    navigation?: any,
+}
+
+export default function AccountSetup({navigation}:Prop): any {
     return(
-        <View>
-            <Text>Account Setup</Text>
-        </View>
+        <ScrollView>
+            <View style={SetupStyle.container}>
+                    <Header goBack={navigation.pop} />
+                    <TouchableWithoutFeedback>
+                        <Text style={SetupStyle.button}>
+                            Continue
+                        </Text>
+                    </TouchableWithoutFeedback>
+            </View>
+        </ScrollView>
     )
 }
