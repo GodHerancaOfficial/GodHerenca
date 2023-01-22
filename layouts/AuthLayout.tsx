@@ -6,16 +6,17 @@ interface Props{
     children: any,
     section: string,
     navigate?: any,
+    active?: boolean
 };
 
-export default function AuthLayout({children, section, navigate}:Props): any{
+export default function AuthLayout({children, section, navigate, active}:Props): any{
     return (
         <ScrollView>
             <StatusBar translucent={false} backgroundColor={'#ffffff'} barStyle={'dark-content'} />
             <View style={AuthLayout_Style.container}>
                 <IntroText section={section} />
                 {children}
-                <ActionButtons section={section} navigate={navigate} />
+                <ActionButtons active={active} section={section} navigate={navigate} />
                 {(section == "Login")?
                 <TouchableWithoutFeedback onPress={()=>{navigate('Forgot')}}>
                     <Text style={[AuthLayout_Style.p, AuthLayout_Style.pBold]}>

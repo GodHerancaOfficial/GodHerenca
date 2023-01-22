@@ -10,12 +10,12 @@ export default function AccountSetup({navigation}:Prop): any {
     return(
         <ScrollView>
             <View style={SetupStyle.container}>
-                    <Header goBack={navigation.pop} />
-                    <TouchableWithoutFeedback>
-                        <Text style={SetupStyle.button}>
-                            Continue
-                        </Text>
-                    </TouchableWithoutFeedback>
+                <Header goBack={navigation.pop} />
+                <TouchableWithoutFeedback>
+                    <Text style={SetupStyle.button}>
+                        Continue
+                    </Text>
+                </TouchableWithoutFeedback>
             </View>
         </ScrollView>
     )

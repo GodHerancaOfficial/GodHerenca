@@ -4,25 +4,19 @@ import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 const SetupStyle = StyleSheet.create({
     container: {
         flex: 1,
-        position: 'relative',
         display: 'flex',
-        justifyContent: 'flex-end',
         alignItems: 'center',
-        height: hp('100%'),
+        height: hp('99%'),
         backgroundColor: '#ffffff',
         paddingHorizontal: 10,
-        paddingVertical: 20,
+        paddingVertical: 10,
     },
     header: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
         display: 'flex',
         justifyContent: 'space-between',
         flexDirection: 'row',
         width: '100%',
         paddingHorizontal: 10,
-        paddingVertical: 15,
         alignItems: 'center',
     },
     headerText: {
@@ -39,6 +33,7 @@ const SetupStyle = StyleSheet.create({
         textAlign: "center",
         width: '98%',
         borderRadius: 50,
+        marginVertical: 20,
     }
 });
 

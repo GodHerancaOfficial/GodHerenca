@@ -28,6 +28,9 @@ const AuthLayout_Style = StyleSheet.create({
         borderRadius: 50,
         marginVertical: 20,
     },
+    InactiveBtn: {
+        opacity: 0.5,
+    },
     p: {
         fontSize: 16,
         fontFamily: 'Nunito',
