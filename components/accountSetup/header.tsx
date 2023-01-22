@@ -10,7 +10,7 @@ export default function Header({goBack}:Prop): any {
     return (
         <View style={SetupStyle.header}>
             <TouchableWithoutFeedback onPress={()=>{goBack()}}>
-                <MaterialIcons name="keyboard-backspace" size={35} color='#000000' />
+                <MaterialIcons name="keyboard-backspace" size={30} color='#000000' />
             </TouchableWithoutFeedback>
             <Text style={SetupStyle.headerText}>
                 Setup Your Account
