@@ -5,16 +5,22 @@ import { useState } from "react";
 
 interface Prop{
     fullName?: string,
+    setFullName?: any,
     username?: string,
+    setUsername?: any,
     gender?: string,
+    setGender?: any,
     cpf?: string,
+    setCpf?:any,
     phone?: string,
+    setPhone?:any,
     accountType?: string,
     setAccountType?: any,
 }
 
-export default function GeneralForm({ fullName, username, gender, cpf, phone, setAccountType }:Prop): any {
-    const [accountTypeList, setList] = useState<any[]>([
+export default function GeneralForm({ fullName, username, gender, cpf, phone, setAccountType,
+                                        setCpf, setFullName, setGender, setPhone, setUsername }:Prop): any {
+    const [accountTypeList] = useState<any[]>([
         {
             id: 1,
             title: 'Customer',
@@ -22,6 +28,17 @@ export default function GeneralForm({ fullName, username, gender, cpf, phone, se
         {
             id: 2,
             title: 'Rider',
+        },
+    ])
+
+    const [genderList] = useState<any[]>([
+        {
+            id: 1,
+            title: 'Male',
+        },
+        {
+            id: 2,
+            title: 'Female',
         },
     ])
         
@@ -39,10 +56,10 @@ export default function GeneralForm({ fullName, username, gender, cpf, phone, se
                 value={username}
             />
 
-            <TextInput
+            <DropDown
+                lists={genderList}
+                setOption={setGender}
                 placeholder="Gender"
-                style={SetupStyle.formInputs}
-                value={gender}
             />
 
             <TextInput
@@ -60,6 +77,7 @@ export default function GeneralForm({ fullName, username, gender, cpf, phone, se
             <DropDown
                 lists={accountTypeList}
                 setOption={setAccountType}
+                placeholder="Account Type"
             />
         </>
     )
