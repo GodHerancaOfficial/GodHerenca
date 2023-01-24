@@ -4,7 +4,7 @@ import { useState, useCallback } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 
 interface Prop{
-    lists?:any[],
+    lists?: any[],
     setOption?: any,
     placeholder: string
 };

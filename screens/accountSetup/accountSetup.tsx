@@ -39,6 +39,7 @@ export default function AccountSetup({navigation}:Prop): any {
                     phone={phone}
                     gender={gender}
                     setAccountType={setAccountType}
+                    setGender={setGender}
                 />
                 {((accountType == "Rider")?
                     <RiderForm />

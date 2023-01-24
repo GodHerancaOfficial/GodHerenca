@@ -19,7 +19,7 @@ interface Prop{
 }
 
 export default function GeneralForm({ fullName, username, gender, cpf, phone, setAccountType,
-                                        setCpf, setFullName, setGender, setPhone, setUsername }:Prop): any {
+                                    setCpf, setFullName, setGender, setPhone, setUsername }:Prop): any {
     const [accountTypeList] = useState<any[]>([
         {
             id: 1,
