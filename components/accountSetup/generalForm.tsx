@@ -1,5 +1,7 @@
 import { TextInput } from "react-native";
 import { SetupStyle } from "../../styles/Auth";
+import DropDown from "../dropdown/dropdown";
+import { useState } from "react";
 
 interface Prop{
     fullName?: string,
@@ -8,14 +10,21 @@ interface Prop{
     cpf?: string,
     phone?: string,
     accountType?: string,
+    setAccountType?: any,
 }
 
-export default function GeneralForm({ fullName, 
-    username, 
-    gender, 
-    cpf, 
-    phone, 
-    accountType }:Prop): any {
+export default function GeneralForm({ fullName, username, gender, cpf, phone, setAccountType }:Prop): any {
+    const [accountTypeList, setList] = useState<any[]>([
+        {
+            id: 1,
+            title: 'Customer',
+        },
+        {
+            id: 2,
+            title: 'Rider',
+        },
+    ])
+        
     return (
         <>
             <TextInput
@@ -48,10 +57,9 @@ export default function GeneralForm({ fullName,
                 value={phone}
             />
 
-            <TextInput
-                placeholder="Account Type"
-                style={SetupStyle.formInputs}
-                value={accountType}
+            <DropDown
+                lists={accountTypeList}
+                setOption={setAccountType}
             />
         </>
     )

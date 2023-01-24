@@ -14,7 +14,7 @@ export default function AccountSetup({navigation}:Prop): any {
     const [cpf, setCpf] = useState<string>("");
     const [phone, setPhone] = useState<string>("");
     const [gender, setGender] = useState<string>("");
-    const [accountType, setAccountType] = useState<string>("buyer");
+    const [accountType, setAccountType] = useState<string>("");
     const [driversLicense, setDriversLicense] = useState<boolean>(false);
     const [guarantorName, setGuarantorName] = useState<string>("");
     const [guarantorPhone, setGuarantorPhone] = useState<string>("");
@@ -36,14 +36,14 @@ export default function AccountSetup({navigation}:Prop): any {
                     fullName={fullName}
                     username={username}
                     cpf={cpf}
-                    accountType={accountType}
                     phone={phone}
                     gender={gender}
+                    setAccountType={setAccountType}
                 />
-                {((accountType == "buyer")?
-                    null
-                    :
+                {((accountType == "Rider")?
                     <RiderForm />
+                    :
+                    null
                 )}
 
                 <TouchableWithoutFeedback>
