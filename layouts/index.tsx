@@ -1,3 +1,4 @@
 import AuthLayout from "./AuthLayout";
+import AccountSetupLayout from "./accountSetupLayout";
 
-export {AuthLayout};
+export {AuthLayout, AccountSetupLayout};

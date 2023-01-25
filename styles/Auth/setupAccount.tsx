@@ -4,11 +4,11 @@ import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 const SetupStyle = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#ffffff',
+        backgroundColor: '#fff',
     },
     container1: {
-        // flex: 1,
-        display: 'flex',
+        flex: 1,
+        // display: 'flex',
         alignItems: 'center',
         backgroundColor: '#ffffff',
         paddingHorizontal: 10,
