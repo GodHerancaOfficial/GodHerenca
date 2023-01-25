@@ -4,6 +4,7 @@ import { SetupStyle } from "../../styles/Auth";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useState, useEffect, useCallback } from "react";
 import { AccountSetupLayout } from "../../layouts";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface Prop {
     navigation?: any,
@@ -28,11 +29,44 @@ export default function AccountSetup({ navigation }: Prop): any {
         }
     }, [fullName, username, cpf, phone, gender, accountType]);
 
-    const handleBtnPress = ():void|null => {
+    const storeRiderDetails = async (): Promise<void | boolean> => {
+        const detailsObject: {fullName:string, username:string, cpf:string, phone:string, gender:string, accountType:string} = {
+            fullName: fullName,
+            username: username,
+            cpf: cpf,
+            phone: phone,
+            gender: gender, 
+            accountType: accountType,
+        };
+
+        try {
+            await AsyncStorage.setItem('riderDetails', JSON.stringify(detailsObject));
+            return true;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    }
+
+    const getDetails = async (): Promise<void | null> => {
+        try {
+            let riderDetails = await AsyncStorage.getItem('riderDetails');
+            if(riderDetails != null){
+                console.log(JSON.parse(riderDetails));
+            }
+            else{
+                console.log("Nothing found");
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const handleBtnPress = async ():Promise<void|null> => {
         if(!btnActive)
             return null;
         
-        ((accountType=="Rider")?navigation.navigate("Dob"):console.log("Customer Account Done!"))
+        ((accountType=="Rider")?((await storeRiderDetails())?navigation.navigate('Dob'):null):getDetails())
     }
 
     return (
