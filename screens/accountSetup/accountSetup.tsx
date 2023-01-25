@@ -31,8 +31,9 @@ export default function AccountSetup({navigation}:Prop): any {
     },[fullName, username, cpf, phone, gender, accountType])
 
     return(
+        <View style={SetupStyle.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={SetupStyle.container}>
+            <View style={SetupStyle.container1}>
                 <Header goBack={navigation.pop} />
 
                 {/**User Profile Picture */}
@@ -68,5 +69,6 @@ export default function AccountSetup({navigation}:Prop): any {
                 </TouchableWithoutFeedback>
             </View>
         </ScrollView>
+        </View>
     )
 }
