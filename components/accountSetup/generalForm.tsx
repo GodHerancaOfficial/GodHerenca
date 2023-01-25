@@ -8,17 +8,15 @@ interface Prop{
     setFullName?: any,
     username?: string,
     setUsername?: any,
-    gender?: string,
     setGender?: any,
     cpf?: string,
     setCpf?:any,
     phone?: string,
     setPhone?:any,
-    accountType?: string,
     setAccountType?: any,
 }
 
-export default function GeneralForm({ fullName, username, gender, cpf, phone, setAccountType,
+export default function GeneralForm({ fullName, username, cpf, phone, setAccountType,
                                     setCpf, setFullName, setGender, setPhone, setUsername }:Prop): any {
     const [accountTypeList] = useState<any[]>([
         {
@@ -48,12 +46,14 @@ export default function GeneralForm({ fullName, username, gender, cpf, phone, se
                 placeholder="Name"
                 style={SetupStyle.formInputs}
                 value={fullName}
+                onChangeText={(e)=>{setFullName(e)}}
             />
 
             <TextInput
                 placeholder="Username"
                 style={SetupStyle.formInputs}
                 value={username}
+                onChangeText={(e)=>{setUsername(e)}}
             />
 
             <DropDown
@@ -66,12 +66,16 @@ export default function GeneralForm({ fullName, username, gender, cpf, phone, se
                 placeholder="CPF"
                 style={SetupStyle.formInputs}
                 value={cpf}
+                onChangeText={(e)=>{setCpf(e)}}
+                keyboardType="numeric"
             />
 
             <TextInput
                 placeholder="Phone Number"
                 style={SetupStyle.formInputs}
                 value={phone}
+                onChangeText={(e)=>{setPhone(e)}}
+                keyboardType='phone-pad'
             />
 
             <DropDown

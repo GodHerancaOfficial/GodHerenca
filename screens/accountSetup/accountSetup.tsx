@@ -2,7 +2,7 @@ import { View, Text, ScrollView, TouchableWithoutFeedback } from "react-native";
 import { Header, GeneralForm, RiderForm } from "../../components/accountSetup";
 import { SetupStyle } from "../../styles/Auth";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface Prop{
     navigation?: any,
@@ -19,6 +19,17 @@ export default function AccountSetup({navigation}:Prop): any {
     const [guarantorName, setGuarantorName] = useState<string>("");
     const [guarantorPhone, setGuarantorPhone] = useState<string>("");
 
+    const [btnActive, setBtnActive] = useState<boolean>(false);
+
+    useEffect(()=>{
+        if(!(fullName=="" || username=="" || cpf=="" || phone=="" || gender=="" || accountType=="")){
+            setBtnActive(true);
+        }
+        else{
+            setBtnActive(false);
+        }
+    },[fullName, username, cpf, phone, gender, accountType])
+
     return(
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={SetupStyle.container}>
@@ -34,22 +45,25 @@ export default function AccountSetup({navigation}:Prop): any {
                 {/**Forms To fill out */}
                 <GeneralForm 
                     fullName={fullName}
+                    setFullName={setFullName}
                     username={username}
+                    setUsername={setUsername}
                     cpf={cpf}
+                    setCpf={setCpf}
                     phone={phone}
-                    gender={gender}
+                    setPhone={setPhone}
                     setAccountType={setAccountType}
                     setGender={setGender}
                 />
-                {((accountType == "Rider")?
+                {/* {((accountType == "Rider")?
                     <RiderForm />
                     :
                     null
-                )}
+                )} */}
 
                 <TouchableWithoutFeedback>
-                    <Text style={SetupStyle.button}>
-                        Continue
+                    <Text style={[SetupStyle.button, {opacity: (btnActive)?1:0.5}]}>
+                        {(accountType=="Rider")?'Next':'Continue'}
                     </Text>
                 </TouchableWithoutFeedback>
             </View>

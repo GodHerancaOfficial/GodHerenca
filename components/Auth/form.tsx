@@ -21,6 +21,7 @@ export default function Form({email, password, setEmail, setPassword}:Prop): any
                     style={FormStyle.formInput} 
                     onChangeText={(newEmail)=>{setEmail(newEmail)}}
                     value={email}
+                    keyboardType="email-address"
                 />
             </View>
 
