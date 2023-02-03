@@ -66,6 +66,22 @@ const SetupStyle = StyleSheet.create({
         borderRadius: 5,
         marginVertical: 10,
         color: '#000000'
+    },
+    generalView: {
+        width: '100%',
+        flex: 1,
+        alignItems: 'flex-start',
+        paddingVertical: 30,
+        // paddingHorizontal: 5,
+    },
+    titleText: {
+        fontFamily: 'Raleway-bold',
+        fontSize: 20,
+    },
+    p: {
+        fontFamily: 'Raleway',
+        fontSize: 16,
+        color: '#888',
     }
 });
 
