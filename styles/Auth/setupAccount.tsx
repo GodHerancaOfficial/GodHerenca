@@ -82,6 +82,34 @@ const SetupStyle = StyleSheet.create({
         fontFamily: 'Raleway',
         fontSize: 16,
         color: '#888',
+    },
+    uploadView: {
+        width: '95%',
+        paddingVertical: 40,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F6F6F6',
+        marginVertical: 20,
+        borderRadius: 10,
+        marginTop: 40,
+    },
+    browseBtn: {
+        paddingHorizontal: 30,
+        paddingVertical: 10,
+        borderWidth: 2,
+        borderRadius: 5,
+        borderColor: '#000',
+        fontFamily: 'Raleway-bold',
+        marginVertical: 10,
+        color: '#000',
+    },
+    displayBoxes: {
+        width: 80,
+        height: 80,
+        backgroundColor: '#EDEDED',
+        borderRadius: 10,
+        marginVertical: 10,
     }
 });
 
