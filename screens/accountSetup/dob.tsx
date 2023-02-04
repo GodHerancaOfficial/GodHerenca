@@ -65,6 +65,7 @@ export default function DobScreen({navigation}:Prop): any{
                     placeholder="DD/MM/YYYY" 
                     style={SetupStyle.formInputs} 
                     keyboardType="phone-pad"
+                    value={riderDetails.dob ? riderDetails.dob : ""}
                     onChangeText={(e)=>{
                         setRiderDetails({ ...riderDetails, ...{
                             "dob": e
@@ -83,6 +84,7 @@ export default function DobScreen({navigation}:Prop): any{
                     placeholder="000000"
                     style={SetupStyle.formInputs}
                     keyboardType="number-pad"
+                    value={riderDetails.postalCode ? riderDetails.postalCode : ""}
                     onChangeText={(e)=>{
                         setRiderDetails({
                             ...riderDetails,
