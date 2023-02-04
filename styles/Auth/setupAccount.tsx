@@ -72,6 +72,7 @@ const SetupStyle = StyleSheet.create({
         flex: 1,
         alignItems: 'flex-start',
         paddingVertical: 30,
+        minHeight: '100%',
         // paddingHorizontal: 5,
     },
     titleText: {
