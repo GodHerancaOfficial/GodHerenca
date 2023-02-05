@@ -7,26 +7,28 @@ const DropDownStyle = StyleSheet.create({
         borderRadius: 5,
         marginVertical: 10,
         paddingHorizontal: 10,
-        // paddingVertical: 14,
-        height: 55,
+        zIndex: 1000,
+        overflow: 'hidden'
+    },
+    defualtView:{
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        position: 'relative',
-        zIndex: 1000,
+        height: 55,
     },
+
     dropDownText: {
         fontSize: 18,
         fontFamily: 'Raleway',
     },
     dropDownOptions: {
-        position: 'absolute',
-        top: '100%',
-        left: 0,
-        padding: 10,
+        // position: 'absolute',
+        // top: '100%',
+        // left: 0,
+        // padding: 10,
         backgroundColor: '#f8f8f8',
-        width: '106.1%',
+        // width: '106.1%',
     },
 });
 

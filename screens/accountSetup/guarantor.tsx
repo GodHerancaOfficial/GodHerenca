@@ -83,11 +83,13 @@ export default function GuarantorScreen({ navigation }: any): any {
                 </Text>
 
                 <TextInput
-                    placeholder="Guarantor Name"
+                    placeholder="Guarantor's Phone Number"
                     style={SetupStyle.formInputs}
                     value={phoneNumber}
                     onChangeText={(e) => { setPhoneNumber(e) }}
                 />
+
+                
 
                 <Text style={[SetupStyle.titleText, { marginVertical: 15 }]}>
                     Who is the Guarantor to you?
@@ -98,6 +100,7 @@ export default function GuarantorScreen({ navigation }: any): any {
                     lists={guarantorList}
                     setOption={setRelationShip}
                 />
+
                 <TouchableWithoutFeedback onPress={() => { btnActive ? console.log(riderDetails) : null }}>
                     <Text style={[SetupStyle.button, { marginVertical: 10, opacity: (btnActive) ? 1 : 0.5 }]}>
                         Next

@@ -23,14 +23,16 @@ export default function DropDown({lists, setOption, placeholder}:Prop): any {
         <TouchableWithoutFeedback onPress={()=>{
             setIsOpen(!isOpen);
         }}>
-            <View style={[DropDownStyle.container, {overflow: (isOpen)?undefined:'hidden'}]}>
-                <Text style={[DropDownStyle.dropDownText, {color: (selected=="")?'#A5A5A5':'#000000'}]}>
-                    {(selected=="")?placeholder: selected}
-                </Text>
-                <MaterialIcons name="arrow-drop-down" color={"#000000"} size={24} />
+            <View style={[DropDownStyle.container, {height: (isOpen)?undefined:55}]}>
+                <View style={DropDownStyle.defualtView}>
+                    <Text style={[DropDownStyle.dropDownText, {color: (selected=="")?'#A5A5A5':'#000000'}]}>
+                        {(selected=="")?placeholder: selected}
+                    </Text>
+                    <MaterialIcons name="arrow-drop-down" color={"#000000"} size={24} />
+                </View>
 
                 {/**Drop Down Options */}
-                <View style={DropDownStyle.dropDownOptions}>
+                <View style={[DropDownStyle.dropDownOptions, {display: (isOpen)?undefined:'none'}]}>
                     {
                         lists.map((list)=>(
                             <TouchableWithoutFeedback key={list.id} onPress={()=>{handlePressForList(list.title)}}>

@@ -10,9 +10,10 @@ const SetupStyle = StyleSheet.create({
         flex: 1,
         // display: 'flex',
         alignItems: 'center',
-        backgroundColor: '#ffffff',
+        backgroundColor: '#fff',
         paddingHorizontal: 10,
         paddingVertical: 10,
+        minHeight: hp('99.7%'),
     },
     header: {
         display: 'flex',
@@ -72,7 +73,6 @@ const SetupStyle = StyleSheet.create({
         flex: 1,
         alignItems: 'flex-start',
         paddingVertical: 30,
-        minHeight: '100%',
         // paddingHorizontal: 5,
     },
     titleText: {

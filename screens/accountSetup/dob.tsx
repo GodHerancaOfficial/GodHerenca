@@ -94,12 +94,17 @@ export default function DobScreen({navigation}:Prop): any{
                         })
                     }}
                 />
-            </View>
-            <TouchableWithoutFeedback onPress={()=>handleNextPress()}>
+                <TouchableWithoutFeedback onPress={()=>handleNextPress()}>
                 <Text style={[SetupStyle.button, {marginVertical: 10, opacity: (btnActive)?1:0.5}]}>
                     Next
                 </Text>
             </TouchableWithoutFeedback>
+            </View>
+            {/* <TouchableWithoutFeedback onPress={()=>handleNextPress()}>
+                <Text style={[SetupStyle.button, {marginVertical: 10, opacity: (btnActive)?1:0.5}]}>
+                    Next
+                </Text>
+            </TouchableWithoutFeedback> */}
         </AccountSetupLayout>
     )
 }
