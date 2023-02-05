@@ -87,6 +87,7 @@ export default function GuarantorScreen({ navigation }: any): any {
                     style={SetupStyle.formInputs}
                     value={phoneNumber}
                     onChangeText={(e) => { setPhoneNumber(e) }}
+                    keyboardType='phone-pad'
                 />
 
                 
@@ -101,7 +102,7 @@ export default function GuarantorScreen({ navigation }: any): any {
                     setOption={setRelationShip}
                 />
 
-                <TouchableWithoutFeedback onPress={() => { btnActive ? console.log(riderDetails) : null }}>
+                <TouchableWithoutFeedback onPress={() => { btnActive ? navigation.navigate('Vehicle') : null }}>
                     <Text style={[SetupStyle.button, { marginVertical: 10, opacity: (btnActive) ? 1 : 0.5 }]}>
                         Next
                     </Text>
