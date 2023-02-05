@@ -4,29 +4,29 @@ import { SetupStyle } from "../../styles/Auth";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-interface Prop{
+interface Prop {
     navigation?: any,
 }
 
-export default function DobScreen({navigation}:Prop): any{
+export default function DobScreen({ navigation }: Prop): any {
     const [riderDetails, setRiderDetails] = useState<any>({});
 
     const [btnActive, setBtnActive] = useState<boolean>(false);
 
-    useEffect(()=>{
-        (async(): Promise<void>=>{
+    useEffect(() => {
+        (async (): Promise<void> => {
             let details = await AsyncStorage.getItem('riderDetails');
-            if(details != null){
-                setRiderDetails({...riderDetails, ...JSON.parse(details)})
+            if (details != null) {
+                setRiderDetails({ ...riderDetails, ...JSON.parse(details) })
                 // console.log(riderDetails);
             }
-            else{
+            else {
                 console.log('Details are null');
             }
         })()
-    },[]);
+    }, []);
 
-    const storeDetails = async (detailsObject:any): Promise<void | boolean> => {
+    const storeDetails = async (detailsObject: any): Promise<void | boolean> => {
         try {
             await AsyncStorage.setItem('riderDetails', JSON.stringify(detailsObject));
             return true;
@@ -36,20 +36,20 @@ export default function DobScreen({navigation}:Prop): any{
         }
     }
 
-    useEffect(()=>{
-        if(riderDetails.dob=="" || riderDetails.postalCode==""){
+    useEffect(() => {
+        if (riderDetails.dob == "" || riderDetails.postalCode == "") {
             setBtnActive(false);
         }
-        else{
+        else {
             setBtnActive(true);
         }
-    },[riderDetails])
+    }, [riderDetails])
 
     const handleNextPress = async (): Promise<void | null> => {
-        if(!btnActive)
+        if (!btnActive)
             return null;
 
-        if(!await storeDetails(riderDetails)){
+        if (!await storeDetails(riderDetails)) {
             return;
         }
         navigation.navigate('Origin');
@@ -61,15 +61,17 @@ export default function DobScreen({navigation}:Prop): any{
                 <Text style={SetupStyle.titleText}>
                     Date Of Birth
                 </Text>
-                <TextInput 
-                    placeholder="DD/MM/YYYY" 
-                    style={SetupStyle.formInputs} 
+                <TextInput
+                    placeholder="DD/MM/YYYY"
+                    style={SetupStyle.formInputs}
                     keyboardType="phone-pad"
                     value={riderDetails.dob ? riderDetails.dob : ""}
-                    onChangeText={(e)=>{
-                        setRiderDetails({ ...riderDetails, ...{
-                            "dob": e
-                        } })
+                    onChangeText={(e) => {
+                        setRiderDetails({
+                            ...riderDetails, ...{
+                                "dob": e
+                            }
+                        })
                     }}
                 />
 
@@ -80,12 +82,12 @@ export default function DobScreen({navigation}:Prop): any{
                 <Text style={SetupStyle.titleText}>
                     Postal Code
                 </Text>
-                <TextInput 
+                <TextInput
                     placeholder="000000"
                     style={SetupStyle.formInputs}
                     keyboardType="number-pad"
                     value={riderDetails.postalCode ? riderDetails.postalCode : ""}
-                    onChangeText={(e)=>{
+                    onChangeText={(e) => {
                         setRiderDetails({
                             ...riderDetails,
                             ...{
@@ -94,11 +96,11 @@ export default function DobScreen({navigation}:Prop): any{
                         })
                     }}
                 />
-                <TouchableWithoutFeedback onPress={()=>handleNextPress()}>
-                <Text style={[SetupStyle.button, {marginVertical: 10, opacity: (btnActive)?1:0.5}]}>
-                    Next
-                </Text>
-            </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={() => handleNextPress()}>
+                    <Text style={[SetupStyle.button, { marginVertical: 10, opacity: (btnActive) ? 1 : 0.5 }]}>
+                        Next
+                    </Text>
+                </TouchableWithoutFeedback>
             </View>
             {/* <TouchableWithoutFeedback onPress={()=>handleNextPress()}>
                 <Text style={[SetupStyle.button, {marginVertical: 10, opacity: (btnActive)?1:0.5}]}>

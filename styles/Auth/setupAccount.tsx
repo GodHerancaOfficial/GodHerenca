@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { heightPercentageToDP as hp } from "react-native-responsive-screen";
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
 
 const SetupStyle = StyleSheet.create({
     container: {
@@ -111,7 +111,37 @@ const SetupStyle = StyleSheet.create({
         backgroundColor: '#EDEDED',
         borderRadius: 10,
         marginVertical: 10,
-    }
+    },
+    vehicleContainer: {
+        paddingVertical: 10,
+        display: 'flex',
+        flexDirection: "row",
+        flexWrap: 'wrap',
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+    },
+    vehicleWrapper: {
+        width: '45%',
+        display: 'flex',
+        alignItems: 'center',
+        marginVertical: 20,
+        overflow: 'hidden'
+
+    },
+    vehicleImage: {
+        resizeMode: 'contain',
+        width: wp('30%'),
+    },
+    vehicleBox: {
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        height: hp('18%'),
+        overflow: 'hidden',
+        width: '45%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 });
 
 export default SetupStyle;
