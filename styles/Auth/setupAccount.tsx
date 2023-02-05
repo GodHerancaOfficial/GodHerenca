@@ -121,26 +121,36 @@ const SetupStyle = StyleSheet.create({
         justifyContent: 'space-evenly',
     },
     vehicleWrapper: {
-        width: '45%',
+        width: '43%',
         display: 'flex',
         alignItems: 'center',
         marginVertical: 20,
-        overflow: 'hidden'
+        // overflow: 'hidden',
 
     },
     vehicleImage: {
         resizeMode: 'contain',
-        width: wp('30%'),
+        // width: wp('45%'),
     },
     vehicleBox: {
         backgroundColor: '#fff',
         borderRadius: 10,
         height: hp('18%'),
         overflow: 'hidden',
-        width: '45%',
+        width: '100%',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        shadowColor: '#868686',
+        // shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.2,
+        elevation: 5,
+        // borderColor: '#000',
+        // borderWidth: 2,
     },
 });
 
