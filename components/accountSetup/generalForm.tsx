@@ -1,23 +1,27 @@
 import { TextInput } from "react-native";
 import { SetupStyle } from "../../styles/Auth";
 import DropDown from "../dropdown/dropdown";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import SetupContext from "../../contexts/SetupContext";
 
-interface Prop{
+interface Prop {
     fullName?: string,
     setFullName?: any,
     username?: string,
     setUsername?: any,
     setGender?: any,
     cpf?: string,
-    setCpf?:any,
+    setCpf?: any,
     phone?: string,
-    setPhone?:any,
+    setPhone?: any,
     setAccountType?: any,
 }
 
-export default function GeneralForm({ fullName, username, cpf, phone, setAccountType,
-                                    setCpf, setFullName, setGender, setPhone, setUsername }:Prop): any {
+export default function GeneralForm(): any {
+
+    const { fullName, setFullName, username, setUsername, gender, setGender,
+        cpf, setCpf, phone, setPhone, accountType, setAccountType } = useContext(SetupContext);
+
     const [accountTypeList] = useState<any[]>([
         {
             id: 1,
@@ -39,21 +43,21 @@ export default function GeneralForm({ fullName, username, cpf, phone, setAccount
             title: 'Female',
         },
     ])
-        
+
     return (
         <>
             <TextInput
                 placeholder="Name"
                 style={SetupStyle.formInputs}
                 value={fullName}
-                onChangeText={(e)=>{setFullName(e)}}
+                onChangeText={(e) => { setFullName(e) }}
             />
 
             <TextInput
                 placeholder="Username"
                 style={SetupStyle.formInputs}
                 value={username}
-                onChangeText={(e)=>{setUsername(e)}}
+                onChangeText={(e) => { setUsername(e) }}
             />
 
             <DropDown
@@ -66,7 +70,7 @@ export default function GeneralForm({ fullName, username, cpf, phone, setAccount
                 placeholder="CPF"
                 style={SetupStyle.formInputs}
                 value={cpf}
-                onChangeText={(e)=>{setCpf(e)}}
+                onChangeText={(e) => { setCpf(e) }}
                 keyboardType="numeric"
             />
 
@@ -74,7 +78,7 @@ export default function GeneralForm({ fullName, username, cpf, phone, setAccount
                 placeholder="Phone Number"
                 style={SetupStyle.formInputs}
                 value={phone}
-                onChangeText={(e)=>{setPhone(e)}}
+                onChangeText={(e) => { setPhone(e) }}
                 keyboardType='phone-pad'
             />
 
