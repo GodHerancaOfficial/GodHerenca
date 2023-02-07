@@ -1,57 +1,31 @@
 import { Text, TextInput, TouchableWithoutFeedback, View } from "react-native";
 import { AccountSetupLayout } from "../../layouts";
 import { SetupStyle } from "../../styles/Auth";
-import { useEffect, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState, useContext } from "react";
+import SetupContext from "../../contexts/SetupContext";
 
 interface Prop {
     navigation?: any,
 }
 
 export default function DobScreen({ navigation }: Prop): any {
-    const [riderDetails, setRiderDetails] = useState<any>({});
-
     const [btnActive, setBtnActive] = useState<boolean>(false);
 
-    useEffect(() => {
-        (async (): Promise<void> => {
-            let details = await AsyncStorage.getItem('riderDetails');
-            if (details != null) {
-                setRiderDetails({ ...riderDetails, ...JSON.parse(details) })
-                // console.log(riderDetails);
-            }
-            else {
-                console.log('Details are null');
-            }
-        })()
-    }, []);
-
-    const storeDetails = async (detailsObject: any): Promise<void | boolean> => {
-        try {
-            await AsyncStorage.setItem('riderDetails', JSON.stringify(detailsObject));
-            return true;
-        } catch (error) {
-            console.log(error);
-            return false;
-        }
-    }
+    const { dob, setDob, postalCode, setPostalCode } = useContext(SetupContext);
 
     useEffect(() => {
-        if (riderDetails.dob == "" || riderDetails.postalCode == "") {
+        if (dob == "" || postalCode == "") {
             setBtnActive(false);
+            return;
         }
-        else {
-            setBtnActive(true);
-        }
-    }, [riderDetails])
 
-    const handleNextPress = async (): Promise<void | null> => {
+        setBtnActive(true);
+    }, [dob, postalCode]);
+
+    const handleNextPress = (): void | null => {
         if (!btnActive)
             return null;
 
-        if (!await storeDetails(riderDetails)) {
-            return;
-        }
         navigation.navigate('Origin');
     }
 
@@ -65,13 +39,9 @@ export default function DobScreen({ navigation }: Prop): any {
                     placeholder="DD/MM/YYYY"
                     style={SetupStyle.formInputs}
                     keyboardType="phone-pad"
-                    value={riderDetails.dob ? riderDetails.dob : ""}
+                    value={dob}
                     onChangeText={(e) => {
-                        setRiderDetails({
-                            ...riderDetails, ...{
-                                "dob": e
-                            }
-                        })
+                        setDob(e);
                     }}
                 />
 
@@ -86,14 +56,9 @@ export default function DobScreen({ navigation }: Prop): any {
                     placeholder="000000"
                     style={SetupStyle.formInputs}
                     keyboardType="number-pad"
-                    value={riderDetails.postalCode ? riderDetails.postalCode : ""}
+                    value={postalCode}
                     onChangeText={(e) => {
-                        setRiderDetails({
-                            ...riderDetails,
-                            ...{
-                                "postalCode": e
-                            }
-                        })
+                        setPostalCode(e);
                     }}
                 />
                 <TouchableWithoutFeedback onPress={() => handleNextPress()}>
@@ -102,11 +67,6 @@ export default function DobScreen({ navigation }: Prop): any {
                     </Text>
                 </TouchableWithoutFeedback>
             </View>
-            {/* <TouchableWithoutFeedback onPress={()=>handleNextPress()}>
-                <Text style={[SetupStyle.button, {marginVertical: 10, opacity: (btnActive)?1:0.5}]}>
-                    Next
-                </Text>
-            </TouchableWithoutFeedback> */}
         </AccountSetupLayout>
     )
 }

@@ -1,16 +1,13 @@
 import { Text, TextInput, View, TouchableWithoutFeedback } from "react-native";
 import { AccountSetupLayout } from "../../layouts";
 import { SetupStyle } from "../../styles/Auth";
-import { useEffect, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState, useContext } from "react";
 import DropDown from "../../components/dropdown/dropdown";
+import SetupContext from "../../contexts/SetupContext";
 
 export default function GuarantorScreen({ navigation }: any): any {
-    const [guarantorName, setGuarantorName] = useState<string>("");
-    const [phoneNumber, setPhoneNumber] = useState<string>("");
-    const [relationship, setRelationShip] = useState<string>("");
-    const [riderDetails, setRiderDetails] = useState({});
     const [btnActive, setBtnActive] = useState<boolean>(false);
+    const { guarantorName, setGuarantorName, guarantorPhone, setGuarantorPhone, guarantorRelationship, setGuarantorRelationship } = useContext(SetupContext);
 
     const [guarantorList] = useState<any[]>([
         {
@@ -35,30 +32,14 @@ export default function GuarantorScreen({ navigation }: any): any {
         },
     ]);
 
-    (async (): Promise<void> => {
-        const details = await AsyncStorage.getItem('riderDetails');
-        if (details != null) {
-            setRiderDetails((existingDetails) => ({ ...existingDetails, ...JSON.parse(details) }));
-        }
-    })();
-
     useEffect(() => {
-        setRiderDetails((details) => ({
-            ...details, ...{
-                guarantorName: guarantorName,
-                guarantorPhone: phoneNumber,
-                guarantorRelationship: relationship
-            }
-        }));
-
-        if (guarantorName == "" || phoneNumber == "" || relationship == "") {
-            setBtnActive(false)
-        }
-        else {
-            setBtnActive(true);
+        if(guarantorName == "" || guarantorPhone == "" || guarantorRelationship == ""){
+            setBtnActive(false);
+            return;
         }
 
-    }, [guarantorName, phoneNumber, relationship]);
+        setBtnActive(true);
+    }, [guarantorName, guarantorPhone, guarantorRelationship]);
 
     return (
         <AccountSetupLayout navigateBack={navigation.pop}>
@@ -85,8 +66,8 @@ export default function GuarantorScreen({ navigation }: any): any {
                 <TextInput
                     placeholder="Guarantor's Phone Number"
                     style={SetupStyle.formInputs}
-                    value={phoneNumber}
-                    onChangeText={(e) => { setPhoneNumber(e) }}
+                    value={guarantorPhone}
+                    onChangeText={(e) => { setGuarantorPhone(e) }}
                     keyboardType='phone-pad'
                 />
 
@@ -99,7 +80,7 @@ export default function GuarantorScreen({ navigation }: any): any {
                 <DropDown
                     placeholder="Guarantor Relationship"
                     lists={guarantorList}
-                    setOption={setRelationShip}
+                    setOption={setGuarantorRelationship}
                 />
 
                 <TouchableWithoutFeedback onPress={() => { btnActive ? navigation.navigate('Vehicle') : null }}>
@@ -108,11 +89,6 @@ export default function GuarantorScreen({ navigation }: any): any {
                     </Text>
                 </TouchableWithoutFeedback>
             </View>
-            {/* <TouchableWithoutFeedback>
-                <Text style={[SetupStyle.button, {marginVertical: 10, opacity: (btnActive)?1:0.5}]}>
-                    Next
-                </Text>
-            </TouchableWithoutFeedback> */}
         </AccountSetupLayout>
     )
 }

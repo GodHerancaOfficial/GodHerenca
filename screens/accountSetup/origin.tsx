@@ -2,36 +2,21 @@ import { Text, TextInput, View, TouchableWithoutFeedback } from "react-native";
 import { AccountSetupLayout } from "../../layouts";
 import { SetupStyle } from "../../styles/Auth";
 import DropDown from "../../components/dropdown/dropdown";
-import { useEffect, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState, useContext } from "react";
+import SetupContext from "../../contexts/SetupContext";
 
 export default function OriginScreen({ navigation }: any): any {
     const [btnActive, setBtnActive] = useState<boolean>(false);
-    const [state, setState] = useState<string>("");
-    const [city, setCity] = useState<string>("");
-    const [address, setAddress] = useState<string>("");
-    const [riderDetails, setRiderDetails] = useState({});
 
-    (async ():Promise<void>=>{
-        const details = await AsyncStorage.getItem('riderDetails');
-        if(details != null){
-            setRiderDetails({...riderDetails, ...JSON.parse(details)});
-        }
-    })();
+    const { state, city, address, setState, setCity, setAddress } = useContext(SetupContext);
 
     useEffect(()=>{
-        setRiderDetails((details)=>({...details, ...{
-            state: state,
-            city: city, 
-            address: address
-        }}));
-
-        if(state == "" || city == "" || address == ""){
+        if(state == "" || city == "" || address==""){
             setBtnActive(false);
+            return;
         }
-        else{
-            setBtnActive(true);
-        }
+
+        setBtnActive(true);
     }, [state, city, address]);
 
     return (

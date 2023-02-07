@@ -13,7 +13,7 @@ const SetupStyle = StyleSheet.create({
         backgroundColor: '#fff',
         paddingHorizontal: 10,
         paddingVertical: 10,
-        minHeight: hp('99.7%'),
+        // minHeight: hp('99.7%'),
     },
     header: {
         display: 'flex',

@@ -1,9 +1,8 @@
 import { Text, View, TouchableWithoutFeedback, Image } from "react-native";
 import { AccountSetupLayout } from "../../layouts";
 import { SetupStyle } from "../../styles/Auth";
-import { useEffect, useState } from "react";
-import { Shadow } from "react-native-shadow-2";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useContext, useEffect, useState } from "react";
+import SetupContext from "../../contexts/SetupContext";
 
 export default function VehicleScreen({navigation}: any): any{
     const Bicycle = require('../../assets/images/vehicles/bicycle.png');
@@ -11,8 +10,7 @@ export default function VehicleScreen({navigation}: any): any{
     const scooter = require("../../assets/images/vehicles/scooter.png");
     const car = require('../../assets/images/vehicles/car.png');
 
-    const [riderDetails, setRiderDetails] = useState({});
-    const [selectedVehicle, setSelectedVehicle] = useState<string>("");
+    const {selectedVehicle, setSelectedVehicle} = useContext(SetupContext);
     const [btnActive, setBtnActive] = useState<boolean>(false);
     const [vehicles] = useState<any[]>([
         {
@@ -37,22 +35,13 @@ export default function VehicleScreen({navigation}: any): any{
         },
     ]);
 
-    (async ():Promise<void>=>{
-        const details = await AsyncStorage.getItem('riderDetails');
-        if(details != null){
-            setRiderDetails((existingDetials)=>({...existingDetials, ...JSON.parse(details)}));
-        }
-    })();
-
     useEffect(()=>{
-        setRiderDetails((details)=>({...details, vehicle: selectedVehicle}));
-
         if(selectedVehicle == ""){
             setBtnActive(false);
+            return;
         }
-        else{
-            setBtnActive(true);
-        }
+
+        setBtnActive(true);
     },[selectedVehicle])
 
     return (
@@ -82,7 +71,7 @@ export default function VehicleScreen({navigation}: any): any{
                     incididunt ut labore et dolore magna aliqua.
                 </Text>
 
-                <TouchableWithoutFeedback onPress={()=>{console.log(riderDetails)}}>
+                <TouchableWithoutFeedback onPress={()=>{console.log(selectedVehicle)}}>
                     <Text style={[SetupStyle.button, { marginVertical: 10, opacity: (btnActive) ? 1 : 0.5 }]}>
                         Finish
                     </Text>
