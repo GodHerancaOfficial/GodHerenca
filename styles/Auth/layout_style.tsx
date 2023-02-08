@@ -4,12 +4,15 @@ import { heightPercentageToDP as hp } from 'react-native-responsive-screen'
 const AuthLayout_Style = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#fff',
+        justifyContent: 'flex-end'
+    },
+    container1: {
         alignItems: "center",
         justifyContent: 'flex-end',
         paddingVertical: 30,
         paddingHorizontal: 15,
         backgroundColor: '#ffffff',
-        height: hp('100%'),
     },
     introText: {
         fontSize: 50,
