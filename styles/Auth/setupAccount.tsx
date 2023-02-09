@@ -12,7 +12,7 @@ const SetupStyle = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#fff',
         paddingHorizontal: 10,
-        paddingVertical: 10,
+        paddingVertical: 40,
         // minHeight: hp('99.7%'),
     },
     header: {
