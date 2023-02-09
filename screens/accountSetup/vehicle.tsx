@@ -54,7 +54,7 @@ export default function VehicleScreen({ navigation }: any): any {
                 <Text style={[AuthLayout_Style.pBold, { fontSize: 24, textAlign: 'center', paddingHorizontal: 15 }]}>
                     Congratulations {'\n\n'}
 
-                    <Text style={[AuthLayout_Style.p, {paddingVertical: 10, fontSize: 18}]}>
+                    <Text style={[AuthLayout_Style.p, { paddingVertical: 10, fontSize: 18 }]}>
                         Your account is ready to use. You
                         will be redirected to your home page in
                         a few seconds
