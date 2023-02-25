@@ -1,6 +1,6 @@
 import { View, ScrollView } from "react-native";
-import { Header } from "../components/accountSetup";
 import { SetupStyle } from "../styles/Auth";
+import { Header } from "../components/common";
 
 interface Prop {
     navigateBack?: any,
@@ -12,7 +12,7 @@ export default function AccountSetupLayout({ navigateBack, children }: Prop): an
         <View style={SetupStyle.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={SetupStyle.container1}>
-                    <Header goBack={navigateBack} />
+                    <Header goBack={navigateBack} text="Setup Your Account" />
 
                     {children}
                 </View>
