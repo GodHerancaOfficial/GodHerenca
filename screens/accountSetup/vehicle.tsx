@@ -4,6 +4,7 @@ import { SetupStyle, AuthLayout_Style } from "../../styles/Auth";
 import { useContext, useEffect, useState } from "react";
 import SetupContext from "../../contexts/SetupContext";
 import { GeneralModal } from "../../components/modals";
+import { Button } from "../../components/common";
 
 export default function VehicleScreen({ navigation }: any): any {
     const Bicycle = require('../../assets/images/vehicles/bicycle.png');
@@ -15,7 +16,7 @@ export default function VehicleScreen({ navigation }: any): any {
     const imageSource = require('../../assets/images/modals/regSuccess.png');
 
     const { selectedVehicle, setSelectedVehicle } = useContext(SetupContext);
-    const [btnActive, setBtnActive] = useState<boolean>(false);
+    const [btnActive, setBtnActive] = useState<boolean>(true);
     const [vehicles] = useState<any[]>([
         {
             id: 1,
@@ -41,11 +42,11 @@ export default function VehicleScreen({ navigation }: any): any {
 
     useEffect(() => {
         if (selectedVehicle == "") {
-            setBtnActive(false);
+            setBtnActive(true);
             return;
         }
 
-        setBtnActive(true);
+        setBtnActive(false);
     }, [selectedVehicle])
 
     return (
@@ -87,11 +88,13 @@ export default function VehicleScreen({ navigation }: any): any {
                     incididunt ut labore et dolore magna aliqua.
                 </Text>
 
-                <TouchableWithoutFeedback onPress={() => { (btnActive) ? setVisible(!visible) : null }}>
-                    <Text style={[SetupStyle.button, { marginVertical: 0, opacity: (btnActive) ? 1 : 0.5 }]}>
-                        Finish
-                    </Text>
-                </TouchableWithoutFeedback>
+                <Button
+                    style={SetupStyle.button}
+                    disabled={btnActive}
+                    onPress={() => setVisible(!visible)}
+                >
+                    Finish
+                </Button>
             </View>
         </AccountSetupLayout>
     )

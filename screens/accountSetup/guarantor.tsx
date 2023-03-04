@@ -4,9 +4,10 @@ import { SetupStyle } from "../../styles/Auth";
 import { useEffect, useState, useContext } from "react";
 import DropDown from "../../components/dropdown/dropdown";
 import SetupContext from "../../contexts/SetupContext";
+import { Button } from "../../components/common";
 
 export default function GuarantorScreen({ navigation }: any): any {
-    const [btnActive, setBtnActive] = useState<boolean>(false);
+    const [btnActive, setBtnActive] = useState<boolean>(true);
     const { guarantorName, setGuarantorName, guarantorPhone, setGuarantorPhone, guarantorRelationship, setGuarantorRelationship } = useContext(SetupContext);
 
     const [guarantorList] = useState<any[]>([
@@ -33,12 +34,12 @@ export default function GuarantorScreen({ navigation }: any): any {
     ]);
 
     useEffect(() => {
-        if(guarantorName == "" || guarantorPhone == "" || guarantorRelationship == ""){
-            setBtnActive(false);
+        if (guarantorName == "" || guarantorPhone == "" || guarantorRelationship == "") {
+            setBtnActive(true);
             return;
         }
 
-        setBtnActive(true);
+        setBtnActive(false);
     }, [guarantorName, guarantorPhone, guarantorRelationship]);
 
     return (
@@ -71,7 +72,7 @@ export default function GuarantorScreen({ navigation }: any): any {
                     keyboardType='phone-pad'
                 />
 
-                
+
 
                 <Text style={[SetupStyle.titleText, { marginVertical: 15 }]}>
                     Who is the Guarantor to you?
@@ -83,11 +84,13 @@ export default function GuarantorScreen({ navigation }: any): any {
                     setOption={setGuarantorRelationship}
                 />
 
-                <TouchableWithoutFeedback onPress={() => { btnActive ? navigation.navigate('Vehicle') : null }}>
-                    <Text style={[SetupStyle.button, { marginVertical: 10, opacity: (btnActive) ? 1 : 0.5 }]}>
-                        Next
-                    </Text>
-                </TouchableWithoutFeedback>
+                <Button
+                    style={SetupStyle.button}
+                    disabled={btnActive}
+                    onPress={()=>{navigation.navigate('Vehicle')}}
+                >
+                    Next
+                </Button>
             </View>
         </AccountSetupLayout>
     )

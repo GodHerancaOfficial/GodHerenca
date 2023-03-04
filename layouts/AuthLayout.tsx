@@ -8,7 +8,7 @@ interface Props {
     children: any,
     section: string,
     navigate?: any,
-    active?: boolean
+    active: boolean
 };
 
 export default function AuthLayout({ children, section, navigate, active }: Props): any {

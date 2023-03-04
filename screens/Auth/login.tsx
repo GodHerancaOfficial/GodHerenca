@@ -9,10 +9,10 @@ interface Prop{
 export default function Login({navigation}:Prop): any{
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const [active, setActive] = useState<boolean>(false);
+    const [active, setActive] = useState<boolean>(true);
 
     useEffect(()=>{
-        ((email == "" || password == "")?setActive(false):setActive(true));
+        ((email == "" || password == "")?setActive(true):setActive(false));
     },[email, password])
 
     return (

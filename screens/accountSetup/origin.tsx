@@ -4,19 +4,20 @@ import { SetupStyle } from "../../styles/Auth";
 import DropDown from "../../components/dropdown/dropdown";
 import { useEffect, useState, useContext } from "react";
 import SetupContext from "../../contexts/SetupContext";
+import { Button } from "../../components/common";
 
 export default function OriginScreen({ navigation }: any): any {
-    const [btnActive, setBtnActive] = useState<boolean>(false);
+    const [btnActive, setBtnActive] = useState<boolean>(true);
 
     const { state, city, address, setState, setCity, setAddress } = useContext(SetupContext);
 
-    useEffect(()=>{
-        if(state == "" || city == "" || address==""){
-            setBtnActive(false);
+    useEffect(() => {
+        if (state == "" || city == "" || address == "") {
+            setBtnActive(true);
             return;
         }
 
-        setBtnActive(true);
+        setBtnActive(false);
     }, [state, city, address]);
 
     return (
@@ -49,17 +50,19 @@ export default function OriginScreen({ navigation }: any): any {
                 <TextInput
                     placeholder="Your Address"
                     style={SetupStyle.formInputs}
-                    onChangeText={(e)=>{
+                    onChangeText={(e) => {
                         setAddress(e);
                     }}
                     value={address}
                 />
 
-                <TouchableWithoutFeedback onPress={()=>{btnActive?navigation.navigate('Legal'):null}}>
-                    <Text style={[SetupStyle.button, { marginVertical: 10, opacity: (btnActive) ? 1 : 0.5 }]}>
-                        Next
-                    </Text>
-                </TouchableWithoutFeedback>
+                <Button
+                    style={SetupStyle.button}
+                    onPress={()=>navigation.navigate('Legal')}
+                    disabled={btnActive}
+                >
+                    Next
+                </Button>
             </View>
         </AccountSetupLayout>
     )

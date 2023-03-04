@@ -5,6 +5,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useState, useEffect, useContext } from "react";
 import { AccountSetupLayout } from "../../layouts";
 import SetupContext from "../../contexts/SetupContext";
+import { Button } from "../../components/common";
 
 interface Prop {
     navigation?: any,
@@ -13,21 +14,18 @@ interface Prop {
 export default function AccountSetup({ navigation }: Prop): any {
     const { fullName, username, gender, cpf, phone, accountType } = useContext(SetupContext);
 
-    const [btnActive, setBtnActive] = useState<boolean>(false);
+    const [btnActive, setBtnActive] = useState<boolean>(true);
 
     useEffect(() => {
         if (fullName == "" || username == "" || cpf == "" || phone == "" || gender == "" || accountType == "") {
-            setBtnActive(false);
+            setBtnActive(true);
             return;
         }
 
-        setBtnActive(true);
+        setBtnActive(false);
     }, [fullName, username, cpf, phone, gender, accountType]);
 
     const handleBtnPress = async (): Promise<void | null> => {
-        if (!btnActive)
-            return null;
-
         console.log(fullName);
         ((accountType == "Rider") ? navigation.navigate('Dob') : null)
     }
@@ -44,11 +42,13 @@ export default function AccountSetup({ navigation }: Prop): any {
             {/**Forms To fill out */}
             <GeneralForm />
 
-            <TouchableWithoutFeedback onPress={() => handleBtnPress()}>
-                <Text style={[SetupStyle.button, { opacity: (btnActive) ? 1 : 0.5 }]}>
-                    {(accountType == "Rider") ? 'Next' : 'Continue'}
-                </Text>
-            </TouchableWithoutFeedback>
+            <Button
+                style={SetupStyle.button}
+                disabled={btnActive}
+                onPress={() => handleBtnPress()}
+            >
+                {(accountType == "Rider") ? 'Next' : 'Continue'}
+            </Button>
         </AccountSetupLayout>
     )
 }

@@ -3,29 +3,27 @@ import { AccountSetupLayout } from "../../layouts";
 import { SetupStyle } from "../../styles/Auth";
 import { useEffect, useState, useContext } from "react";
 import SetupContext from "../../contexts/SetupContext";
+import { Button } from "../../components/common";
 
 interface Prop {
     navigation?: any,
 }
 
 export default function DobScreen({ navigation }: Prop): any {
-    const [btnActive, setBtnActive] = useState<boolean>(false);
+    const [btnActive, setBtnActive] = useState<boolean>(true);
 
     const { dob, setDob, postalCode, setPostalCode } = useContext(SetupContext);
 
     useEffect(() => {
         if (dob == "" || postalCode == "") {
-            setBtnActive(false);
+            setBtnActive(true);
             return;
         }
 
-        setBtnActive(true);
+        setBtnActive(false);
     }, [dob, postalCode]);
 
     const handleNextPress = (): void | null => {
-        if (!btnActive)
-            return null;
-
         navigation.navigate('Origin');
     }
 
@@ -61,11 +59,14 @@ export default function DobScreen({ navigation }: Prop): any {
                         setPostalCode(e);
                     }}
                 />
-                <TouchableWithoutFeedback onPress={() => handleNextPress()}>
-                    <Text style={[SetupStyle.button, { marginVertical: 10, opacity: (btnActive) ? 1 : 0.5 }]}>
-                        Next
-                    </Text>
-                </TouchableWithoutFeedback>
+
+                <Button
+                    disabled={btnActive}
+                    style={SetupStyle.button}
+                    onPress={() => handleNextPress()}
+                >
+                    Next
+                </Button>
             </View>
         </AccountSetupLayout>
     )

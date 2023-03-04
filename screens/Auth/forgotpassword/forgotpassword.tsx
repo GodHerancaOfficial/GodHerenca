@@ -3,27 +3,28 @@ import { ForgotPasswordLayout } from "../../../layouts";
 import { ForgotLayoutStyle } from "../../../styles/Auth";
 import { useEffect, useState } from "react";
 import { MaterialIcons } from '@expo/vector-icons';
+import { Button } from "../../../components/common";
 
 export default function ForgotPassword({ navigation }: any): any {
     const imageSrc = require('../../../assets/images/forgot_password/screen1.png');
     const [selectedMethod, setSelectedMethod] = useState<string>('');
-    const [btnActive, setBtnActive] = useState<boolean>(false);
+    const [btnActive, setBtnActive] = useState<boolean>(true);
     const [contactDetails] = useState<any[]>([
         {
             id: 1,
             userDetail: '+234 123 *** 840',
-            type: 'Sms',
+            type: 'phone',
         },
         {
             id: 2,
             userDetail: 'cman****@gmail.com',
-            type: 'Email',
+            type: 'email',
         },
     ]);
 
-    useEffect(()=>{
-        ((selectedMethod=="")?setBtnActive(false):setBtnActive(true));
-    },[selectedMethod])
+    useEffect(() => {
+        ((selectedMethod == "") ? setBtnActive(true) : setBtnActive(false));
+    }, [selectedMethod])
 
     return (
         <ForgotPasswordLayout navigateBack={navigation.pop}>
@@ -38,18 +39,18 @@ export default function ForgotPassword({ navigation }: any): any {
                 <View style={{ marginVertical: 30, width: '85%' }}>
                     {
                         contactDetails.map((contactDetail) => (
-                            <TouchableWithoutFeedback key={contactDetail.id} onPress={()=>{setSelectedMethod(contactDetail.type)}}>
-                                <View style={[ForgotLayoutStyle.contactDetail, {borderColor: (selectedMethod==contactDetail.type)?'#000000':'#DEDEDE', borderWidth: (selectedMethod==contactDetail.type)?2:1 }]}>
+                            <TouchableWithoutFeedback key={contactDetail.id} onPress={() => { setSelectedMethod(contactDetail.type) }}>
+                                <View style={[ForgotLayoutStyle.contactDetail, { borderColor: (selectedMethod == contactDetail.type) ? '#000000' : '#DEDEDE', borderWidth: (selectedMethod == contactDetail.type) ? 2 : 1 }]}>
                                     <MaterialIcons
-                                        name={(contactDetail.type == "Sms") ? 'sms' : "email"}
+                                        name={(contactDetail.type == "phone") ? 'sms' : "email"}
                                         size={27}
                                         color="black"
                                         style={{ backgroundColor: '#EDEDED', padding: 13, borderRadius: 100, }}
                                     />
 
-                                    <Text style={{fontFamily:'Raleway', fontSize: 16, paddingHorizontal: 20}}>
-                                        Via {contactDetail.type} {'\n'}
-                                        <Text style={{fontFamily: 'Raleway-bold', fontSize: 18,}}>{contactDetail.userDetail}</Text>
+                                    <Text style={{ fontFamily: 'Raleway', fontSize: 16, paddingHorizontal: 20 }}>
+                                        Via {(contactDetail.type == "email") ? 'Email' : 'Sms'} {'\n'}
+                                        <Text style={{ fontFamily: 'Raleway-bold', fontSize: 18, }}>{contactDetail.userDetail}</Text>
                                     </Text>
                                     <View></View>
                                 </View>
@@ -57,11 +58,10 @@ export default function ForgotPassword({ navigation }: any): any {
                         ))
                     }
                 </View>
-                <TouchableWithoutFeedback>
-                    <Text style={[ForgotLayoutStyle.btnStyle, {opacity: (btnActive)?1:0.5}]}>
-                        CONTINUE
-                    </Text>
-                </TouchableWithoutFeedback>
+
+                <Button deactivated={btnActive} onPress={() => { null }}>
+                    CONTINUE
+                </Button>
             </View>
         </ForgotPasswordLayout>
     )
