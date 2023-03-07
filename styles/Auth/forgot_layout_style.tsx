@@ -40,6 +40,11 @@ const ForgotLayoutStyle = StyleSheet.create({
         textAlign: 'center',
         borderRadius: 100,
         fontSize: 16,
+    },
+    text: {
+        fontFamily: 'Raleway',
+        color: '#000',
+        fontSize: 18,
     }
 });
 

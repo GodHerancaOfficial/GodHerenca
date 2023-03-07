@@ -59,7 +59,7 @@ export default function ForgotPassword({ navigation }: any): any {
                     }
                 </View>
 
-                <Button deactivated={btnActive} onPress={() => { null }}>
+                <Button disabled={btnActive} onPress={() => { navigation.navigate('EnterOTP') }}>
                     CONTINUE
                 </Button>
             </View>
