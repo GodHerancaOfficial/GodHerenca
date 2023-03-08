@@ -11,8 +11,10 @@ const ForgotLayoutStyle = StyleSheet.create({
         minHeight: hp('95%'),
         display:'flex',
         alignItems: 'center',
+        flexDirection: 'column',
         paddingVertical: 15,
         paddingHorizontal: 2,
+        position: 'relative'
     },
     imageStyle: {
         width: '83%',

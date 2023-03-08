@@ -3,12 +3,14 @@ import { ForgotPasswordLayout } from "../../../layouts";
 import { ForgotLayoutStyle } from "../../../styles/Auth";
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import { useEffect, useState } from "react";
+import { Button } from "../../../components/common";
 
 export default function OtpScreen({ navigation }: any): any {
     const [code, setCode] = useState<string>('');
     const [countDown, setCountDown] = useState<number>(50);
+    const [btnDisaled, setBtnDisabled] = useState<boolean>(true);
 
-    useEffect(() => {
+    (async() => {
         setTimeout(() => {
             if (countDown == 0) {
                 return;
@@ -17,7 +19,11 @@ export default function OtpScreen({ navigation }: any): any {
                 setCountDown((number) => (number - 1))
             }
         }, 1000);
-    })
+    })();
+
+    useEffect(() => {
+        ((code.length < 4) ? setBtnDisabled(true) : setBtnDisabled(false));
+    }, [code])
 
     return (
         <ForgotPasswordLayout navigateBack={navigation.pop}>
@@ -45,7 +51,7 @@ export default function OtpScreen({ navigation }: any): any {
                 {
                     ((countDown <= 0) ?
                         <TouchableWithoutFeedback>
-                            <Text style={[ForgotLayoutStyle.text, {fontFamily: 'Raleway-bold', paddingVertical: 20}]}>
+                            <Text style={[ForgotLayoutStyle.text, { fontFamily: 'Raleway-bold', paddingVertical: 20 }]}>
                                 Resend Code
                             </Text>
                         </TouchableWithoutFeedback>
@@ -59,6 +65,14 @@ export default function OtpScreen({ navigation }: any): any {
                         </Text>
                     )
                 }
+
+                <Button
+                    disabled={btnDisaled}
+                    onPress={() => { navigation.navigate('CreateNewPassword') }}
+                    style={[ForgotLayoutStyle.btnStyle, {position: 'absolute', bottom: 25}]}
+                >
+                    Verify
+                </Button>
             </View>
         </ForgotPasswordLayout>
     )
