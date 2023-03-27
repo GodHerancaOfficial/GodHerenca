@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
 
-type SetupContextType= {
+type SetupContextType = {
     fullName?: string, setFullName?: any,
     username?: string, setUsername?: any,
     gender?: string, setGender?: any,
@@ -18,7 +18,7 @@ type SetupContextType= {
     selectedVehicle?: string, setSelectedVehicle?: any
 }
 
-const SetupContext = createContext<SetupContextType>({});
+const SetupContext = createContext<any>({});
 
 export const ContextProvider = ({ children }: any) => {
     const [fullName, setFullName] = useState<string>("");
@@ -37,26 +37,28 @@ export const ContextProvider = ({ children }: any) => {
     const [guarantorRelationship, setGuarantorRelationship] = useState<string>("");
     const [selectedVehicle, setSelectedVehicle] = useState<string>("");
 
-    const values:SetupContextType = {
-        fullName, setFullName,
-        username, setUsername,
-        gender, setGender,
-        cpf, setCpf,
-        phone, setPhone,
-        accountType, setAccountType,
-        dob, setDob,
-        postalCode, setPostalCode,
-        state, setState,
-        city, setCity,
-        address, setAddress,
-        guarantorName, setGuarantorName,
-        guarantorPhone, setGuarantorPhone,
-        guarantorRelationship, setGuarantorRelationship,
-        selectedVehicle, setSelectedVehicle
-    }
+    const [detailsObj, setDetailsObj] = useState<any>({});
+
+    // const values: SetupContextType = {
+    //     fullName, setFullName,
+    //     username, setUsername,
+    //     gender, setGender,
+    //     cpf, setCpf,
+    //     phone, setPhone,
+    //     accountType, setAccountType,
+    //     dob, setDob,
+    //     postalCode, setPostalCode,
+    //     state, setState,
+    //     city, setCity,
+    //     address, setAddress,
+    //     guarantorName, setGuarantorName,
+    //     guarantorPhone, setGuarantorPhone,
+    //     guarantorRelationship, setGuarantorRelationship,
+    //     selectedVehicle, setSelectedVehicle
+    // }
 
     return (
-        <SetupContext.Provider value={values}>
+        <SetupContext.Provider value={detailsObj}>
             {children}
         </SetupContext.Provider>
     )

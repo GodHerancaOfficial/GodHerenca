@@ -49,6 +49,12 @@ export default function VehicleScreen({ navigation }: any): any {
         setBtnActive(false);
     }, [selectedVehicle])
 
+    const handleSubmit = ():void => {
+        const formData = new FormData();
+
+        
+    }
+
     return (
         <AccountSetupLayout navigateBack={navigation.pop}>
             <GeneralModal visible={visible} setVisible={setVisible} imageSource={imageSource}>
