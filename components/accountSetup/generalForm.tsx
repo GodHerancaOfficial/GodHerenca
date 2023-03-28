@@ -51,7 +51,7 @@ export default function GeneralForm(): any {
       <TextInput
         placeholder="Full Name"
         style={SetupStyle.formInputs}
-        value={detailsObj.fullName}
+        value={detailsObj.fullname}
         onChangeText={(e) => {
           setDetailsObj((detailsObj: any) => ({
             ...detailsObj,
@@ -63,14 +63,13 @@ export default function GeneralForm(): any {
       <TextInput
         placeholder="Email"
         style={SetupStyle.formInputs}
-        value={detailsObj.username}
+        value={detailsObj.email}
         keyboardType="email-address"
         onChangeText={(e) => {
           setDetailsObj((detailsObj: any) => ({
             ...detailsObj,
             'email': e,
           }));
-          console.log(detailsObj.email);
         }}
       />
 
@@ -81,9 +80,9 @@ export default function GeneralForm(): any {
             ...detailsObj,
             'gender': choice
           }));
-          console.log(detailsObj.gender);
         }}
         placeholder="Gender"
+        value={detailsObj.gender}
       />
 
       <TextInput
@@ -121,6 +120,7 @@ export default function GeneralForm(): any {
           }))
         }}
         placeholder="Account Type"
+        value={detailsObj.accountType}
       />
     </>
   );

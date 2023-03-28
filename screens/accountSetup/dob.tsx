@@ -12,11 +12,10 @@ interface Prop {
 export default function DobScreen({ navigation }: Prop): any {
   const [btnActive, setBtnActive] = useState<boolean>(true);
 
-  //const { dob, setDob, postalCode, setPostalCode } = useContext(SetupContext);
   const { detailsObj, setDetailsObj } = useContext(SetupContext);
 
   useEffect(() => {
-    if (!(detailsObj.dob || detailsObj.postalCode)) {
+    if (detailsObj.dob == "" || detailsObj.postalCode == "") {
       setBtnActive(true);
       return;
     }
@@ -25,6 +24,7 @@ export default function DobScreen({ navigation }: Prop): any {
   }, [detailsObj.dob, detailsObj.postalCode]);
 
   const handleNextPress = (): void | null => {
+    console.log(detailsObj);
     navigation.navigate("Origin");
   };
 

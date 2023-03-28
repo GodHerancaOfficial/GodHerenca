@@ -9,16 +9,23 @@ import { Button } from "../../components/common";
 export default function OriginScreen({ navigation }: any): any {
     const [btnActive, setBtnActive] = useState<boolean>(true);
 
-    const { state, city, address, setState, setCity, setAddress } = useContext(SetupContext);
+    // const { state, city, address, setState, setCity, setAddress } = useContext(SetupContext);
+    const { detailsObj, setDetailsObj } = useContext(SetupContext);
 
     useEffect(() => {
-        if (state == "" || city == "" || address == "") {
+        if (detailsObj.state == "" || detailsObj.city == "" || detailsObj.address == "") {
             setBtnActive(true);
             return;
         }
 
         setBtnActive(false);
-    }, [state, city, address]);
+    }, [detailsObj.state, detailsObj.city, detailsObj.address]);
+
+    const handleBtnPress = (): void | null => {
+        console.log(detailsObj);
+
+        ((detailsObj.accountType == "Rider") ? navigation.navigate('Guarantor') : null);
+    }
 
     return (
         <AccountSetupLayout navigateBack={navigation.pop}>
@@ -30,7 +37,13 @@ export default function OriginScreen({ navigation }: any): any {
                 <DropDown
                     placeholder="Select State"
                     lists={[{ id: 1, title: "Coming Soon!" }]}
-                    setOption={setState}
+                    onChange={(choice: string) => {
+                        setDetailsObj((detailsObj: any) => ({
+                            ...detailsObj,
+                            'state': choice
+                        }))
+                    }}
+                    value={detailsObj.state}
                 />
 
                 <Text style={SetupStyle.titleText}>
@@ -40,7 +53,13 @@ export default function OriginScreen({ navigation }: any): any {
                 <DropDown
                     placeholder="Select City"
                     lists={[{ id: 1, title: "Coming Soon!" }]}
-                    setOption={setCity}
+                    onChange={(choice: string) => {
+                        setDetailsObj((detailsObj: any) => ({
+                            ...detailsObj,
+                            'city': choice
+                        }))
+                    }}
+                    value={detailsObj.city}
                 />
 
                 <Text style={SetupStyle.titleText}>
@@ -51,17 +70,20 @@ export default function OriginScreen({ navigation }: any): any {
                     placeholder="Your Address"
                     style={SetupStyle.formInputs}
                     onChangeText={(e) => {
-                        setAddress(e);
+                        setDetailsObj((detailsObj: any) => ({
+                            ...detailsObj,
+                            'address': e
+                        }));
                     }}
-                    value={address}
+                    value={detailsObj.address}
                 />
 
                 <Button
                     style={SetupStyle.button}
-                    onPress={()=>navigation.navigate('Legal')}
+                    onPress={() => handleBtnPress()}
                     disabled={btnActive}
                 >
-                    Next
+                    {(detailsObj.accountType == 'Rider') ? 'Next' : 'Finish'}
                 </Button>
             </View>
         </AccountSetupLayout>

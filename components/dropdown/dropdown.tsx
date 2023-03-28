@@ -7,10 +7,11 @@ interface Prop{
     lists: any[],
     onChange?: any,
     placeholder: string,
+    value?: string,
 };
 
-export default function DropDown({lists, onChange, placeholder}:Prop): any {
-    const [selected, setSelected] = useState<string>("");
+export default function DropDown({lists, onChange, placeholder, value}:Prop): any {
+    const [selected, setSelected] = useState<string>((value)?value:"");
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     const handlePressForList = (title:string):void => {

@@ -12,23 +12,23 @@ interface Prop {
 }
 
 export default function AccountSetup({ navigation }: Prop): any {
-    // const { fullName, username, gender, cpf, phone, accountType } = useContext(SetupContext);
-    const {detailsObj, setDetailsObj} = useContext(SetupContext);
+    const { detailsObj } = useContext(SetupContext);
 
-    const [btnActive, setBtnActive] = useState<boolean>(true);
+    const [btnDisabled, setBtnDisabled] = useState<boolean>(true);
 
     useEffect(() => {
-        if (!(detailsObj.fullName  || detailsObj.username || detailsObj.cpf || detailsObj.phone || detailsObj.gender || detailsObj.accountType)) {
-            setBtnActive(true);
+        if (detailsObj.fullname == "" || detailsObj.email == "" || detailsObj.cpf == "" || detailsObj.phone == "" ||
+            detailsObj.gender == "" || detailsObj.accountType == "") {
+            setBtnDisabled(true);
             return;
         }
 
-        setBtnActive(false);
-    }, [detailsObj.fullName, detailsObj.username, detailsObj.cpf, detailsObj.phone, detailsObj.gender, detailsObj.accountType]);
+        setBtnDisabled(false);
+    }, [detailsObj.fullname, detailsObj.email, detailsObj.cpf, detailsObj.phone, detailsObj.gender, detailsObj.accountType]);
 
     const handleBtnPress = async (): Promise<void | null> => {
-        console.log(detailsObj.fullName);
-        ((detailsObj.accountType == "Rider") ? navigation.navigate('Dob') : null)
+        console.log(detailsObj);
+        navigation.navigate('Dob');
     }
 
     return (
@@ -45,7 +45,7 @@ export default function AccountSetup({ navigation }: Prop): any {
 
             <Button
                 style={SetupStyle.button}
-                disabled={btnActive}
+                disabled={btnDisabled}
                 onPress={() => handleBtnPress()}
             >
                 {(detailsObj.accountType == "Rider") ? 'Next' : 'Continue'}

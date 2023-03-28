@@ -15,7 +15,7 @@ export default function VehicleScreen({ navigation }: any): any {
     const [visible, setVisible] = useState<boolean>(false);
     const imageSource = require('../../assets/images/modals/regSuccess.png');
 
-    const { selectedVehicle, setSelectedVehicle } = useContext(SetupContext);
+    const { detailsObj, setDetailsObj } = useContext(SetupContext);
     const [btnActive, setBtnActive] = useState<boolean>(true);
     const [vehicles] = useState<any[]>([
         {
@@ -41,18 +41,16 @@ export default function VehicleScreen({ navigation }: any): any {
     ]);
 
     useEffect(() => {
-        if (selectedVehicle == "") {
+        if (detailsObj.vehicleType == "") {
             setBtnActive(true);
             return;
         }
 
         setBtnActive(false);
-    }, [selectedVehicle])
+    }, [detailsObj.vehicleType])
 
     const handleSubmit = ():void => {
-        const formData = new FormData();
-
-        
+        console.log(detailsObj);
     }
 
     return (
@@ -75,9 +73,12 @@ export default function VehicleScreen({ navigation }: any): any {
                         vehicles.map((vehicle) => (
                             <View key={vehicle.id} style={[SetupStyle.vehicleWrapper]}>
                                 <TouchableWithoutFeedback onPress={() => {
-                                    setSelectedVehicle(vehicle.name);
+                                    setDetailsObj((detailsObj:any)=>({
+                                        ...detailsObj,
+                                        'vehicleType': vehicle.name
+                                    }));
                                 }}>
-                                    <View style={[SetupStyle.vehicleBox, { borderWidth: (selectedVehicle == vehicle.name) ? 2 : 0, borderColor: '#000' }]}>
+                                    <View style={[SetupStyle.vehicleBox, { borderWidth: (detailsObj.vehicleType == vehicle.name) ? 2 : 0, borderColor: '#000' }]}>
                                         <Image source={vehicle.image} />
                                     </View>
                                 </TouchableWithoutFeedback>
@@ -97,9 +98,9 @@ export default function VehicleScreen({ navigation }: any): any {
                 <Button
                     style={SetupStyle.button}
                     disabled={btnActive}
-                    onPress={() => setVisible(!visible)}
+                    onPress={() => handleSubmit()}
                 >
-                    Finish
+                    Next
                 </Button>
             </View>
         </AccountSetupLayout>

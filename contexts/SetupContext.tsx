@@ -21,6 +21,7 @@ import { createContext, useState } from "react";
 type SetupContextType = {
     detailsObj?: any
     setDetailsObj?: any
+    inputRegex?: RegExp
 };
 
 const SetupContext = createContext<SetupContextType>({});
@@ -42,7 +43,27 @@ export const ContextProvider = ({ children }: any) => {
     const [guarantorRelationship, setGuarantorRelationship] = useState<string>("");
     const [selectedVehicle, setSelectedVehicle] = useState<string>("");
 
-    const [detailsObj, setDetailsObj] = useState<any>({});
+    const [detailsObj, setDetailsObj] = useState<any>({
+        'fullname': '',
+        'email': '',
+        'cpf': '',
+        'phone': '',
+        'gender': '',
+        'accountType': '',
+        'dob': '',
+        'postalCode': '',
+        'state': '',
+        'city': '',
+        'address': '',
+        'guarantorName': '',
+        'guarantorRelationship': '',
+        'guarantorPhone': '',
+        'vehicleType': '',
+        'profile_photo': null,  // 
+        'frontview': null,      // For these three that have comments, they'll be image files.
+        'backview': null        // 
+    });
+    const inputRegex = /[a-zA-Z]+/;
 
     // const values: SetupContextType = {
     //     fullName, setFullName,
@@ -64,7 +85,8 @@ export const ContextProvider = ({ children }: any) => {
 
     const values: SetupContextType = {
         detailsObj,
-        setDetailsObj
+        setDetailsObj,
+        inputRegex
     };
 
     return (
