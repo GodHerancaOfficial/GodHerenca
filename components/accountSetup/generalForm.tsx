@@ -49,32 +49,40 @@ export default function GeneralForm(): any {
   return (
     <>
       <TextInput
-        placeholder="Name"
+        placeholder="Full Name"
         style={SetupStyle.formInputs}
         value={detailsObj.fullName}
         onChangeText={(e) => {
           setDetailsObj((detailsObj: any) => ({
             ...detailsObj,
-            fullame: e,
+            'fullname': e,
           }));
         }}
       />
 
       <TextInput
-        placeholder="Username"
+        placeholder="Email"
         style={SetupStyle.formInputs}
         value={detailsObj.username}
+        keyboardType="email-address"
         onChangeText={(e) => {
           setDetailsObj((detailsObj: any) => ({
             ...detailsObj,
-            username: e,
+            'email': e,
           }));
+          console.log(detailsObj.email);
         }}
       />
 
       <DropDown
         lists={genderList}
-        setOption={detailsObj.setGender}
+        onChange={(choice:string)=>{
+          setDetailsObj((detailsObj: any)=>({
+            ...detailsObj,
+            'gender': choice
+          }));
+          console.log(detailsObj.gender);
+        }}
         placeholder="Gender"
       />
 
@@ -85,7 +93,7 @@ export default function GeneralForm(): any {
         onChangeText={(e) => {
           setDetailsObj((detailsObj: any) => ({
             ...detailsObj,
-            cpf: e,
+            'cpf': e,
           }));
         }}
         keyboardType="numeric"
@@ -98,7 +106,7 @@ export default function GeneralForm(): any {
         onChangeText={(e) => {
           setDetailsObj((detailsObj: any) => ({
             ...detailsObj,
-            phone: e,
+            'phone': e,
           }));
         }}
         keyboardType="phone-pad"
@@ -106,7 +114,12 @@ export default function GeneralForm(): any {
 
       <DropDown
         lists={accountTypeList}
-        setOption={detailsObj.setAccountType}
+        onChange={(choice:string)=>{
+          setDetailsObj((detailsObj: any)=>({
+            ...detailsObj,
+            'accountType': choice
+          }))
+        }}
         placeholder="Account Type"
       />
     </>

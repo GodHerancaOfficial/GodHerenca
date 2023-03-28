@@ -5,18 +5,18 @@ import { MaterialIcons } from "@expo/vector-icons";
 
 interface Prop{
     lists: any[],
-    setOption?: any,
-    placeholder: string
+    onChange?: any,
+    placeholder: string,
 };
 
-export default function DropDown({lists, setOption, placeholder}:Prop): any {
+export default function DropDown({lists, onChange, placeholder}:Prop): any {
     const [selected, setSelected] = useState<string>("");
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     const handlePressForList = (title:string):void => {
         setSelected(title);
         setIsOpen(!isOpen);
-        setOption(title);
+        onChange(title);
     }
 
     return (

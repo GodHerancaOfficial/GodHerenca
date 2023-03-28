@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "jsx": "react-native",
+    "jsx": "react-jsx",
     "target": "es5",
     "lib": [
       "dom",

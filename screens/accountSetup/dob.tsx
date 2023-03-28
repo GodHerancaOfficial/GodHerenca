@@ -16,7 +16,7 @@ export default function DobScreen({ navigation }: Prop): any {
   const { detailsObj, setDetailsObj } = useContext(SetupContext);
 
   useEffect(() => {
-    if (detailsObj.dob == "" || detailsObj.postalCode == "") {
+    if (!(detailsObj.dob || detailsObj.postalCode)) {
       setBtnActive(true);
       return;
     }
