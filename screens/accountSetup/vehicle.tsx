@@ -59,6 +59,7 @@ export default function VehicleScreen({ navigation }: any): any {
       navigation.navigate("Legal");
     } else {
       console.log("You selected bicycle!");
+      navigation.navigate("IdentiyVerification");
     }
   };
 
