@@ -8,7 +8,7 @@ import { Button } from "../../components/common";
 
 export default function GuarantorScreen({ navigation }: any): any {
     const [btnActive, setBtnActive] = useState<boolean>(true);
-    const { guarantorName, setGuarantorName, guarantorPhone, setGuarantorPhone, guarantorRelationship, setGuarantorRelationship } = useContext(SetupContext);
+    const { detailsObj, setDetailsObj } = useContext(SetupContext);
 
     const [guarantorList] = useState<any[]>([
         {
@@ -34,13 +34,13 @@ export default function GuarantorScreen({ navigation }: any): any {
     ]);
 
     useEffect(() => {
-        if (guarantorName == "" || guarantorPhone == "" || guarantorRelationship == "") {
+        if (detailsObj.guarantorName == "" || detailsObj.guarantorPhone == "" || detailsObj.guarantorRelationship == "") {
             setBtnActive(true);
             return;
         }
 
         setBtnActive(false);
-    }, [guarantorName, guarantorPhone, guarantorRelationship]);
+    }, [detailsObj.guarantorName, detailsObj.guarantorPhone, detailsObj.guarantorRelationship]);
 
     return (
         <AccountSetupLayout navigateBack={navigation.pop}>
@@ -56,8 +56,13 @@ export default function GuarantorScreen({ navigation }: any): any {
                 <TextInput
                     placeholder="Guarantor Name"
                     style={SetupStyle.formInputs}
-                    value={guarantorName}
-                    onChangeText={(e) => { setGuarantorName(e) }}
+                    value={detailsObj.guarantorName}
+                    onChangeText={(e)=>{
+                        setDetailsObj((detailsObj:any)=>({
+                            ...detailsObj,
+                            'guarantorName': e
+                        }));
+                    }}
                 />
 
                 <Text style={[SetupStyle.titleText, { marginVertical: 15 }]}>
@@ -67,8 +72,13 @@ export default function GuarantorScreen({ navigation }: any): any {
                 <TextInput
                     placeholder="Guarantor's Phone Number"
                     style={SetupStyle.formInputs}
-                    value={guarantorPhone}
-                    onChangeText={(e) => { setGuarantorPhone(e) }}
+                    value={detailsObj.guarantorPhone}
+                    onChangeText={(e)=>{
+                        setDetailsObj((detailsObj:any)=>({
+                            ...detailsObj,
+                            'guarantorPhone': e
+                        }));
+                    }}
                     keyboardType='phone-pad'
                 />
 
@@ -81,13 +91,18 @@ export default function GuarantorScreen({ navigation }: any): any {
                 <DropDown
                     placeholder="Guarantor Relationship"
                     lists={guarantorList}
-                    setOption={setGuarantorRelationship}
+                    onChange={(choice:string)=>{
+                        setDetailsObj((detailsObj:any)=>({
+                            ...detailsObj,
+                            'guarantorRelationship': choice
+                        }));
+                    }}
                 />
 
                 <Button
                     style={SetupStyle.button}
                     disabled={btnActive}
-                    onPress={()=>{navigation.navigate('Vehicle')}}
+                    onPress={()=>{console.log(detailsObj);navigation.navigate('Vehicle')}}
                 >
                     Next
                 </Button>
