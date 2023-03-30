@@ -59,6 +59,7 @@ export const ContextProvider = ({ children }: any) => {
         'guarantorRelationship': '',
         'guarantorPhone': '',
         'vehicleType': '',
+        'id_type': '',
         'profile_photo': null,  // 
         'frontview': null,      // For these three that have comments, they'll be image files.
         'backview': null        // 

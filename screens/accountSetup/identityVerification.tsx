@@ -1,9 +1,9 @@
 import { Text, View, TouchableWithoutFeedback } from "react-native";
 import { AccountSetupLayout } from "../../layouts";
 import { SetupStyle } from "../../styles/Auth";
-import { useState } from "react";
-import { Entypo } from "@expo/vector-icons";
+import { useState, useContext, useEffect } from "react";
 import { Button } from "../../components/common";
+import SetupContext from "../../contexts/SetupContext";
 
 interface documentProps {
   id: number;
@@ -11,10 +11,21 @@ interface documentProps {
 }
 
 export default function IdentityVerificationScreen({ navigation }: any): any {
-  const [btnActive, setBtnActive] = useState<boolean>(true);
+  const [btnDisabled, setBtnDisabled] = useState<boolean>(true);
+  const { detailsObj, setDetailsObj } = useContext(SetupContext);
+
+  useEffect(() => {
+    if (detailsObj.id_type == "") {
+      setBtnDisabled(true);
+      return;
+    }
+
+    setBtnDisabled(false);
+  }, [detailsObj.id_type]);
 
   const handleNextPress = (): void => {
-    navigation.navigate("Guarantor");
+    console.log(detailsObj);
+    navigation.navigate("Legal");
   };
 
   const documents: documentProps[] = [
@@ -37,21 +48,36 @@ export default function IdentityVerificationScreen({ navigation }: any): any {
       id: 4,
       documentType: "Protocol",
     },
+
+    {
+      id: 5,
+      documentType: "Driver's License"
+    },
   ];
 
-  const documentData = documents.map((document) => {
-    return (
-      <TouchableWithoutFeedback>
-        <View key={document.id} style={SetupStyle.documentSelectionView}>
-          <Text style={SetupStyle.documentTitle}>{document.documentType}</Text>
+  const documentData = documents.map((document) => (
+    <TouchableWithoutFeedback
+      key={document.id}
+      onPress={() => {
+        setDetailsObj((detailsObj: any) => ({
+          ...detailsObj,
+          'id_type': document.documentType
+        }));
+      }}
+    >
+      <View style={SetupStyle.documentSelectionView}>
+        <Text style={SetupStyle.documentTitle}>{document.documentType}</Text>
 
-          <View style={SetupStyle.documentSelectionViewCircleBig}>
+        <View style={SetupStyle.documentSelectionViewCircleBig}>
+
+          {((document.documentType == detailsObj.id_type) ?
             <View style={SetupStyle.documentSelectionViewCircleSmall}></View>
-          </View>
+            :
+            null)}
         </View>
-      </TouchableWithoutFeedback>
-    );
-  });
+      </View>
+    </TouchableWithoutFeedback>
+  ));
 
   return (
     <AccountSetupLayout navigateBack={navigation.pop}>
@@ -72,9 +98,9 @@ export default function IdentityVerificationScreen({ navigation }: any): any {
         <Button
           style={SetupStyle.button}
           onPress={() => handleNextPress()}
-          disabled={false}
+          disabled={btnDisabled}
         >
-          continue
+          Continue
         </Button>
       </View>
     </AccountSetupLayout>
