@@ -1,12 +1,14 @@
 import { Text, View, TouchableWithoutFeedback } from "react-native";
 import { AccountSetupLayout } from "../../layouts";
 import { SetupStyle } from "../../styles/Auth";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Entypo } from "@expo/vector-icons";
 import { Button } from "../../components/common";
+import SetupContext from "../../contexts/SetupContext";
 
 export default function LegalScreen({ navigation }: any): any {
     const [btnActive, setBtnActive] = useState<boolean>(true);
+    const { detailsObj } = useContext(SetupContext);
 
     const handleNextPress = (): void => {
         navigation.navigate('Guarantor');
@@ -16,13 +18,19 @@ export default function LegalScreen({ navigation }: any): any {
         <AccountSetupLayout navigateBack={navigation.pop}>
             <View style={SetupStyle.generalView}>
                 <Text style={SetupStyle.titleText}>
-                    Driver's Licence
+                    {(detailsObj.id_type != "") ? detailsObj.id_type : "Driver's License"}
                 </Text>
                 <View style={{ display: 'flex', width: '100%', backgroundColor: 'transparent', justifyContent: 'center', alignItems: 'center' }}>
                     <View style={SetupStyle.uploadView}>
                         <Entypo name="upload-to-cloud" size={50} color={'#000'} />
-                        <Text style={[SetupStyle.p, { color: '#A5A5A5', fontFamily: 'Raleway-bold', fontSize: 19 }]}>
-                            {'\n'}Upload your driver's licence here
+                        <Text style={[SetupStyle.p, {
+                            color: '#A5A5A5',
+                            fontFamily: 'Raleway-bold',
+                            fontSize: 19,
+                            paddingHorizontal: 2.5,
+                            textAlign: 'center'
+                        }]}>
+                            {'\n'}Upload your {(detailsObj.id_type != "") ? detailsObj.id_type : "driver's license"} here
                         </Text>
                         <Text style={[SetupStyle.p, { color: '#D9D9D9' }]}>
                             Files supported: JPG, PNG {'\n'}
@@ -43,7 +51,7 @@ export default function LegalScreen({ navigation }: any): any {
                 </View>
 
                 <Text style={[SetupStyle.p, { color: '#737373', padding: 5 }]}>
-                    Front and back of your driver license must be clear and captured {'\n\n'}
+                    Front and back of your {(detailsObj.id_type != "") ? detailsObj.id_type : "driver's license"} must be clear and captured {'\n\n'}
                 </Text>
 
                 <Button
