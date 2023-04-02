@@ -6,6 +6,8 @@ interface Prop{
     navigation?: any,
 }
 
+
+
 export default function Signup({navigation}:Prop): any{
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
