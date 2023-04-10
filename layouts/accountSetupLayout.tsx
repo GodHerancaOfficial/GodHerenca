@@ -5,18 +5,21 @@ import { Header } from "../components/common";
 interface Prop {
     navigateBack?: any,
     children: any,
+    flashMessage?: JSX.Element;
 }
 
-export default function AccountSetupLayout({ navigateBack, children }: Prop): any {
+export default function AccountSetupLayout({ navigateBack, children, flashMessage }: Prop): any {
     return (
-        <View style={SetupStyle.container}>
-            <ScrollView showsVerticalScrollIndicator={false}>
-                <View style={SetupStyle.container1}>
-                    <Header goBack={navigateBack} text="Setup Your Account" />
+      <View style={SetupStyle.container}>
+        {/* {flashMessage} */}
 
-                    {children}
-                </View>
-            </ScrollView>
-        </View>
-    )
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={SetupStyle.container1}>
+            <Header goBack={navigateBack} text="Setup Your Account" />
+
+            {children}
+          </View>
+        </ScrollView>
+      </View>
+    );
 }

@@ -161,6 +161,22 @@ const SetupStyle = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-evenly",
   },
+  flashMessageContainer: {
+    width: "100%",
+    top:0,
+    right:0,
+    left:0,
+    position: "absolute"
+  },
+  flashMessageTitle: {
+    fontFamily: "Raleway-bold",
+    fontSize: 18,
+  },
+  flashMessageText: {
+    fontFamily: "Raleway-bold",
+    fontSize: 16,
+    padding: 20,
+  },
   vehicleWrapper: {
     width: "43%",
     display: "flex",
