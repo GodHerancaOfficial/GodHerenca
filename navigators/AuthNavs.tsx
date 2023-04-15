@@ -4,7 +4,6 @@ import { Login, Signup } from '../screens/Auth';
 import ForgotPwdNavs from './forgotPwdNavs';
 import AccountSetup from '../screens/accountSetup/accountSetup';
 import AccountSetupNavs from './accountSetup';
-
 const Stack = createNativeStackNavigator();
 
 export default function AuthNavs(): any{

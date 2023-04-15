@@ -163,10 +163,7 @@ const SetupStyle = StyleSheet.create({
   },
   flashMessageContainer: {
     width: "100%",
-    top:0,
-    right:0,
-    left:0,
-    position: "absolute"
+   
   },
   flashMessageTitle: {
     fontFamily: "Raleway-bold",

@@ -2,7 +2,7 @@ import { View, Text, TouchableWithoutFeedback } from "react-native";
 import { GeneralForm } from "../../components/accountSetup";
 import { SetupStyle } from "../../styles/Auth";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import { AccountSetupLayout } from "../../layouts";
 import SetupContext from "../../contexts/SetupContext";
 import { Button } from "../../components/common";
@@ -18,6 +18,7 @@ export default function AccountSetup({ navigation }: Prop): any {
   const [btnDisabled, setBtnDisabled] = useState<boolean>(true);
   const { checkEmailInput } = useContext<any>(SetupContext);
   const { checkFullnameInput } = useContext<any>(SetupContext);
+  const flashMessageRef = useRef<any>();
 
   useEffect(() => {
     if (
@@ -32,6 +33,16 @@ export default function AccountSetup({ navigation }: Prop): any {
       return;
     }
 
+    // if (detailsObj.fullname.length < 5) {
+    //   showMessage({
+    //     message: "Fullname can only be letters",
+    //     type: "danger",
+    //     titleStyle: SetupStyle.flashMessageText,
+    //     style: SetupStyle.flashMessageContainer,
+    //   });
+    //   console.log("wrong");
+    // }
+
     setBtnDisabled(false);
   }, [
     detailsObj.fullname,
@@ -43,58 +54,43 @@ export default function AccountSetup({ navigation }: Prop): any {
   ]);
 
   const handleBtnPress = /*async (): Promise<void | null>*/() => {
-    // console.log(detailsObj);
+    console.log(detailsObj);
 
     // //input validations
-    // const checkEmailValidity = checkEmailInput(detailsObj.email);
-    // const fullNameValidity = checkFullnameInput(detailsObj.fullname);
+    const checkEmailValidity = checkEmailInput(detailsObj.email);
+    const fullNameValidity = checkFullnameInput(detailsObj.fullname);
     
-    
-    // console.log(`email is ${checkEmailValidity} fullname is ${fullNameValidity}`)
-    // if (!fullNameValidity) {
-    //   showMessage({
-    //     message: "Fullname can only be letters",
-    //     type: "danger",
-    //     titleStyle: SetupStyle.flashMessageText,
-    //     style: SetupStyle.flashMessageContainer,
-    //   });
-    // }
-    // if (!checkEmailValidity) {
-    //   showMessage({
-    //     message: "Invalid email address",
-    //     type: "danger",
-    //     titleStyle: SetupStyle.flashMessageText,
-    //     style: SetupStyle.flashMessageContainer,
-    //   });
-    // }
-    
-    // showMessage({
-    //   message: "Invalid email address",
-    //   type: "danger",
-    //   titleStyle: SetupStyle.flashMessageText,
-    //   style: SetupStyle.flashMessageContainer,
-    // });
 
-    // //only navigate the user to the next screen if there is no error
-    // if (checkEmailValidity && fullNameValidity) {
-    //   navigation.navigate("Dob");
-    // }\
+    if (!fullNameValidity) {
+      flashMessageRef.current.showMessage({
+        message: "Fullname can only be letters",
+        type: "danger",
+        titleStyle: SetupStyle.flashMessageText,
+        style: SetupStyle.flashMessageContainer,
+      });
+    }
+    if (!checkEmailValidity) {
+      flashMessageRef.current.showMessage({
+        message: "Invalid email address",
+        type: "danger",
+        titleStyle: SetupStyle.flashMessageText,
+        style: SetupStyle.flashMessageContainer,
+      });
+    }
+   
+    //only navigate the user to the next screen if there is no error
+    if (checkEmailValidity && fullNameValidity) {
+      navigation.navigate("Dob");
+    }
     
-    showMessage({
-      message: "you clicked me!",
-      type: "success",
-      titleStyle: SetupStyle.flashMessageText,
-      style: SetupStyle.flashMessageContainer,
-    });
-    console.log("clicked");
   };
   
-
-
   return (
-    <AccountSetupLayout navigateBack={navigation.pop}>
+    <AccountSetupLayout
+      navigateBack={navigation.pop}
+      setupFlashMessage={<FlashMessage ref={flashMessageRef} position="top" />}
+    >
       {/**User Profile Picture */}
-      <FlashMessage position="top" />
 
       <View style={SetupStyle.profileContainer}>
         <TouchableWithoutFeedback>
@@ -109,7 +105,6 @@ export default function AccountSetup({ navigation }: Prop): any {
 
       {/**Forms To fill out */}
       <GeneralForm />
-
       <Button
         style={SetupStyle.button}
         disabled={btnDisabled}

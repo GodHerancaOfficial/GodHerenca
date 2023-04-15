@@ -11,13 +11,13 @@ interface Props {
     navigate?: any,
     active: boolean,
     handlePress?: () => any;
-    flashMessage?: JSX.Element;
+    authFlashMessage?: JSX.Element | any;
 };
 
-export default function AuthLayout({ children, section, navigate, active, handlePress, flashMessage}: Props): any {
+export default function AuthLayout({ children, section, navigate, active, handlePress, authFlashMessage}: Props): any {
     return (
       <View style={AuthLayout_Style.container}>
-        {(flashMessage) && flashMessage}
+        {(authFlashMessage) && authFlashMessage}
         <ScrollView
           contentContainerStyle={{
             justifyContent: "flex-end",

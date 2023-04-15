@@ -4,7 +4,6 @@ import {
     LegalScreen, GuarantorScreen, VehicleScreen, IdentityVerificationScreen
 } from "../screens/accountSetup";
 import { ContextProvider } from "../contexts/SetupContext";
-
 const Stack = createNativeStackNavigator();
 
 export default function AccountSetupNavs(): any {

@@ -1,8 +1,9 @@
 import { AuthLayout } from "../../layouts";
 import { Form } from "../../components/Auth";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext , useRef} from "react";
 import {checkEmailInput} from "../../contexts/SetupContext";
-import FlashMessage, { showMessage } from "react-native-flash-message";
+import FlashMessage, { showMessage} from "react-native-flash-message";
+
 import { SetupStyle } from "../../styles/Auth";
 
 interface Prop {
@@ -13,6 +14,7 @@ export default function Signup({ navigation }: Prop): any {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [active, setActive] = useState<boolean>(true);
+  const flashMessageRef = useRef<any>();
   
   useEffect(() => {
    
@@ -37,7 +39,7 @@ export default function Signup({ navigation }: Prop): any {
 
     if (!checkPasswordValidity) 
     {
-      showMessage({
+      flashMessageRef.current.showMessage({
         message: "Password must be at least 8 characters",
         type: "danger",
         titleStyle: SetupStyle.flashMessageText,
@@ -51,14 +53,14 @@ export default function Signup({ navigation }: Prop): any {
       navigation.navigate("Setup");
     }
   }
-
+  
   return (
     <AuthLayout
       active={active}
       section="Signup"
       navigate={navigation.navigate}
       handlePress={handlePress}
-      flashMessage={<FlashMessage position="top" />}
+      authFlashMessage={<FlashMessage ref= {flashMessageRef} position="top" />}
     >
 
       <Form

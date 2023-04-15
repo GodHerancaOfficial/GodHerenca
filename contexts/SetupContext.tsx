@@ -45,6 +45,36 @@ export const checkUsernameInput = (usernameInput: string): boolean => {
 export const checkFullnameInput = (fullnameInput: string): boolean => {
   return fullnameRegex.test(fullnameInput);
 };
+
+export const checkRiderAgeInput = (accountType: string, dateOfBirthFormat: string): boolean => {
+  
+  //customer of any age range can use the product.
+  if(accountType === "Customer")
+  {
+    return true
+  }
+  if(dateOfBirthFormat.trim().length < 8)
+  {
+    return false;
+  }
+  //Format eg 14 | 09 | 2005
+  const yearOfBirth = parseInt(dateOfBirthFormat.slice(4), 10); // Birth Year
+  const monthOfBirth = parseInt(dateOfBirthFormat.slice(2, 4), 10) - 1; // get the month of birth as an integer (subtract 1 since month indices are zero-based)
+  const dayOfBirth = parseInt(dateOfBirthFormat.slice(0, 2), 10); // get the day of birth as an integer
+
+  const today = new Date();
+  let age = today.getFullYear() - yearOfBirth;
+  const monthDifference = today.getMonth() - monthOfBirth;
+
+  if (
+    monthDifference < 0 ||
+    (monthDifference === 0 && today.getDate() < dayOfBirth)
+  ) {
+    age--; // adjust the age if the current date is before the birth date in the same year
+  }
+
+  return (age >= 18) ? true : false;
+};
 export const ContextProvider = ({ children }: any) => {
   const [fullName, setFullName] = useState<string>("");
   const [username, setUsername] = useState<string>("");
