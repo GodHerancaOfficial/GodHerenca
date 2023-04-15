@@ -163,6 +163,7 @@ const SetupStyle = StyleSheet.create({
   },
   flashMessageContainer: {
     width: "100%",
+    backgroundColor:"tomato"
    
   },
   flashMessageTitle: {
@@ -171,7 +172,8 @@ const SetupStyle = StyleSheet.create({
   },
   flashMessageText: {
     fontFamily: "Raleway-bold",
-    fontSize: 16,
+    fontWeight:"normal",
+    fontSize: 12,
     padding: 20,
   },
   vehicleWrapper: {
