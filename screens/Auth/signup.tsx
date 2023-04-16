@@ -1,23 +1,74 @@
 import { AuthLayout } from "../../layouts";
 import { Form } from "../../components/Auth";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext , useRef} from "react";
+import {checkEmailInput} from "../../contexts/SetupContext";
+import FlashMessage, { showMessage} from "react-native-flash-message";
 
-interface Prop{
-    navigation?: any,
+import { SetupStyle } from "../../styles/Auth";
+
+interface Prop {
+  navigation?: any;
 }
 
-export default function Signup({navigation}:Prop): any{
-    const [email, setEmail] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
-    const [active, setActive] = useState<boolean>(true);
+export default function Signup({ navigation }: Prop): any {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [active, setActive] = useState<boolean>(true);
+  const flashMessageRef = useRef<any>();
+  
+  useEffect(() => {
+   
+    email == "" || password == ""
+      ? setActive(true)
+      : setActive(false);
+  }, [email, password]);
+  
+  const handlePress = () => 
+  {
+    const checkEmailValidity = checkEmailInput(email);
+    const checkPasswordValidity = password.length >= 8 ? true : false;
+    if (!checkEmailValidity) 
+    {
+      showMessage({
+        message: "Invalid email address",
+        type: "danger",
+        titleStyle: SetupStyle.flashMessageText,
+        style: SetupStyle.flashMessageContainer,
+      });
+    }
 
-    useEffect(()=>{
-        ((email == "" || password == "")?setActive(true):setActive(false));
-    },[email, password])
+    if (!checkPasswordValidity) 
+    {
+      flashMessageRef.current.showMessage({
+        message: "Password must be at least 8 characters",
+        type: "danger",
+        titleStyle: SetupStyle.flashMessageText,
+        style: SetupStyle.flashMessageContainer,
+      });
+    }
 
-    return (
-        <AuthLayout active={active} section="Signup" navigate={navigation.navigate} >
-            <Form email={email} password={password} setEmail={setEmail} setPassword={setPassword} />
-        </AuthLayout>
-    )
+    //only navigate the user to the next screen if there is no error
+    if (checkEmailValidity && checkPasswordValidity)
+    {
+      navigation.navigate("Setup");
+    }
+  }
+  
+  return (
+    <AuthLayout
+      active={active}
+      section="Signup"
+      navigate={navigation.navigate}
+      handlePress={handlePress}
+      authFlashMessage={<FlashMessage ref= {flashMessageRef} position="top" />}
+    >
+
+      <Form
+        email={email}
+        password={password}
+        setEmail={setEmail}
+        setPassword={setPassword}
+      />
+    </AuthLayout>
+  );
 }

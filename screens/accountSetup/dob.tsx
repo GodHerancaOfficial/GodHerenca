@@ -1,17 +1,18 @@
 import { Text, TextInput, TouchableWithoutFeedback, View } from "react-native";
 import { AccountSetupLayout } from "../../layouts";
 import { SetupStyle } from "../../styles/Auth";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 import SetupContext from "../../contexts/SetupContext";
 import { Button } from "../../components/common";
-
+import FlashMessage,{showMessage} from 'react-native-flash-message';
+import { checkRiderAgeInput } from "../../contexts/SetupContext";
 interface Prop {
   navigation?: any;
 }
 
 export default function DobScreen({ navigation }: Prop): any {
   const [btnActive, setBtnActive] = useState<boolean>(true);
-
+  const flashMessageRef = useRef<any>();
   const { detailsObj, setDetailsObj } = useContext(SetupContext);
 
   useEffect(() => {
@@ -25,12 +26,26 @@ export default function DobScreen({ navigation }: Prop): any {
 
   const handleNextPress = (): void | null => {
     console.log(detailsObj);
-    navigation.navigate("Origin");
+    console.log(detailsObj.accountType);
+    //check if the user is already 18 years old
+    if(checkRiderAgeInput(detailsObj.accountType,detailsObj.dob))
+    {
+        navigation.navigate("Origin");
+     
+    }else{
+     flashMessageRef.current.showMessage({
+       message: "You are not up to 18 years",
+       type: "danger",
+       titleStyle: SetupStyle.flashMessageText,
+       style: SetupStyle.flashMessageContainer,
+     });
+    }
+  
   };
 
 
   return (
-    <AccountSetupLayout navigateBack={navigation.pop}>
+    <AccountSetupLayout navigateBack={navigation.pop} setupFlashMessage={<FlashMessage ref={flashMessageRef} position="top"/>}>
       <View style={SetupStyle.generalView}>
         <Text style={SetupStyle.titleText}>Date Of Birth</Text>
         <TextInput

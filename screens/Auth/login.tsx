@@ -1,7 +1,6 @@
 import { AuthLayout } from "../../layouts";
 import { Form } from "../../components/Auth";
 import { useEffect, useState } from "react";
-
 interface Prop{
     navigation?: any,
 }
