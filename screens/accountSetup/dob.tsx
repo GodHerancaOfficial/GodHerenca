@@ -5,7 +5,7 @@ import { useEffect, useState, useContext, useRef } from "react";
 import SetupContext from "../../contexts/SetupContext";
 import { Button } from "../../components/common";
 import FlashMessage,{showMessage} from 'react-native-flash-message';
-import { checkRiderAgeInput } from "../../contexts/SetupContext";
+import { formatDateOfBirthInput } from '../../contexts/SetupContext';
 interface Prop {
   navigation?: any;
 }
@@ -13,7 +13,8 @@ interface Prop {
 export default function DobScreen({ navigation }: Prop): any {
   const [btnActive, setBtnActive] = useState<boolean>(true);
   const flashMessageRef = useRef<any>();
-  const { detailsObj, setDetailsObj } = useContext(SetupContext);
+  const { detailsObj, setDetailsObj, checkRiderAgeInput, formatDateOfBirthInput } =
+    useContext<any>(SetupContext);
 
   useEffect(() => {
     if (detailsObj.dob == "" || detailsObj.postalCode == "") {
@@ -23,7 +24,12 @@ export default function DobScreen({ navigation }: Prop): any {
 
     setBtnActive(false);
   }, [detailsObj.dob, detailsObj.postalCode]);
-
+  
+  
+  // useEffect(()=>{
+  //   detailsObj.dob = formatDateOfBirthInput(detailsObj.dob);
+  // }, [detailsObj.dob]);
+  
   const handleNextPress = (): void | null => {
     console.log(detailsObj);
     console.log(detailsObj.accountType);
@@ -45,18 +51,21 @@ export default function DobScreen({ navigation }: Prop): any {
 
 
   return (
-    <AccountSetupLayout navigateBack={navigation.pop} setupFlashMessage={<FlashMessage ref={flashMessageRef} position="top"/>}>
+    <AccountSetupLayout
+      navigateBack={navigation.pop}
+      setupFlashMessage={<FlashMessage ref={flashMessageRef} position="top" />}
+    >
       <View style={SetupStyle.generalView}>
         <Text style={SetupStyle.titleText}>Date Of Birth</Text>
         <TextInput
           placeholder="DD/MM/YYYY"
           style={SetupStyle.formInputs}
           keyboardType="phone-pad"
-          value={detailsObj.dob}
+          value={formatDateOfBirthInput(detailsObj.dob)}
           onChangeText={(e) => {
             setDetailsObj((detailsObj: any) => ({
               ...detailsObj,
-              "dob": e,
+              dob: e,
             }));
           }}
         />
@@ -74,7 +83,7 @@ export default function DobScreen({ navigation }: Prop): any {
           onChangeText={(e) => {
             setDetailsObj((detailsObj: any) => ({
               ...detailsObj,
-              "postalCode": e,
+              postalCode: e,
             }));
           }}
         />
