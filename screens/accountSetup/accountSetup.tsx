@@ -33,16 +33,6 @@ export default function AccountSetup({ navigation }: Prop): any {
       return;
     }
 
-    // if (detailsObj.fullname.length < 5) {
-    //   showMessage({
-    //     message: "Fullname can only be letters",
-    //     type: "danger",
-    //     titleStyle: SetupStyle.flashMessageText,
-    //     style: SetupStyle.flashMessageContainer,
-    //   });
-    //   console.log("wrong");
-    // }
-
     setBtnDisabled(false);
   }, [
     detailsObj.fullname,
@@ -53,7 +43,7 @@ export default function AccountSetup({ navigation }: Prop): any {
     detailsObj.accountType,
   ]);
 
-  const handleBtnPress = /*async (): Promise<void | null>*/() => {
+  const handleBtnPress = async (): Promise<null | void> => {
     console.log(detailsObj);
 
     // //input validations

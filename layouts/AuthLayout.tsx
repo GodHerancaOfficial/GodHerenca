@@ -17,11 +17,11 @@ interface Props {
 export default function AuthLayout({ children, section, navigate, active, handlePress, authFlashMessage}: Props): any {
     return (
       <View style={AuthLayout_Style.container}>
-        {(authFlashMessage) && authFlashMessage}
+        {authFlashMessage && authFlashMessage}
         <ScrollView
           contentContainerStyle={{
             justifyContent: "flex-end",
-            minHeight: "99.7%",
+            minHeight: "98%",
           }}
         >
           {/* <StatusBar translucent={false} backgroundColor={'#ffffff'} barStyle={'dark-content'} /> */}
