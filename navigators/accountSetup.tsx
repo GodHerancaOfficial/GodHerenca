@@ -4,6 +4,7 @@ import {
     LegalScreen, GuarantorScreen, VehicleScreen, IdentityVerificationScreen
 } from "../screens/accountSetup";
 import { ContextProvider } from "../contexts/SetupContext";
+import { NavigationContainer } from "@react-navigation/native";
 const Stack = createNativeStackNavigator();
 
 export default function AccountSetupNavs(): any {
@@ -18,7 +19,10 @@ export default function AccountSetupNavs(): any {
           <Stack.Screen name="Guarantor" component={GuarantorScreen} />
           <Stack.Screen name="Vehicle" component={VehicleScreen} />
           <Stack.Screen name="Legal" component={LegalScreen} />
-          <Stack.Screen name="IdentiyVerification" component={IdentityVerificationScreen} />
+          <Stack.Screen
+            name="IdentiyVerification"
+            component={IdentityVerificationScreen}
+          />
         </Stack.Navigator>
       </ContextProvider>
     );

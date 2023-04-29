@@ -1,4 +1,5 @@
 import { Text, TextInput, View, TouchableWithoutFeedback } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AccountSetupLayout } from "../../layouts";
 import { SetupStyle } from "../../styles/Auth";
 import DropDown from "../../components/dropdown/dropdown";
@@ -7,12 +8,12 @@ import SetupContext from "../../contexts/SetupContext";
 import { Button } from "../../components/common";
 import { GeneralModal } from "../../components/modals";
 import { ForgotLayoutStyle } from "./../../styles/Auth";
-
+import { useNavigation } from "@react-navigation/native";
 export default function OriginScreen({ navigation }: any): any {
   const [btnActive, setBtnActive] = useState<boolean>(true);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const modalImageSource = require("./../../assets/images/modals/regSuccess.png");
-
+  const navigateTo = useNavigation<any>();
   // const { state, city, address, setState, setCity, setAddress } = useContext(SetupContext);
   const { detailsObj, setDetailsObj } = useContext(SetupContext);
 
@@ -32,9 +33,17 @@ export default function OriginScreen({ navigation }: any): any {
   const handleBtnPress = (): void | null => {
     console.log(detailsObj);
 
-    detailsObj.accountType == "Rider"
-      ? navigation.navigate("Guarantor")
-      : setModalVisible(!modalVisible);
+    // detailsObj.accountType == "Rider"
+    //   ? navigation.navigate("Guarantor")
+    //   : setModalVisible(!modalVisible);
+    
+    //navigate the user to the main screen
+   // setTimeout(()=>{
+     //AsyncStorage.setItem("jwt", "false");
+     //here is the issue i am facing :(
+    navigation.navigate("Profile", { screen: "Profile" });
+      
+    // },3000);
   };
 
   return (
