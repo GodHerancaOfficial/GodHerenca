@@ -33,17 +33,15 @@ export default function OriginScreen({ navigation }: any): any {
   const handleBtnPress = (): void | null => {
     console.log(detailsObj);
 
-    // detailsObj.accountType == "Rider"
-    //   ? navigation.navigate("Guarantor")
-    //   : setModalVisible(!modalVisible);
-    
+    detailsObj.accountType == "Rider"
+      ? navigation.navigate("Guarantor")
+      : setModalVisible(!modalVisible);
+
     //navigate the user to the main screen
-   // setTimeout(()=>{
-     //AsyncStorage.setItem("jwt", "false");
-     //here is the issue i am facing :(
-    navigation.navigate("mainscreens");
-      
-    // },3000);
+    setTimeout(() => {
+      AsyncStorage.setItem("jwt", "false");
+      navigation.navigate("mainscreens");
+    }, 3000);
   };
 
   return (
