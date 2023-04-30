@@ -39,7 +39,7 @@ export default function OriginScreen({ navigation }: any): any {
 
     //navigate the user to the main screen
     setTimeout(() => {
-      AsyncStorage.setItem("jwt", "false");
+      AsyncStorage.setItem("jwt", "true");
       navigation.navigate("mainscreens");
     }, 3000);
   };

@@ -1,5 +1,5 @@
 import Header from "./header";
 import Button from "./button";
 import Input from "./input";
-
-export { Header, Button, Input };
+import ProfileActions from "./profileActions";
+export { Header, Button, Input, ProfileActions };
