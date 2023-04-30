@@ -13,7 +13,7 @@ export default function OriginScreen({ navigation }: any): any {
   const [btnActive, setBtnActive] = useState<boolean>(true);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const modalImageSource = require("./../../assets/images/modals/regSuccess.png");
-  const navigateTo = useNavigation<any>();
+  // const navigateTo = useNavigation<any>();
   // const { state, city, address, setState, setCity, setAddress } = useContext(SetupContext);
   const { detailsObj, setDetailsObj } = useContext(SetupContext);
 
@@ -41,7 +41,7 @@ export default function OriginScreen({ navigation }: any): any {
    // setTimeout(()=>{
      //AsyncStorage.setItem("jwt", "false");
      //here is the issue i am facing :(
-    navigation.navigate("Profile", { screen: "Profile" });
+    navigation.navigate("mainscreens");
       
     // },3000);
   };
@@ -76,6 +76,7 @@ export default function OriginScreen({ navigation }: any): any {
           </Text>
         </Text>
       </GeneralModal>
+
       <View style={SetupStyle.generalView}>
         <Text style={SetupStyle.titleText}>State</Text>
 
