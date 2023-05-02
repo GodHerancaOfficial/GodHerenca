@@ -46,7 +46,7 @@ export default function Input({ placeholder, icon, keyboardType, secureTextEntry
                     <MaterialCommunityIcons name="eye-off" color={'#A5A5A5'} size={20} />
                 </TouchableWithoutFeedback>
                 :
-                <View></View>
+                <View style={{width:20}}></View>
             )}
         </View>
     )
