@@ -1,6 +1,7 @@
-import { Text, TouchableWithoutFeedback } from "react-native";
+import { useContext } from "react";
 import { AuthLayout_Style } from "../../styles/Auth";
 import { Button } from "../common";
+import { AppContext } from "../../contexts";
 interface Prop {
   section: string;
   navigate?: any;
@@ -14,14 +15,28 @@ export default function ActionButtons({
   active,
   handlePress,
 }: Prop): any {
+  const { setUsername, setPassword } = useContext<any>(AppContext);
+
+  const handleSignup = async (): Promise<void> => {
+    setUsername("");
+    setPassword("");
+    navigate('Setup')
+  }
+
+  const handleLogin = async (): Promise<void> => {
+    setUsername("");
+    setPassword("");
+    navigate('Signup')
+  }
+
   return (
     <Button
       onPress={() => {
         handlePress
           ? handlePress()
           : section == "Signup"
-          ? navigate("Setup")
-          : null;
+            ? handleSignup()
+            : handleLogin();
       }}
       disabled={active}
       style={

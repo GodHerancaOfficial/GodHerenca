@@ -16,9 +16,10 @@ interface InputProps {
     secureTextEntry?: boolean,
     onChangeText: any,
     style?: any | undefined,
+    value?:string,
 }
 
-export default function Input({ placeholder, icon, keyboardType, secureTextEntry, onChangeText, style }: InputProps): any {
+export default function Input({ placeholder, icon, keyboardType, secureTextEntry, onChangeText, style, value }: InputProps): any {
     const [viewPassword, setViewPassword] = useState<boolean>(false);
 
     return (
@@ -38,6 +39,7 @@ export default function Input({ placeholder, icon, keyboardType, secureTextEntry
                     width: ((icon) ? '75%' : '90%')
                 }}
                 onChangeText={onChangeText}
+                value={value}
             />
 
             {/* View Icon, in case input is for a password. */}

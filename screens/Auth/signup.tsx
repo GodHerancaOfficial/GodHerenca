@@ -1,5 +1,5 @@
 import { AuthLayout } from "../../layouts";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { checkUsernameInput } from "../../contexts/SetupContext";
 import FlashMessage, { showMessage } from "react-native-flash-message";
 import { SetupStyle } from "../../styles/Auth";
@@ -8,25 +8,25 @@ import { View } from "react-native";
 import { Input } from "../../components/common";
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import { AppContext } from "../../contexts";
 
 interface Prop {
   navigation?: any;
 }
 
 export default function Signup({ navigation }: Prop): any {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const {username, setUsername, password, setPassword} = useContext<any>(AppContext);
   const [active, setActive] = useState<boolean>(true);
   const flashMessageRef = useRef<any>();
 
   useEffect(() => {
-    email == "" || password == ""
+    username == "" || password == ""
       ? setActive(true)
       : setActive(false);
-  }, [email, password]);
+  }, [username, password]);
 
   const handlePress = () => {
-    const checkUsernameValidity = checkUsernameInput(email);
+    const checkUsernameValidity = checkUsernameInput(username);
     const checkPasswordValidity = password.length >= 8 ? true : false;
     if (!checkUsernameValidity) {
       showMessage({
@@ -63,9 +63,10 @@ export default function Signup({ navigation }: Prop): any {
       <View style={FormStyle.container}>
         <Input
           placeholder="Username"
-          onChangeText={(e: string) => { setEmail(e) }}
+          onChangeText={(e: string) => { setUsername(e) }}
           keyboardType="default"
           icon={<FontAwesome5 name="user-alt" size={19} color="black" />}
+          value={username}
         />
 
         <Input
@@ -73,6 +74,7 @@ export default function Signup({ navigation }: Prop): any {
           onChangeText={(e:string) => { setPassword(e) }}
           secureTextEntry={true}
           icon={<MaterialIcons name="lock" size={24} color="black" />}
+          value={password}
         />
       </View>
     </AuthLayout>
