@@ -1,7 +1,8 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthLayout_Style } from "../../styles/Auth";
 import { Button } from "../common";
 import { AppContext } from "../../contexts";
+import { Post } from "../../utils/requests";
 interface Prop {
   section: string;
   navigate?: any;
@@ -15,18 +16,39 @@ export default function ActionButtons({
   active,
   handlePress,
 }: Prop): any {
-  const { setUsername, setPassword } = useContext<any>(AppContext);
+  const { username, password, setUsername, setPassword } = useContext<any>(AppContext);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleSignup = async (): Promise<void> => {
     setUsername("");
     setPassword("");
-    navigate('Setup')
+    // navigate('Setup');
+
+    try {
+      let data = await Post('/user/create', JSON.stringify({
+        "username": username,
+        "password": password
+      }))
+
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   const handleLogin = async (): Promise<void> => {
-    setUsername("");
-    setPassword("");
-    navigate('Signup')
+    try {
+      setLoading(true);
+      let data = await Post('/user/login', JSON.stringify({
+        "username": username,
+        "password": password
+      }))
+
+      console.log(data);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
@@ -45,7 +67,7 @@ export default function ActionButtons({
           : [AuthLayout_Style.actionButton, AuthLayout_Style.InactiveBtn]
       }
     >
-      {section == "Login" ? "LOG IN" : "SIGN UP"}
+      {(loading)?'Loading...':section == "Login" ? "LOG IN" : "SIGN UP"}
     </Button>
   );
 }
