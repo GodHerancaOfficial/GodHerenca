@@ -14,7 +14,6 @@ const BottomTab = createBottomTabNavigator();
 export default function MainScreen(): any {
   return (
     <ContextProvider>
-      <NavigationContainer>
         <BottomTab.Navigator
           screenOptions={{ headerShown: false, tabBarShowLabel: true, tabBarHideOnKeyboard: true }}
         >
@@ -78,7 +77,6 @@ export default function MainScreen(): any {
             }}
           />
         </BottomTab.Navigator>
-      </NavigationContainer>
     </ContextProvider>
   );
 }

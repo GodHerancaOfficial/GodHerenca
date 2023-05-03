@@ -17,13 +17,13 @@ export default function DobScreen({ navigation }: Prop): any {
     useContext<any>(SetupContext);
 
   useEffect(() => {
-    if (detailsObj.dob == "" || detailsObj.postalCode == "") {
+    if (detailsObj.dob == "" || detailsObj.postal_code == "") {
       setBtnActive(true);
       return;
     }
 
     setBtnActive(false);
-  }, [detailsObj.dob, detailsObj.postalCode]);
+  }, [detailsObj.dob, detailsObj.postal_code]);
   
   
   // useEffect(()=>{
@@ -32,9 +32,9 @@ export default function DobScreen({ navigation }: Prop): any {
   
   const handleNextPress = (): void | null => {
     console.log(detailsObj);
-    console.log(detailsObj.accountType);
+    console.log(detailsObj.account_type);
     //check if the user is already 18 years old
-    if(checkRiderAgeInput(detailsObj.accountType,detailsObj.dob))
+    if(checkRiderAgeInput(detailsObj.account_type,detailsObj.dob))
     {
         navigation.navigate("Origin");
      
@@ -83,7 +83,7 @@ export default function DobScreen({ navigation }: Prop): any {
           onChangeText={(e) => {
             setDetailsObj((detailsObj: any) => ({
               ...detailsObj,
-              postalCode: e,
+              postal_code: e,
             }));
           }}
         />

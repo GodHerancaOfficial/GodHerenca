@@ -116,11 +116,11 @@ export default function GeneralForm(): any {
         onChange={(choice:string)=>{
           setDetailsObj((detailsObj: any)=>({
             ...detailsObj,
-            'accountType': choice
+            'account_type': choice
           }))
         }}
         placeholder="Account Type"
-        value={detailsObj.accountType}
+        value={detailsObj.account_type}
       />
     </>
   );

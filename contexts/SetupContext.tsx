@@ -55,28 +55,28 @@ export const checkRiderAgeInput = (
 
 export const formatDateOfBirthInput = (dateOfBirth: number): string | void => {
   if (dateOfBirth.toString().length <= 2) return;
-  const formattedInput = dateOfBirth.toString().replace(/\D/g, "").slice(0,8);
+  const formattedInput = dateOfBirth.toString().replace(/\D/g, "").slice(0, 8);
   let dd = formattedInput.slice(0, 2);
   let mm = formattedInput.slice(2, 4);
   const yyyy = formattedInput.slice(4);
-  
+
   return `${dd}/${mm}/${yyyy}`;
 };
 export const ContextProvider = ({ children }: any) => {
-  const [fullName, setFullName] = useState<string>("");
+  const [fullname, setFullName] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [gender, setGender] = useState<string>("");
   const [cpf, setCpf] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
-  const [accountType, setAccountType] = useState<string>("");
+  const [account_type, setAccountType] = useState<string>("");
   const [dob, setDob] = useState<string>("");
-  const [postalCode, setPostalCode] = useState<string>("");
+  const [postal_code, setPostalCode] = useState<string>("");
   const [state, setState] = useState<string>("");
   const [city, setCity] = useState<string>("");
-  const [address, setAddress] = useState<string>("");
-  const [guarantorName, setGuarantorName] = useState<string>("");
-  const [guarantorPhone, setGuarantorPhone] = useState<string>("");
-  const [guarantorRelationship, setGuarantorRelationship] =
+  const [street_address, setAddress] = useState<string>("");
+  const [guarantor_name, setGuarantorName] = useState<string>("");
+  const [guarantor_phone, setGuarantorPhone] = useState<string>("");
+  const [guarantor_relationship, setGuarantorRelationship] =
     useState<string>("");
   const [selectedVehicle, setSelectedVehicle] = useState<string>("");
 
@@ -86,16 +86,16 @@ export const ContextProvider = ({ children }: any) => {
     cpf: "",
     phone: "",
     gender: "",
-    accountType: "",
+    account_type: "",
     dob: "",
-    postalCode: "",
+    postal_code: "",
     state: "",
     city: "",
-    address: "",
-    guarantorName: "",
-    guarantorRelationship: "",
-    guarantorPhone: "",
-    vehicleType: "",
+    street_address: "",
+    guarantor_name: "",
+    guarantor_relationship: "",
+    guarantor_phone: "",
+    vehicle_type: "",
     id_type: "",
     profile_photo: null, //
     frontview: null, // For these three that have comments, they'll be image files.
@@ -116,7 +116,7 @@ export const ContextProvider = ({ children }: any) => {
     checkUsernameInput,
     checkFullnameInput,
     checkRiderAgeInput,
-    formatDateOfBirthInput
+    formatDateOfBirthInput,
   };
 
   return (

@@ -8,27 +8,26 @@ import SetupContext from "../../contexts/SetupContext";
 import { Button } from "../../components/common";
 import { GeneralModal } from "../../components/modals";
 import { ForgotLayoutStyle } from "./../../styles/Auth";
-import { useNavigation } from "@react-navigation/native";
+import { Post } from "../../utils/requests";
+
 export default function OriginScreen({ navigation }: any): any {
   const [btnActive, setBtnActive] = useState<boolean>(true);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const modalImageSource = require("./../../assets/images/modals/regSuccess.png");
-  // const navigateTo = useNavigation<any>();
-  // const { state, city, address, setState, setCity, setAddress } = useContext(SetupContext);
   const { detailsObj, setDetailsObj } = useContext(SetupContext);
-
+  const endPoint = "/user/addinfo";
   useEffect(() => {
     if (
       detailsObj.state == "" ||
       detailsObj.city == "" ||
-      detailsObj.address == ""
+      detailsObj.street_address == ""
     ) {
       setBtnActive(true);
       return;
     }
 
     setBtnActive(false);
-  }, [detailsObj.state, detailsObj.city, detailsObj.address]);
+  }, [detailsObj.state, detailsObj.city, detailsObj.street_address]);
 
   const handleBtnPress = (): void | null => {
     console.log(detailsObj);
@@ -36,10 +35,13 @@ export default function OriginScreen({ navigation }: any): any {
     detailsObj.accountType == "Rider"
       ? navigation.navigate("Guarantor")
       : setModalVisible(!modalVisible);
-
+  
+    //const response = Post(endPoint, JSON.stringify(detailsObj), "dummytext");
+    
+    //console.log(response);
     //navigate the user to the main screen
     setTimeout(() => {
-      AsyncStorage.setItem("jwt", "true");
+      setModalVisible(!modalVisible);
       navigation.navigate("mainscreens");
     }, 3000);
   };
@@ -112,10 +114,10 @@ export default function OriginScreen({ navigation }: any): any {
           onChangeText={(e) => {
             setDetailsObj((detailsObj: any) => ({
               ...detailsObj,
-              address: e,
+              street_address: e,
             }));
           }}
-          value={detailsObj.address}
+          value={detailsObj.street_address}
         />
 
         <Button

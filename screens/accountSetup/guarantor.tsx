@@ -38,9 +38,9 @@ export default function GuarantorScreen({ navigation }: any): any {
 
   useEffect(() => {
     if (
-      detailsObj.guarantorName == "" ||
-      detailsObj.guarantorPhone == "" ||
-      detailsObj.guarantorRelationship == ""
+      detailsObj.guarantor_name == "" ||
+      detailsObj.guarantor_phone == "" ||
+      detailsObj.guarantor_relationship == ""
     ) {
       setBtnActive(true);
       return;
@@ -48,14 +48,14 @@ export default function GuarantorScreen({ navigation }: any): any {
 
     setBtnActive(false);
   }, [
-    detailsObj.guarantorName,
-    detailsObj.guarantorPhone,
-    detailsObj.guarantorRelationship,
+    detailsObj.guarantor_name,
+    detailsObj.guarantor_phone,
+    detailsObj.guarantor_relationship,
   ]);
 
   const handleButtonPress = (): null | void => {
     //check the guarantor username if it contains numbers
-    if(checkFullnameInput(detailsObj.guarantorName))
+    if(checkFullnameInput(detailsObj.guarantor_name))
     {
         navigation.navigate("Vehicle");
     }else{
@@ -87,11 +87,11 @@ export default function GuarantorScreen({ navigation }: any): any {
         <TextInput
           placeholder="Guarantor Name"
           style={SetupStyle.formInputs}
-          value={detailsObj.guarantorName}
+          value={detailsObj.guarantor_name}
           onChangeText={(e) => {
             setDetailsObj((detailsObj: any) => ({
               ...detailsObj,
-              guarantorName: e,
+              guarantor_name: e,
             }));
           }}
         />
@@ -103,11 +103,11 @@ export default function GuarantorScreen({ navigation }: any): any {
         <TextInput
           placeholder="Guarantor's Phone Number"
           style={SetupStyle.formInputs}
-          value={detailsObj.guarantorPhone}
+          value={detailsObj.guarantor_phone}
           onChangeText={(e) => {
             setDetailsObj((detailsObj: any) => ({
               ...detailsObj,
-              guarantorPhone: e,
+              guarantor_phone: e,
             }));
           }}
           keyboardType="phone-pad"
@@ -123,7 +123,7 @@ export default function GuarantorScreen({ navigation }: any): any {
           onChange={(choice: string) => {
             setDetailsObj((detailsObj: any) => ({
               ...detailsObj,
-              guarantorRelationship: choice,
+              guarantor_relationship: choice,
             }));
           }}
         />

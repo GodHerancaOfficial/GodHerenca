@@ -8,7 +8,6 @@ import SetupContext from "../../contexts/SetupContext";
 import { Button } from "../../components/common";
 import FlashMessage, { showMessage } from "react-native-flash-message";
 
-
 interface Prop {
   navigation?: any;
 }
@@ -27,21 +26,24 @@ export default function AccountSetup({ navigation }: Prop): any {
       detailsObj.cpf == "" ||
       detailsObj.phone == "" ||
       detailsObj.gender == "" ||
-      detailsObj.accountType == ""
+      detailsObj.account_type == ""
     ) {
       setBtnDisabled(true);
+
       return;
     }
 
     setBtnDisabled(false);
+    console.log(detailsObj);
   }, [
     detailsObj.fullname,
     detailsObj.email,
     detailsObj.cpf,
     detailsObj.phone,
     detailsObj.gender,
-    detailsObj.accountType,
+    detailsObj.account_type,
   ]);
+    console.log(detailsObj);
 
   const handleBtnPress = async (): Promise<null | void> => {
     console.log(detailsObj);
@@ -49,7 +51,6 @@ export default function AccountSetup({ navigation }: Prop): any {
     // //input validations
     const checkEmailValidity = checkEmailInput(detailsObj.email);
     const fullNameValidity = checkFullnameInput(detailsObj.fullname);
-    
 
     if (!fullNameValidity) {
       flashMessageRef.current.showMessage({
@@ -67,14 +68,13 @@ export default function AccountSetup({ navigation }: Prop): any {
         style: SetupStyle.flashMessageContainer,
       });
     }
-   
+
     //only navigate the user to the next screen if there is no error
     if (checkEmailValidity && fullNameValidity) {
       navigation.navigate("Dob");
     }
-    
   };
-  
+
   return (
     <AccountSetupLayout
       navigateBack={navigation.pop}
@@ -100,7 +100,7 @@ export default function AccountSetup({ navigation }: Prop): any {
         disabled={btnDisabled}
         onPress={() => handleBtnPress()}
       >
-        {detailsObj.accountType == "Rider" ? "Next" : "Continue"}
+        {detailsObj.account_type == "Rider" ? "Next" : "Continue"}
       </Button>
     </AccountSetupLayout>
   );
