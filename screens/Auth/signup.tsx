@@ -27,10 +27,10 @@ export default function Signup({ navigation }: Prop): any {
 
   const handlePress = () => {
     const checkUsernameValidity = checkUsernameInput(username);
-    const checkPasswordValidity = password.length >= 8 ? true : false;
+    const checkPasswordValidity = password.length >= 6 ? true : false;
     if (!checkUsernameValidity) {
       showMessage({
-        message: "Invalid email address",
+        message: "Username must contain only letters",
         type: "danger",
         titleStyle: SetupStyle.flashMessageText,
         style: SetupStyle.flashMessageContainer,
@@ -39,7 +39,7 @@ export default function Signup({ navigation }: Prop): any {
 
     if (!checkPasswordValidity) {
       flashMessageRef.current.showMessage({
-        message: "Password must be at least 8 characters",
+        message: "Password must be at least 6 characters",
         type: "danger",
         titleStyle: SetupStyle.flashMessageText,
         style: SetupStyle.flashMessageContainer,

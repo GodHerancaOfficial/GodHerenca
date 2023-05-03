@@ -26,7 +26,7 @@ export const checkEmailInput = (emailInput: string): boolean => {
 };
 
 export const checkUsernameInput = (usernameInput: string): boolean => {
-  return inputRegex.test(usernameInput);
+  return fullnameRegex.test(usernameInput);
 };
 
 export const checkFullnameInput = (fullnameInput: string): boolean => {
