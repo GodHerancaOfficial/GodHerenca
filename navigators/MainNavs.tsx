@@ -16,7 +16,7 @@ export default function MainNavs(): any {
     }, []);
     return (
         <AppContextProvide>
-            {((loggedIn)?<AuthNavs />:<AuthNavs />)}
+            {((loggedIn)?<MainScreen />:<AuthNavs />)}
         </AppContextProvide>
     )
 }

@@ -17,7 +17,11 @@ export default function Login({ navigation }: Prop): any {
     useEffect(() => {
         ((username == "" || password == "") ? setActive(true) : setActive(false));
     }, [username, password])
-
+    
+    // const handlePress = () =>
+    // {
+    //     navigation.navigate("MainScreens");
+    // }
     return (
         <AuthLayout active={active} section="Login" navigate={navigation.navigate}>
 

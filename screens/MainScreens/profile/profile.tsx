@@ -1,5 +1,5 @@
 import React from "react";
-import { ProfileStyle } from "../../styles/MainScreens";
+import { ProfileStyle } from "../../../styles/MainScreens";
 import {
   View,
   Text,
@@ -8,11 +8,14 @@ import {
   Image,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { ProfileActions } from "../../components/common";
+import { ProfileActions } from "../../../components/common";
 
-export default function Profile(): JSX.Element {
-  const optionIcon = require("./../../assets/images/special-icons/option-icon.png");
-  const profileImage = require("./../../assets/images/special-icons/dummy-profile.png");
+interface ProfileProps {
+  navigation: any;
+}
+export default function Profile({ navigation }: ProfileProps): JSX.Element {
+  const optionIcon = require("./../../../assets/images/special-icons/option-icon.png");
+  const profileImage = require("./../../../assets/images/special-icons/dummy-profile.png");
   return (
     <React.Fragment>
       <SafeAreaView style={ProfileStyle.container}>
@@ -48,14 +51,16 @@ export default function Profile(): JSX.Element {
           mainIconName={"person"}
           text="Edit Profile"
           onPress={() => {
-            console.log("hello world");
+            navigation.navigate("ProfileScreen", { screen: "EditProfile" });
           }}
         />
         <ProfileActions
           mainIconName={"location-on"}
           text="Address"
           onPress={() => {
-            console.log("hello world");
+            navigation.navigate("ProfileScreen", {
+              screen: "Address",
+            });
           }}
         />
         <ProfileActions

@@ -13,37 +13,39 @@ export default function ProfileActions({
   onPress,
 }: Prop): any {
   return (
-    <View style={ProfileStyle.profileActionContainer}>
-      <View style={ProfileStyle.profileActionSubContainer}>
-        <MaterialIcons
-          name={mainIconName}
-          size={27}
-          color={mainIconName == "logout" ? "EB4335" : "#000"}
-          style={ProfileStyle.mainIcon}
-        />
-        <TouchableWithoutFeedback onPress={onPress}>
-          <Text
-            style={
-              text == "Logout"
-                ? ProfileStyle.profileLogoutText
-                : ProfileStyle.profileActionText
-            }
-          >
-            {text && text}
-          </Text>
-        </TouchableWithoutFeedback>
-      </View>
-
-      {mainIconName !== "logout" && (
-        <TouchableWithoutFeedback onPress={onPress}>
+    <TouchableWithoutFeedback onPress={onPress}>
+      <View style={ProfileStyle.profileActionContainer}>
+        <View style={ProfileStyle.profileActionSubContainer}>
           <MaterialIcons
-            name="chevron-right"
+            name={mainIconName}
             size={27}
-            color="#000000"
-            style={ProfileStyle.profileActionIcon}
+            color={mainIconName == "logout" ? "EB4335" : "#000"}
+            style={ProfileStyle.mainIcon}
           />
-        </TouchableWithoutFeedback>
-      )}
-    </View>
+          <TouchableWithoutFeedback onPress={onPress}>
+            <Text
+              style={
+                text == "Logout"
+                  ? ProfileStyle.profileLogoutText
+                  : ProfileStyle.profileActionText
+              }
+            >
+              {text && text}
+            </Text>
+          </TouchableWithoutFeedback>
+        </View>
+
+        {mainIconName !== "logout" && (
+          <TouchableWithoutFeedback onPress={onPress}>
+            <MaterialIcons
+              name="chevron-right"
+              size={27}
+              color="#000000"
+              style={ProfileStyle.profileActionIcon}
+            />
+          </TouchableWithoutFeedback>
+        )}
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
