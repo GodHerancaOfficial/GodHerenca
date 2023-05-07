@@ -1,12 +1,13 @@
 import { View, SafeAreaView, Text, ScrollView } from "react-native";
 import React from "react";
 import { Header } from "../components/common";
-
+import { ProfileStyle } from "../styles/MainScreens";
 interface ProfileLayoutProps {
   navigateBack?: any;
   children: any | JSX.Element;
   headerText: string;
   profileFlashMessage?: JSX.Element;
+
 }
 const ProfileLayout = ({
   children,
@@ -16,7 +17,7 @@ const ProfileLayout = ({
 }: ProfileLayoutProps): JSX.Element => {
   return (
     <React.Fragment>
-      <SafeAreaView>
+      <SafeAreaView style={ProfileStyle.profileLayout}>
         {profileFlashMessage && profileFlashMessage}
         <ScrollView>
           <View>

@@ -45,6 +45,7 @@ export default function MainScreen(): any {
             tabBarShowLabel: true,
             tabBarHideOnKeyboard: true,
           }}
+        
         >
           <BottomTab.Screen
             name="Profile"
@@ -130,8 +131,9 @@ export default function MainScreen(): any {
           <BottomTab.Screen
             name="ProfileScreen"
             component={ProfileScreens}
-            options={{ tabBarButton: () => null }}
+            options={{ tabBarButton: () => null,  }}
           ></BottomTab.Screen>
+
           
         </BottomTab.Navigator>
       </NavigationContainer>

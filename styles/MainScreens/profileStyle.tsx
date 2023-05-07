@@ -107,6 +107,42 @@ const ProfileStyle = StyleSheet.create({
     fontFamily: "Raleway",
     fontSize: 16,
   },
+
+  editProfileDetailsContainer: {
+    backgroundColor: "#F6F6F6",
+    borderRadius: 10,
+    padding: 8,
+    marginTop: 12,
+    margin: 15,
+  },
+
+  profileLayout: {
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    backgroundColor: "#",
+    paddingVertical: 30,
+    marginTop: 10,
+    flexDirection: "row",
+    alignItems: "flex-start",
+    justifyContent: "space-between",
+  },
+
+  editProfileFormInput: {
+    fontFamily: "Raleway-bold",
+    paddingLeft: 10,
+    paddingVertical: 10,
+    fontSize: 17,
+  },
+
+  updateProfileButtonContainer:{
+    display: "flex",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 30,
+    paddingVertical: 10,
+  }
 });
 
 export default ProfileStyle;
