@@ -4,6 +4,7 @@ import {
     LegalScreen, GuarantorScreen, VehicleScreen, IdentityVerificationScreen
 } from "../screens/accountSetup";
 import { ContextProvider } from "../contexts/SetupContext";
+import MainScreenNavs from "./MainScreens";
 const Stack = createNativeStackNavigator();
 
 export default function AccountSetupNavs(): any {
@@ -19,6 +20,7 @@ export default function AccountSetupNavs(): any {
           <Stack.Screen name="Vehicle" component={VehicleScreen} />
           <Stack.Screen name="Legal" component={LegalScreen} />
           <Stack.Screen name="IdentiyVerification" component={IdentityVerificationScreen} />
+          <Stack.Screen name="mainscreens" component={MainScreenNavs} />
         </Stack.Navigator>
       </ContextProvider>
     );

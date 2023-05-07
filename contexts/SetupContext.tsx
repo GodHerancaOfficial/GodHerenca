@@ -1,23 +1,5 @@
 import { createContext, useState } from "react";
 
-// type SetupContextType = {
-//     fullName?: string, setFullName?: any,
-//     username?: string, setUsername?: any,
-//     gender?: string, setGender?: any,
-//     cpf?: string, setCpf?: any,
-//     phone?: string, setPhone?: any,
-//     accountType?: string, setAccountType?: any,
-//     dob?: string, setDob?: any,
-//     postalCode?: string, setPostalCode?: any,
-//     state?: string, setState?: any,
-//     city?: string, setCity?: any,
-//     address?: string, setAddress?: any,
-//     guarantorName?: string, setGuarantorName?: any,
-//     guarantorPhone?: string, setGuarantorPhone?: any,
-//     guarantorRelationship?: string, setGuarantorRelationship?: any,
-//     selectedVehicle?: string, setSelectedVehicle?: any
-// }
-
 type SetupContextType = {
   detailsObj?: any;
   setDetailsObj?: any;
@@ -27,6 +9,11 @@ type SetupContextType = {
   checkEmailInput?: (emailInput: string) => boolean;
   checkUsernameInput?: (emailInput: string) => boolean;
   checkFullnameInput?: (emailInput: string) => boolean;
+  checkRiderAgeInput?: (
+    accountType: string,
+    dateOfBirthFormat: string
+  ) => boolean;
+  formatDateOfBirthInput?: (dateOfBirth: number) => string | void;
 };
 
 const SetupContext = createContext<SetupContextType>({});
@@ -39,57 +26,57 @@ export const checkEmailInput = (emailInput: string): boolean => {
 };
 
 export const checkUsernameInput = (usernameInput: string): boolean => {
-  return inputRegex.test(usernameInput);
+  return fullnameRegex.test(usernameInput);
 };
 
 export const checkFullnameInput = (fullnameInput: string): boolean => {
   return fullnameRegex.test(fullnameInput);
 };
 
-export const checkRiderAgeInput = (accountType: string, dateOfBirthFormat: string): boolean => {
-  
+export const checkRiderAgeInput = (
+  accountType: string,
+  dateOfBirthFormat: string
+): boolean => {
   //customer of any age range can use the product.
-  if(accountType === "Customer")
-  {
-    return true
+  if (accountType === "Customer") {
+    return true;
   }
-  if(dateOfBirthFormat.trim().length < 8)
-  {
-    return false;
-  }
-  //Format eg 14 | 09 | 2005
-  const yearOfBirth = parseInt(dateOfBirthFormat.slice(4), 10); // Birth Year
-  const monthOfBirth = parseInt(dateOfBirthFormat.slice(2, 4), 10) - 1; // get the month of birth as an integer (subtract 1 since month indices are zero-based)
-  const dayOfBirth = parseInt(dateOfBirthFormat.slice(0, 2), 10); // get the day of birth as an integer
-
   const today = new Date();
-  let age = today.getFullYear() - yearOfBirth;
-  const monthDifference = today.getMonth() - monthOfBirth;
+  const dob = new Date(
+    `${dateOfBirthFormat.slice(6, 10)}-${dateOfBirthFormat.slice(
+      3,
+      5
+    )}-${dateOfBirthFormat.slice(0, 2)}`
+  );
+  const age = today.getFullYear() - dob.getFullYear();
+  dob.setFullYear(today.getFullYear());
+  return today < dob ? age - 1 >= 18 : age >= 18;
+};
 
-  if (
-    monthDifference < 0 ||
-    (monthDifference === 0 && today.getDate() < dayOfBirth)
-  ) {
-    age--; // adjust the age if the current date is before the birth date in the same year
-  }
+export const formatDateOfBirthInput = (dateOfBirth: number): string | void => {
+  if (dateOfBirth.toString().length <= 2) return;
+  const formattedInput = dateOfBirth.toString().replace(/\D/g, "").slice(0, 8);
+  let dd = formattedInput.slice(0, 2);
+  let mm = formattedInput.slice(2, 4);
+  const yyyy = formattedInput.slice(4);
 
-  return (age >= 18) ? true : false;
+  return `${dd}/${mm}/${yyyy}`;
 };
 export const ContextProvider = ({ children }: any) => {
-  const [fullName, setFullName] = useState<string>("");
+  const [fullname, setFullName] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [gender, setGender] = useState<string>("");
   const [cpf, setCpf] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
-  const [accountType, setAccountType] = useState<string>("");
+  const [account_type, setAccountType] = useState<string>("");
   const [dob, setDob] = useState<string>("");
-  const [postalCode, setPostalCode] = useState<string>("");
+  const [postal_code, setPostalCode] = useState<string>("");
   const [state, setState] = useState<string>("");
   const [city, setCity] = useState<string>("");
-  const [address, setAddress] = useState<string>("");
-  const [guarantorName, setGuarantorName] = useState<string>("");
-  const [guarantorPhone, setGuarantorPhone] = useState<string>("");
-  const [guarantorRelationship, setGuarantorRelationship] =
+  const [street_address, setAddress] = useState<string>("");
+  const [guarantor_name, setGuarantorName] = useState<string>("");
+  const [guarantor_phone, setGuarantorPhone] = useState<string>("");
+  const [guarantor_relationship, setGuarantorRelationship] =
     useState<string>("");
   const [selectedVehicle, setSelectedVehicle] = useState<string>("");
 
@@ -99,16 +86,16 @@ export const ContextProvider = ({ children }: any) => {
     cpf: "",
     phone: "",
     gender: "",
-    accountType: "",
+    account_type: "",
     dob: "",
-    postalCode: "",
+    postal_code: "",
     state: "",
     city: "",
-    address: "",
-    guarantorName: "",
-    guarantorRelationship: "",
-    guarantorPhone: "",
-    vehicleType: "",
+    street_address: "",
+    guarantor_name: "",
+    guarantor_relationship: "",
+    guarantor_phone: "",
+    vehicle_type: "",
     id_type: "",
     profile_photo: null, //
     frontview: null, // For these three that have comments, they'll be image files.
@@ -117,23 +104,6 @@ export const ContextProvider = ({ children }: any) => {
 
   // const checkPhoneNumberInput = (phoneNumberInput: string): boolean =>{
   //     return false;
-  // }
-  // const values: SetupContextType = {
-  //     fullName, setFullName,
-  //     username, setUsername,
-  //     gender, setGender,
-  //     cpf, setCpf,
-  //     phone, setPhone,
-  //     accountType, setAccountType,
-  //     dob, setDob,
-  //     postalCode, setPostalCode,
-  //     state, setState,
-  //     city, setCity,
-  //     address, setAddress,
-  //     guarantorName, setGuarantorName,
-  //     guarantorPhone, setGuarantorPhone,
-  //     guarantorRelationship, setGuarantorRelationship,
-  //     selectedVehicle, setSelectedVehicle
   // }
 
   const values: SetupContextType = {
@@ -145,6 +115,8 @@ export const ContextProvider = ({ children }: any) => {
     checkEmailInput,
     checkUsernameInput,
     checkFullnameInput,
+    checkRiderAgeInput,
+    formatDateOfBirthInput,
   };
 
   return (

@@ -15,7 +15,7 @@ const AuthLayout_Style = StyleSheet.create({
         backgroundColor: '#ffffff',
     },
     introText: {
-        fontSize: 50,
+        fontSize: 47,
         fontFamily: 'Raleway-bold',
         textAlign: 'left',
         width: '100%',

@@ -1,4 +1,4 @@
 import MainNavs from "./MainNavs";
 import OnboardingNavs from "./OnboardingNavs";
-
-export { MainNavs, OnboardingNavs };
+import MainScreenNavs from "./MainScreens";
+export { MainNavs, OnboardingNavs, MainScreenNavs };
