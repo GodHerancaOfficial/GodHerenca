@@ -2,9 +2,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 import { MainNavs, OnboardingNavs } from './navigators';
 import { useFonts } from 'expo-font';
+import MainApp from './main_app';
+import { AppContextProvider } from './contexts/AppContext';
 
 export default function App() {
-  const [isOpended, setIsOpened] = useState<boolean>(false);
+  // const [isOpended, setIsOpened] = useState<boolean>(false);
   const [loaded] = useFonts({
     Nunito: require('./assets/fonts/Nunito-Regular.ttf'),
     'Nunito-bold': require('./assets/fonts/Nunito-Bold.ttf'),
@@ -12,34 +14,37 @@ export default function App() {
     'Raleway-bold': require('./assets/fonts/Raleway-Bold.ttf'),
   });
 
-  const storeDevice = async ():Promise<void> => {
-    await AsyncStorage.setItem('isOpened', 'true');
-  }
+  // const storeDevice = async ():Promise<void> => {
+  //   await AsyncStorage.setItem('isOpened', 'true');
+  // }
 
-  const changeViews = async ():Promise<void> => {
-    try {
-      await storeDevice();
-      setIsOpened(true);
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  // const changeViews = async ():Promise<void> => {
+  //   try {
+  //     await storeDevice();
+  //     setIsOpened(true);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
-  useEffect(()=>{
-    (async function(){
-      const val = await AsyncStorage.getItem('isOpened');
-      if(val != null){
-        setIsOpened(true);
-        console.log(val);
-      }
-    })();
-  }, []);
+  // useEffect(()=>{
+  //   (async function(){
+  //     const val = await AsyncStorage.getItem('isOpened');
+  //     if(val != null){
+  //       setIsOpened(true);
+  //       console.log(val);
+  //     }
+  //   })();
+  // }, []);
 
-  if(!loaded){
+  if (!loaded) {
     return null;
   }
 
   return (
-    ((isOpended)?<MainNavs />:<OnboardingNavs changeViews={changeViews} />)
+    // ((isOpended)?<MainNavs />:<OnboardingNavs changeViews={changeViews} />)
+    <AppContextProvider>
+      <MainApp />
+    </AppContextProvider>
   );
 }

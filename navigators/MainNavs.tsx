@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useEffect, useState } from "react"
 import AuthNavs from "./AuthNavs";
 import MainScreen from "./MainScreens";
-import { AppContextProvide } from "../contexts/AppContext";
+import { AppContextProvider } from "../contexts/AppContext";
 
 export default function MainNavs(): any {
     const [loggedIn, setLoggedIn] = useState<boolean>(false);
@@ -15,8 +15,8 @@ export default function MainNavs(): any {
         })();
     }, []);
     return (
-        <AppContextProvide>
+        <AppContextProvider>
             {((loggedIn)?<MainScreen />:<AuthNavs />)}
-        </AppContextProvide>
+        </AppContextProvider>
     )
 }
