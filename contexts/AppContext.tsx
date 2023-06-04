@@ -5,7 +5,7 @@ type AppContextType = {
     username?: string; setUsername?: any;
     password?: string; setPassword?: any;
     isOpened?: boolean; setIsOpened?: any;
-    storeDevice?: () => Promise<boolean>; checkDevice?: ()=>Promise<boolean>;
+    storeDevice?: () => Promise<boolean>; checkDevice?: () => Promise<boolean>;
 }
 
 const AppContext = createContext<AppContextType>({});
@@ -18,7 +18,7 @@ export const AppContextProvider = ({ children }: any) => {
     const storeDevice = async (): Promise<boolean> => {
         try {
             await AsyncStorage.setItem('opened', 'true');
-            return true;   
+            return true;
         } catch (error) {
             console.error(error);
             return false;
@@ -27,9 +27,9 @@ export const AppContextProvider = ({ children }: any) => {
 
     const checkDevice = async (): Promise<boolean> => {
         try {
-            let val = AsyncStorage.getItem('opened');
-            if(val !== null){
-                console.log(val);
+            let val = await AsyncStorage.getItem('opened');
+            if (val !== null) {
+                console.log(val);       // Remove during production
                 return true;
             }
             return false;

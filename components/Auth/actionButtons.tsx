@@ -20,19 +20,22 @@ export default function ActionButtons({
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleSignup = async (): Promise<void> => {
-    setUsername("");
-    setPassword("");
-    // navigate('Setup');
+    // setUsername("");
+    // setPassword("");
+    // // navigate('Setup');
 
     try {
+      setLoading(true);
       let data = await Post('/user/create', JSON.stringify({
         "username": username,
         "password": password
       }))
 
       console.log(data);
+      setLoading(false);
     } catch (error) {
       console.error(error);
+      setLoading(false);
     }
   }
 
@@ -48,17 +51,14 @@ export default function ActionButtons({
       setLoading(false);
     } catch (error) {
       console.error(error);
+      setLoading(false);
     }
   }
 
   return (
     <Button
       onPress={() => {
-        handlePress
-          ? handlePress()
-          : section == "Signup"
-            ? handleSignup()
-            : handleLogin();
+        section == "Signup" ? handleSignup() : handleLogin();
       }}
       disabled={active}
       style={
@@ -67,7 +67,7 @@ export default function ActionButtons({
           : [AuthLayout_Style.actionButton, AuthLayout_Style.InactiveBtn]
       }
     >
-      {(loading)?'Loading...':section == "Login" ? "LOG IN" : "SIGN UP"}
+      {(loading) ? 'Loading...' : section == "Login" ? "LOG IN" : "SIGN UP"}
     </Button>
   );
 }
