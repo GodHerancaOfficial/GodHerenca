@@ -13,7 +13,7 @@ export default function ProfileActions({
   onPress,
 }: Prop): any {
   return (
-    <TouchableWithoutFeedback onPress={onPress}>
+    <TouchableWithoutFeedback onPress={()=>{onPress();}}>
       <View style={ProfileStyle.profileActionContainer}>
         <View style={ProfileStyle.profileActionSubContainer}>
           <MaterialIcons

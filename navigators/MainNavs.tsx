@@ -1,22 +1,24 @@
-import AsyncStorage from "@react-native-async-storage/async-storage"
-import { useEffect, useState } from "react"
+import { useContext, useEffect } from "react"
 import AuthNavs from "./AuthNavs";
 import MainScreen from "./MainScreens";
-import { AppContextProvider } from "../contexts/AppContext";
+import AppContext, { AppContextProvider } from "../contexts/AppContext";
 
 export default function MainNavs(): any {
-    const [loggedIn, setLoggedIn] = useState<boolean>(false);
+    const { loggedIn, setLoggedIn, checkLogin } = useContext<any>(AppContext);
+
+    const runOnStart = async (): Promise<any> => {
+        if (!await checkLogin?.()) {
+            setLoggedIn(false);
+            return;
+        }
+        setLoggedIn(true);
+    }
+
     useEffect(() => {
-        (async function (): Promise<void> {
-            const val = await AsyncStorage.getItem('jwt');
-            if (val != null) {
-                setLoggedIn(true);
-            }
-        })();
+        runOnStart();
     }, []);
+
     return (
-        <AppContextProvider>
-            {((loggedIn) ? <MainScreen /> : <AuthNavs />)}
-        </AppContextProvider>
+        (!loggedIn) ? <AuthNavs /> : <MainScreen />
     )
 }

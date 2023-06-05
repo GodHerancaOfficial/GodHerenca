@@ -1,8 +1,10 @@
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { AuthLayout_Style } from "../../styles/Auth";
 import { Button } from "../common";
 import { AppContext } from "../../contexts";
 import { Post } from "../../utils/requests";
+import FlashMessage, { showMessage } from "react-native-flash-message";
+
 interface Prop {
   section: string;
   navigate?: any;
@@ -16,10 +18,11 @@ export default function ActionButtons({
   active,
   handlePress,
 }: Prop): any {
-  const { username, password, setUsername, setPassword } = useContext<any>(AppContext);
+  const { username, password, setUsername, setPassword, saveToken, setLoggedIn } = useContext<any>(AppContext);
   const [loading, setLoading] = useState<boolean>(false);
+  const flashRef = useRef<any>();
 
-  const handleSignup = async (): Promise<void> => {
+  const handleSignup = async (): Promise<any> => {
     // setUsername("");
     // setPassword("");
     // // navigate('Setup');
@@ -32,14 +35,37 @@ export default function ActionButtons({
       }))
 
       console.log(data);
+      if(data.error){
+        flashRef.current.showMessage({
+          message: data.error,
+          duration: 4000,
+          type: 'danger',
+          // hideStatusBar: true,
+        });
+        setLoading(false);
+        return;
+      }
+      // if(!saveToken?.(data.accessToken)){
+      //   showMessage({
+      //     message: 'Error saving your login',
+      //     duration: 4000,
+      //     type: 'danger',
+      //   });
+      // }
       setLoading(false);
     } catch (error) {
       console.error(error);
+      flashRef.current.showMessage({
+        message: "Error Occured",
+        duration: 4000,
+        type: 'danger',
+        hideStatusBar: true,
+      });
       setLoading(false);
     }
   }
 
-  const handleLogin = async (): Promise<void> => {
+  const handleLogin = async (): Promise<any> => {
     try {
       setLoading(true);
       let data = await Post('/user/login', JSON.stringify({
@@ -48,6 +74,24 @@ export default function ActionButtons({
       }))
 
       console.log(data);
+      if(data.error){
+        flashRef.current.showMessage({
+          message: data.error,
+          duration: 4000,
+          type: 'danger',
+          hideStatusBar: true,
+        });
+        setLoading(false);
+        return;
+      }
+      if(!await saveToken?.(data.access_token)){
+        showMessage({
+          message: 'Error saving your login',
+          duration: 4000,
+          type: 'danger',
+        });
+      }
+      setLoggedIn(true);
       setLoading(false);
     } catch (error) {
       console.error(error);
@@ -56,6 +100,8 @@ export default function ActionButtons({
   }
 
   return (
+    <>
+    <FlashMessage position={'top'} ref={flashRef} />
     <Button
       onPress={() => {
         section == "Signup" ? handleSignup() : handleLogin();
@@ -69,5 +115,6 @@ export default function ActionButtons({
     >
       {(loading) ? 'Loading...' : section == "Login" ? "LOG IN" : "SIGN UP"}
     </Button>
+    </>
   );
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { ProfileStyle } from "../../../styles/MainScreens";
 import {
   View,
@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { ProfileActions } from "../../../components/common";
+import { AppContext } from "../../../contexts";
 
 interface ProfileProps {
   navigation: any;
@@ -16,6 +17,8 @@ interface ProfileProps {
 export default function Profile({ navigation }: ProfileProps): JSX.Element {
   const optionIcon = require("./../../../assets/images/special-icons/option-icon.png");
   const profileImage = require("./../../../assets/images/special-icons/dummy-profile.png");
+  const { logout, setLoggedIn } = useContext<any>(AppContext);
+
   return (
     <React.Fragment>
       <SafeAreaView style={ProfileStyle.container}>
@@ -94,8 +97,13 @@ export default function Profile({ navigation }: ProfileProps): JSX.Element {
         <ProfileActions
           mainIconName={"logout"}
           text="Logout"
-          onPress={() => {
-            console.log("hello world");
+          onPress={async () => {
+            if (!await logout?.()) {
+              console.error('Error Logging Out');
+              return;
+            }
+            console.log('Logged Out');
+            setLoggedIn(false);
           }}
         />
       </SafeAreaView>
