@@ -1,5 +1,6 @@
-import { View, Text, TouchableWithoutFeedback } from "react-native";
+import { View, TouchableWithoutFeedback, TextInput } from "react-native";
 import { GeneralForm } from "../../components/accountSetup";
+import DropDown from "../../components/dropdown/dropdown";
 import { SetupStyle } from "../../styles/Auth";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useState, useEffect, useContext, useRef } from "react";
@@ -13,44 +14,49 @@ interface Prop {
 }
 
 export default function AccountSetup({ navigation }: Prop): any {
-  const { detailsObj } = useContext(SetupContext);
+  const { detailsObj, setDetailsObj } = useContext(SetupContext);
   const [btnDisabled, setBtnDisabled] = useState<boolean>(true);
   const { checkEmailInput } = useContext<any>(SetupContext);
   const { checkFullnameInput } = useContext<any>(SetupContext);
+  // const [detailsObj, setDetailsObj] = useState<any>({});
   const flashMessageRef = useRef<any>();
 
-  useEffect(() => {
-    if (
-      detailsObj.fullname == "" ||
-      detailsObj.email == "" ||
-      detailsObj.cpf == "" ||
-      detailsObj.phone == "" ||
-      detailsObj.gender == "" ||
-      detailsObj.account_type == ""
-    ) {
-      setBtnDisabled(true);
+  const [accountTypeList] = useState<any[]>([
+    {
+      id: 1,
+      title: "Customer",
+    },
+    {
+      id: 2,
+      title: "Rider",
+    },
+  ]);
 
+  const [genderList] = useState<any[]>([
+    {
+      id: 1,
+      title: "Male",
+    },
+    {
+      id: 2,
+      title: "Female",
+    },
+  ]);
+
+  useEffect(() => {
+    if (detailsObj?.fullname == "" || detailsObj?.contact_detail == "" || detailsObj?.cpf == "" || detailsObj?.gender == "" || detailsObj?.account_type == "") {
+      setBtnDisabled(true);
       return;
     }
 
     setBtnDisabled(false);
-    console.log(detailsObj);
   }, [
-    detailsObj.fullname,
-    detailsObj.email,
-    detailsObj.cpf,
-    detailsObj.phone,
-    detailsObj.gender,
-    detailsObj.account_type,
-  ]);
-    console.log(detailsObj);
+    detailsObj?.fullname, detailsObj?.contact_detail, detailsObj?.cpf, detailsObj?.gender, detailsObj?.account_type,]);
 
   const handleBtnPress = async (): Promise<null | void> => {
-    console.log(detailsObj);
-
-    // //input validations
-    const checkEmailValidity = checkEmailInput(detailsObj.email);
-    const fullNameValidity = checkFullnameInput(detailsObj.fullname);
+    //input validations
+    const checkEmailValidity = checkEmailInput(detailsObj?.contact_detail);
+    const fullNameValidity = checkFullnameInput(detailsObj?.fullname);
 
     if (!fullNameValidity) {
       flashMessageRef.current.showMessage({
@@ -59,6 +65,7 @@ export default function AccountSetup({ navigation }: Prop): any {
         titleStyle: SetupStyle.flashMessageText,
         style: SetupStyle.flashMessageContainer,
       });
+      return;
     }
     if (!checkEmailValidity) {
       flashMessageRef.current.showMessage({
@@ -67,12 +74,10 @@ export default function AccountSetup({ navigation }: Prop): any {
         titleStyle: SetupStyle.flashMessageText,
         style: SetupStyle.flashMessageContainer,
       });
+      return;
     }
 
-    //only navigate the user to the next screen if there is no error
-    if (checkEmailValidity && fullNameValidity) {
-      navigation.navigate("Dob");
-    }
+    navigation.navigate('Dob');
   };
 
   return (
@@ -94,7 +99,70 @@ export default function AccountSetup({ navigation }: Prop): any {
       </View>
 
       {/**Forms To fill out */}
-      <GeneralForm />
+      <TextInput
+        placeholder="Full Name"
+        style={SetupStyle.formInputs}
+        value={detailsObj?.fullname}
+        onChangeText={(e) => {
+          setDetailsObj((detailsObj: any) => ({
+            ...detailsObj,
+            'fullname': e,
+          }));
+        }}
+      />
+
+      <TextInput
+        placeholder="Email"
+        style={SetupStyle.formInputs}
+        value={detailsObj?.contact_detail}
+        keyboardType="email-address"
+        onChangeText={(e) => {
+          setDetailsObj((detailsObj: any) => ({
+            ...detailsObj,
+            'contact_type': "Email",
+            'contact_detail': e,
+          }));
+        }}
+      />
+
+      <DropDown
+        lists={genderList}
+        onChange={(choice: string) => {
+          setDetailsObj((detailsObj: any) => ({
+            ...detailsObj,
+            'gender': choice
+          }));
+        }}
+        placeholder="Gender"
+        value={detailsObj?.gender}
+      />
+
+      <TextInput
+        placeholder="CPF"
+        style={SetupStyle.formInputs}
+        value={detailsObj?.cpf}
+        onChangeText={(e) => {
+          setDetailsObj((detailsObj: any) => ({
+            ...detailsObj,
+            'cpf': e,
+          }));
+        }}
+        keyboardType="numeric"
+      />
+
+      <DropDown
+        lists={accountTypeList}
+        onChange={(choice: string) => {
+          setDetailsObj((detailsObj: any) => ({
+            ...detailsObj,
+            'account_type': choice
+          }))
+        }}
+        placeholder="Account Type"
+        value={detailsObj?.account_type}
+      />
+
+
       <Button
         style={SetupStyle.button}
         disabled={btnDisabled}

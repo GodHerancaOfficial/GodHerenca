@@ -9,6 +9,7 @@ type AppContextType = {
     loggedIn?: boolean; setLoggedIn?: any;
     saveToken?: (token: string) => Promise<boolean>;
     checkLogin?: () => Promise<boolean>; logout?: () => Promise<boolean>;
+    getToken?: () => Promise<any>;
 }
 
 const AppContext = createContext<AppContextType>({});
@@ -26,6 +27,18 @@ export const AppContextProvider = ({ children }: any) => {
         } catch (error) {
             console.error(error);
             return false;
+        }
+    }
+
+    const getToken = async (): Promise<any> => {
+        try {
+            let val = await AsyncStorage.getItem('accessToken');
+            if (val !== null) {
+                return val;
+            }
+        } catch (error) {
+            console.error(error);
+            return error;
         }
     }
 
@@ -80,7 +93,7 @@ export const AppContextProvider = ({ children }: any) => {
         storeDevice, isOpened,
         setIsOpened, checkDevice,
         saveToken, loggedIn, setLoggedIn,
-        checkLogin, logout,
+        checkLogin, logout, getToken,
     }
 
     return (

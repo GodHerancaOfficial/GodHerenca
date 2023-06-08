@@ -4,8 +4,8 @@ import { SetupStyle } from "../../styles/Auth";
 import { useEffect, useState, useContext, useRef } from "react";
 import SetupContext from "../../contexts/SetupContext";
 import { Button } from "../../components/common";
-import FlashMessage,{showMessage} from 'react-native-flash-message';
-import { formatDateOfBirthInput } from '../../contexts/SetupContext';
+import FlashMessage, { showMessage } from 'react-native-flash-message';
+// import { formatDateOfBirthInput } from '../../contexts/SetupContext';
 interface Prop {
   navigation?: any;
 }
@@ -13,6 +13,10 @@ interface Prop {
 export default function DobScreen({ navigation }: Prop): any {
   const [btnActive, setBtnActive] = useState<boolean>(true);
   const flashMessageRef = useRef<any>();
+  // const [detailsObj, setDetailsObj] = useState<any>({
+  //   dob: '',
+  //   postal_code: '',
+  // });
   const { detailsObj, setDetailsObj, checkRiderAgeInput, formatDateOfBirthInput } =
     useContext<any>(SetupContext);
 
@@ -24,29 +28,19 @@ export default function DobScreen({ navigation }: Prop): any {
 
     setBtnActive(false);
   }, [detailsObj.dob, detailsObj.postal_code]);
-  
-  
-  // useEffect(()=>{
-  //   detailsObj.dob = formatDateOfBirthInput(detailsObj.dob);
-  // }, [detailsObj.dob]);
-  
+
   const handleNextPress = (): void | null => {
-    console.log(detailsObj);
-    console.log(detailsObj.account_type);
-    //check if the user is already 18 years old
-    if(checkRiderAgeInput(detailsObj.account_type,detailsObj.dob))
-    {
-        navigation.navigate("Origin");
-     
-    }else{
-     flashMessageRef.current.showMessage({
-       message: "You are not up to 18 years",
-       type: "danger",
-       titleStyle: SetupStyle.flashMessageText,
-       style: SetupStyle.flashMessageContainer,
-     });
+    if(!checkRiderAgeInput(detailsObj.account_type, detailsObj.dob)){
+      flashMessageRef.current.showMessage({
+        message: "You are not up to 18 years",
+        type: "danger",
+        titleStyle: SetupStyle.flashMessageText,
+        style: SetupStyle.flashMessageContainer,
+      });
+      return;
     }
-  
+    
+    navigation.navigate("Origin");
   };
 
 
@@ -61,7 +55,7 @@ export default function DobScreen({ navigation }: Prop): any {
           placeholder="DD/MM/YYYY"
           style={SetupStyle.formInputs}
           keyboardType="phone-pad"
-          value={formatDateOfBirthInput(detailsObj.dob)}
+          value={formatDateOfBirthInput(detailsObj?.dob)}
           onChangeText={(e) => {
             setDetailsObj((detailsObj: any) => ({
               ...detailsObj,

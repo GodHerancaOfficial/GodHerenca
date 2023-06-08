@@ -1,5 +1,4 @@
 import { Text, TextInput, View, TouchableWithoutFeedback } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AccountSetupLayout } from "../../layouts";
 import { SetupStyle } from "../../styles/Auth";
 import DropDown from "../../components/dropdown/dropdown";
@@ -9,19 +8,17 @@ import { Button } from "../../components/common";
 import { GeneralModal } from "../../components/modals";
 import { ForgotLayoutStyle } from "./../../styles/Auth";
 import { Post } from "../../utils/requests";
+import { AppContext } from "../../contexts";
 
 export default function OriginScreen({ navigation }: any): any {
   const [btnActive, setBtnActive] = useState<boolean>(true);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
-  const modalImageSource = require("./../../assets/images/modals/regSuccess.png");
-  const { detailsObj, setDetailsObj } = useContext(SetupContext);
-  const endPoint = "/user/addinfo";
+  const modalImageSource = require("../../assets/images/modals/regSuccess.png");
+  const { detailsObj, setDetailsObj, formData } = useContext(SetupContext);
+  const { getToken } = useContext<any>(AppContext);
+  const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
-    if (
-      detailsObj.state == "" ||
-      detailsObj.city == "" ||
-      detailsObj.street_address == ""
-    ) {
+    if (detailsObj.state == "" || detailsObj.city == "" || detailsObj.street_address == "") {
       setBtnActive(true);
       return;
     }
@@ -29,21 +26,35 @@ export default function OriginScreen({ navigation }: any): any {
     setBtnActive(false);
   }, [detailsObj.state, detailsObj.city, detailsObj.street_address]);
 
-  const handleBtnPress = (): void | null => {
-    console.log(detailsObj);
+  const handleBtnPress = async (): Promise<void | null> => {
+    // console.log(detailsObj);
 
-    detailsObj.accountType == "Rider"
-      ? navigation.navigate("Guarantor")
-      : setModalVisible(!modalVisible);
-  
-    //const response = Post(endPoint, JSON.stringify(detailsObj), "dummytext");
-    
-    //console.log(response);
-    //navigate the user to the main screen
-    setTimeout(() => {
-      setModalVisible(!modalVisible);
-      navigation.navigate("mainscreens");
-    }, 3000);
+    if(detailsObj.account_type !== 'Customer'){
+      navigation.navigate('Guarantor');
+      return;
+    }
+
+    try {
+      for(let key in detailsObj){
+        // formData.delete(key);
+        formData.append(key, detailsObj[key]);
+      }
+    } catch (error) {
+      console.error(error);
+      return;
+    }
+    console.log(formData);
+
+    try {
+      setLoading(true);
+      let data = await Post('/user/addinfo', formData, await getToken?.());
+
+      console.log(data);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
   };
 
   return (
@@ -125,7 +136,9 @@ export default function OriginScreen({ navigation }: any): any {
           onPress={() => handleBtnPress()}
           disabled={btnActive}
         >
-          {detailsObj.accountType == "Rider" ? "Next" : "Finish"}
+          {
+            (detailsObj.account_type == "Rider") ? "Next" : (loading)? "Loading..." : "Finish"
+          }
         </Button>
       </View>
     </AccountSetupLayout>

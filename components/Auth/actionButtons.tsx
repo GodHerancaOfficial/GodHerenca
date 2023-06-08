@@ -23,10 +23,6 @@ export default function ActionButtons({
   const flashRef = useRef<any>();
 
   const handleSignup = async (): Promise<any> => {
-    // setUsername("");
-    // setPassword("");
-    // // navigate('Setup');
-
     try {
       setLoading(true);
       let data = await Post('/user/create', JSON.stringify({
@@ -35,23 +31,25 @@ export default function ActionButtons({
       }))
 
       console.log(data);
-      if(data.error){
+      if (data.error) {
         flashRef.current.showMessage({
           message: data.error,
           duration: 4000,
           type: 'danger',
-          // hideStatusBar: true,
         });
         setLoading(false);
         return;
       }
-      // if(!saveToken?.(data.accessToken)){
-      //   showMessage({
-      //     message: 'Error saving your login',
-      //     duration: 4000,
-      //     type: 'danger',
-      //   });
-      // }
+      if (!saveToken?.(data.access_token)) {
+        showMessage({
+          message: 'Error saving your login',
+          duration: 4000,
+          type: 'danger',
+        });
+      }
+      setUsername('');
+      setPassword('');
+      navigate('Setup');
       setLoading(false);
     } catch (error) {
       console.error(error);
@@ -74,7 +72,7 @@ export default function ActionButtons({
       }))
 
       console.log(data);
-      if(data.error){
+      if (data.error) {
         flashRef.current.showMessage({
           message: data.error,
           duration: 4000,
@@ -84,12 +82,17 @@ export default function ActionButtons({
         setLoading(false);
         return;
       }
-      if(!await saveToken?.(data.access_token)){
+      if (!await saveToken?.(data.access_token)) {
         showMessage({
           message: 'Error saving your login',
           duration: 4000,
           type: 'danger',
         });
+      }
+      if(!data?.data){
+        setLoading(false);
+        navigate('Setup');
+        return;
       }
       setLoggedIn(true);
       setLoading(false);
@@ -101,20 +104,20 @@ export default function ActionButtons({
 
   return (
     <>
-    <FlashMessage position={'top'} ref={flashRef} />
-    <Button
-      onPress={() => {
-        section == "Signup" ? handleSignup() : handleLogin();
-      }}
-      disabled={active}
-      style={
-        active
-          ? AuthLayout_Style.actionButton
-          : [AuthLayout_Style.actionButton, AuthLayout_Style.InactiveBtn]
-      }
-    >
-      {(loading) ? 'Loading...' : section == "Login" ? "LOG IN" : "SIGN UP"}
-    </Button>
+      <FlashMessage position={'top'} ref={flashRef} />
+      <Button
+        onPress={() => {
+          section == "Signup" ? handleSignup() : handleLogin();
+        }}
+        disabled={active}
+        style={
+          active
+            ? AuthLayout_Style.actionButton
+            : [AuthLayout_Style.actionButton, AuthLayout_Style.InactiveBtn]
+        }
+      >
+        {(loading) ? 'Loading...' : section == "Login" ? "LOG IN" : "SIGN UP"}
+      </Button>
     </>
   );
 }

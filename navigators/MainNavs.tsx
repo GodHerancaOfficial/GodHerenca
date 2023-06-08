@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react"
 import AuthNavs from "./AuthNavs";
 import MainScreen from "./MainScreens";
-import AppContext, { AppContextProvider } from "../contexts/AppContext";
+import AppContext from "../contexts/AppContext";
 
 export default function MainNavs(): any {
     const { loggedIn, setLoggedIn, checkLogin } = useContext<any>(AppContext);

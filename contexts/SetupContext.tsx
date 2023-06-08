@@ -14,6 +14,7 @@ type SetupContextType = {
     dateOfBirthFormat: string
   ) => boolean;
   formatDateOfBirthInput?: (dateOfBirth: number) => string | void;
+  formData?: any;
 };
 
 const SetupContext = createContext<SetupContextType>({});
@@ -63,28 +64,11 @@ export const formatDateOfBirthInput = (dateOfBirth: number): string | void => {
   return `${dd}/${mm}/${yyyy}`;
 };
 export const ContextProvider = ({ children }: any) => {
-  const [fullname, setFullName] = useState<string>("");
-  const [username, setUsername] = useState<string>("");
-  const [gender, setGender] = useState<string>("");
-  const [cpf, setCpf] = useState<string>("");
-  const [phone, setPhone] = useState<string>("");
-  const [account_type, setAccountType] = useState<string>("");
-  const [dob, setDob] = useState<string>("");
-  const [postal_code, setPostalCode] = useState<string>("");
-  const [state, setState] = useState<string>("");
-  const [city, setCity] = useState<string>("");
-  const [street_address, setAddress] = useState<string>("");
-  const [guarantor_name, setGuarantorName] = useState<string>("");
-  const [guarantor_phone, setGuarantorPhone] = useState<string>("");
-  const [guarantor_relationship, setGuarantorRelationship] =
-    useState<string>("");
-  const [selectedVehicle, setSelectedVehicle] = useState<string>("");
-
   const [detailsObj, setDetailsObj] = useState<any>({
     fullname: "",
-    email: "",
+    contact_detail: "",
+    contact_type: "",
     cpf: "",
-    phone: "",
     gender: "",
     account_type: "",
     dob: "",
@@ -102,9 +86,7 @@ export const ContextProvider = ({ children }: any) => {
     backview: null, //
   });
 
-  // const checkPhoneNumberInput = (phoneNumberInput: string): boolean =>{
-  //     return false;
-  // }
+  const formData = new FormData();
 
   const values: SetupContextType = {
     detailsObj,
@@ -117,6 +99,7 @@ export const ContextProvider = ({ children }: any) => {
     checkFullnameInput,
     checkRiderAgeInput,
     formatDateOfBirthInput,
+    formData,
   };
 
   return (
