@@ -8,11 +8,11 @@ const MainApp = (): JSX.Element => {
     const runOnStart = async () => {
         if (!await checkDevice?.()) {
             setIsOpened(false);
-            console.log(isOpened);      // Remove during production
+            // console.log(isOpened);      // Remove during production
             return;
         }
         setIsOpened(true);
-        console.log(isOpened);          // Remove during production
+        // console.log(isOpened);          // Remove during production
     }
 
     useEffect(() => {

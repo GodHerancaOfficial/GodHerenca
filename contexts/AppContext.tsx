@@ -34,11 +34,13 @@ export const AppContextProvider = ({ children }: any) => {
         try {
             let val = await AsyncStorage.getItem('accessToken');
             if (val !== null) {
+                console.log(val);
                 return val;
             }
+            return 'No val';
         } catch (error) {
             console.error(error);
-            return error;
+            // return error;
         }
     }
 
@@ -47,6 +49,7 @@ export const AppContextProvider = ({ children }: any) => {
             await AsyncStorage.setItem('accessToken', token);
             return true;
         } catch (error) {
+            // console.log(error);
             return false;
         }
     }
@@ -55,7 +58,7 @@ export const AppContextProvider = ({ children }: any) => {
         try {
             let val = await AsyncStorage.getItem('opened');
             if (val !== null) {
-                console.log(val);       // Remove during production
+                // console.log(val);       // Remove during production
                 return true;
             }
             return false;

@@ -7,16 +7,17 @@ import SetupContext from "../../contexts/SetupContext";
 import { Button } from "../../components/common";
 import { GeneralModal } from "../../components/modals";
 import { ForgotLayoutStyle } from "./../../styles/Auth";
-import { Post } from "../../utils/requests";
+import { PostAuth } from "../../utils/requests";
 import { AppContext } from "../../contexts";
 
 export default function OriginScreen({ navigation }: any): any {
   const [btnActive, setBtnActive] = useState<boolean>(true);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const modalImageSource = require("../../assets/images/modals/regSuccess.png");
-  const { detailsObj, setDetailsObj, formData } = useContext(SetupContext);
+  const { detailsObj, setDetailsObj } = useContext(SetupContext);
   const { getToken } = useContext<any>(AppContext);
   const [loading, setLoading] = useState<boolean>(false);
+
   useEffect(() => {
     if (detailsObj.state == "" || detailsObj.city == "" || detailsObj.street_address == "") {
       setBtnActive(true);
@@ -34,9 +35,12 @@ export default function OriginScreen({ navigation }: any): any {
       return;
     }
 
+    let formData = new FormData();
+    let token = await getToken?.();
+    
+
     try {
       for(let key in detailsObj){
-        // formData.delete(key);
         formData.append(key, detailsObj[key]);
       }
     } catch (error) {
@@ -44,10 +48,11 @@ export default function OriginScreen({ navigation }: any): any {
       return;
     }
     console.log(formData);
+    // console.log(token);
 
     try {
       setLoading(true);
-      let data = await Post('/user/addinfo', formData, await getToken?.());
+      let data = await PostAuth('/user/addinfo', formData, 'multipart/form-data', token);
 
       console.log(data);
       setLoading(false);

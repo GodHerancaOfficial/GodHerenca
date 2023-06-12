@@ -28,7 +28,7 @@ export default function ActionButtons({
       let data = await Post('/user/create', JSON.stringify({
         "username": username,
         "password": password
-      }))
+      }), 'application/json');
 
       console.log(data);
       if (data.error) {
@@ -40,12 +40,15 @@ export default function ActionButtons({
         setLoading(false);
         return;
       }
+
       if (!saveToken?.(data.access_token)) {
         showMessage({
           message: 'Error saving your login',
           duration: 4000,
           type: 'danger',
         });
+        setLoading(false);
+        return;
       }
       setUsername('');
       setPassword('');
@@ -69,7 +72,7 @@ export default function ActionButtons({
       let data = await Post('/user/login', JSON.stringify({
         "username": username,
         "password": password
-      }))
+      }), 'application/json');
 
       console.log(data);
       if (data.error) {
@@ -88,6 +91,8 @@ export default function ActionButtons({
           duration: 4000,
           type: 'danger',
         });
+        setLoading(false);
+        return;
       }
       if(!data?.data){
         setLoading(false);
