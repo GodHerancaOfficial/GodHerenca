@@ -38,9 +38,9 @@ export default function GuarantorScreen({ navigation }: any): any {
 
   useEffect(() => {
     if (
-      detailsObj.guarantor_name == "" ||
-      detailsObj.guarantor_phone == "" ||
-      detailsObj.guarantor_relationship == ""
+      !detailsObj.guarantor_name||
+      !detailsObj.guarantor_phone ||
+      !detailsObj.guarantor_relationship
     ) {
       setBtnActive(true);
       return;

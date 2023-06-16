@@ -14,7 +14,6 @@ type SetupContextType = {
     dateOfBirthFormat: string
   ) => boolean;
   formatDateOfBirthInput?: (dateOfBirth: number) => string | void;
-  formData?: any;
 };
 
 const SetupContext = createContext<SetupContextType>({});
@@ -63,30 +62,28 @@ export const formatDateOfBirthInput = (dateOfBirth: number): string | void => {
 
   return `${dd}/${mm}/${yyyy}`;
 };
+
 export const ContextProvider = ({ children }: any) => {
   const [detailsObj, setDetailsObj] = useState<any>({
-    fullname: "",
+    first_name: "",
+    last_name: "",
     contact_detail: "",
     contact_type: "",
     cpf: "",
     gender: "",
     account_type: "",
-    dob: "",
+    dob: new Date(1990, 11, 2).toISOString().split('T')[0],
     postal_code: "",
     state: "",
     city: "",
     street_address: "",
-    guarantor_name: "",
-    guarantor_relationship: "",
-    guarantor_phone: "",
-    vehicle_type: "",
-    id_type: "",
-    profile_photo: null, //
-    frontview: null, // For these three that have comments, they'll be image files.
-    backview: null, //
+    // guarantor_name: "",
+    // guarantor_relationship: "",
+    // guarantor_phone: "",
+    // vehicle_type: "",
+    // id_type: "",
+    // profile_photo: null,
   });
-
-  const formData = new FormData();
 
   const values: SetupContextType = {
     detailsObj,
@@ -99,7 +96,6 @@ export const ContextProvider = ({ children }: any) => {
     checkFullnameInput,
     checkRiderAgeInput,
     formatDateOfBirthInput,
-    formData,
   };
 
   return (

@@ -15,7 +15,7 @@ export default function IdentityVerificationScreen({ navigation }: any): any {
   const { detailsObj, setDetailsObj } = useContext(SetupContext);
 
   useEffect(() => {
-    if (detailsObj.id_type == "") {
+    if (!detailsObj.id_type) {
       setBtnDisabled(true);
       return;
     }

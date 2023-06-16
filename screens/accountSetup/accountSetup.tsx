@@ -24,7 +24,7 @@ export default function AccountSetup({ navigation }: Prop): any {
   const [accountTypeList] = useState<any[]>([
     {
       id: 1,
-      title: "Customer",
+      title: "Buyer",
     },
     {
       id: 2,
@@ -100,13 +100,25 @@ export default function AccountSetup({ navigation }: Prop): any {
 
       {/**Forms To fill out */}
       <TextInput
-        placeholder="Full Name"
+        placeholder="First Name"
         style={SetupStyle.formInputs}
-        value={detailsObj?.fullname}
+        value={detailsObj?.first_name}
         onChangeText={(e) => {
           setDetailsObj((detailsObj: any) => ({
             ...detailsObj,
-            'fullname': e,
+            'first_name': e,
+          }));
+        }}
+      />
+
+      <TextInput
+        placeholder="Last Name"
+        style={SetupStyle.formInputs}
+        value={detailsObj?.last_name}
+        onChangeText={(e) => {
+          setDetailsObj((detailsObj: any) => ({
+            ...detailsObj,
+            'last_name': e,
           }));
         }}
       />

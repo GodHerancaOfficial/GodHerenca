@@ -14,10 +14,10 @@ export default function DropDown({lists, onChange, placeholder, value}:Prop): an
     const [selected, setSelected] = useState<string>((value)?value:"");
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
-    const handlePressForList = (title:string):void => {
+    const handlePressForList = (title:string, id:any):void => {
         setSelected(title);
         setIsOpen(!isOpen);
-        onChange(title);
+        onChange(title, id);
     }
 
     return (
@@ -36,7 +36,7 @@ export default function DropDown({lists, onChange, placeholder, value}:Prop): an
                 <View style={[DropDownStyle.dropDownOptions, {display: (isOpen)?undefined:'none'}]}>
                     {
                         lists.map((list)=>(
-                            <TouchableWithoutFeedback key={list.id} onPress={()=>{handlePressForList(list.title)}}>
+                            <TouchableWithoutFeedback key={list.id} onPress={()=>{handlePressForList(list.title, list.id)}}>
                                 <Text style={[DropDownStyle.dropDownText, {paddingVertical: 10}]}>
                                     {list.title}
                                 </Text>

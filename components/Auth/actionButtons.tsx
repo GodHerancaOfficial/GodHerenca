@@ -1,5 +1,5 @@
 import { useContext, useRef, useState } from "react";
-import { AuthLayout_Style } from "../../styles/Auth";
+import { AuthLayout_Style, SetupStyle } from "../../styles/Auth";
 import { Button } from "../common";
 import { AppContext } from "../../contexts";
 import { Post } from "../../utils/requests";
@@ -25,35 +25,67 @@ export default function ActionButtons({
   const handleSignup = async (): Promise<any> => {
     try {
       setLoading(true);
-      let data = await Post('/user/create', JSON.stringify({
+      let result = await Post('/user/create', JSON.stringify({
         "username": username,
         "password": password
       }), 'application/json');
 
+      const status = result.status;
+      const data = await result.data;
       console.log(data);
-      if (data.error) {
-        flashRef.current.showMessage({
-          message: data.error,
-          duration: 4000,
-          type: 'danger',
-        });
-        setLoading(false);
-        return;
+
+      switch (status) {
+        case 201:
+          if (!await saveToken(data.token)) {
+            flashRef.current.showMessage({
+              message: 'Error signing up',
+              description: 'Your Account Has Been Created, We\'re Having Troubles Persisting Your Login.',
+              floating: true,
+              duration: 7000,
+              type: 'danger',
+              style: SetupStyle.flashMessageContainer
+            });
+            break;
+          }
+          navigate('Setup');
+          break;
+
+        case 400:
+          flashRef.current.showMessage({
+            message: 'An Error Occured',
+            description: data.message,
+            floating: true,
+            duration: 7000,
+            type: 'danger',
+            style: SetupStyle.flashMessageContainer
+          })
+          break;
+
+        case 409:
+          flashRef.current.showMessage({
+            message: 'User Already Exists',
+            description: data.message + ', please login',
+            floating: true,
+            duration: 4000,
+            type: 'danger',
+            style: SetupStyle.flashMessageContainer
+          });
+          setTimeout(() => {
+            navigate('Login');
+          }, 4000)
+          break;
+
+        default:
+          flashRef.current.showMessage({
+            message: 'Unknown Error',
+            description: 'An Unknown Error Occured, Please Contact Authors',
+            floating: true,
+            duration: 7000,
+            type: 'danger',
+            style: SetupStyle.flashMessageContainer
+          })
       }
 
-      if (!saveToken?.(data.access_token)) {
-        showMessage({
-          message: 'Error saving your login',
-          duration: 4000,
-          type: 'danger',
-        });
-        setLoading(false);
-        return;
-      }
-      setUsername('');
-      setPassword('');
-      navigate('Setup');
-      setLoading(false);
     } catch (error) {
       console.error(error);
       flashRef.current.showMessage({
@@ -62,49 +94,65 @@ export default function ActionButtons({
         type: 'danger',
         hideStatusBar: true,
       });
-      setLoading(false);
     }
+
+    setLoading(false);
   }
 
   const handleLogin = async (): Promise<any> => {
     try {
       setLoading(true);
-      let data = await Post('/user/login', JSON.stringify({
+      let result = await Post('/user/login', JSON.stringify({
         "username": username,
         "password": password
       }), 'application/json');
 
+      const status = result.status;
+      const data = await result.data;
+
       console.log(data);
-      if (data.error) {
-        flashRef.current.showMessage({
-          message: data.error,
-          duration: 4000,
-          type: 'danger',
-          hideStatusBar: true,
-        });
-        setLoading(false);
-        return;
+
+      switch (status) {
+        case 200:
+          if (!await saveToken(data.token)) {
+            console.error("Error Saving Token");
+            flashRef.current.showMessage({
+              message: "Error Saving Token",
+              duration: 4000,
+              type: 'danger',
+              hideStatusBar: true,
+            });
+            break;
+          }
+
+          if (!data.data) {
+            navigate('Setup');
+            break;
+          }
+          setLoggedIn(true);
+          break;
+
+        case 401:
+          flashRef.current.showMessage({
+            message: data.message,
+            duration: 4000,
+            type: 'danger',
+            hideStatusBar: true,
+          });
+          break;
+        default:
+          flashRef.current.showMessage({
+            message: "Unknow Error",
+            description: "Please Contact The Authors",
+            duration: 4000,
+            type: 'danger',
+            hideStatusBar: true,
+          });
       }
-      if (!await saveToken?.(data.access_token)) {
-        showMessage({
-          message: 'Error saving your login',
-          duration: 4000,
-          type: 'danger',
-        });
-        setLoading(false);
-        return;
-      }
-      if(!data?.data){
-        setLoading(false);
-        navigate('Setup');
-        return;
-      }
-      setLoggedIn(true);
-      setLoading(false);
     } catch (error) {
       console.error(error);
-      setLoading(false);
     }
+    setLoading(false);
   }
 
   return (

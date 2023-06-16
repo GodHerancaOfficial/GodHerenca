@@ -1,4 +1,4 @@
-export const Post = async (endpoint: string, data: any, contentType:any, token?: any ): Promise<any> => {
+export const Post = async (endpoint: string, data: any, contentType: any): Promise<any> => {
     try {
         let result = await fetch(`https://api.godheranca.com${endpoint}/`, {
             method: 'POST',
@@ -8,7 +8,10 @@ export const Post = async (endpoint: string, data: any, contentType:any, token?:
             body: data
         })
 
-        return result.json();
+        return {
+            'status': result.status,
+            'data': result.json()
+        }
     } catch (error) {
         throw error;
     }
@@ -31,7 +34,7 @@ export const Get = async (endpoint: string, data: any, token?: any): Promise<any
     }
 }
 
-export const PostAuth = async (endpoint: string, data: any, contentType:any, token?: any ): Promise<any> => {
+export const PostAuth = async (endpoint: string, data: any, contentType: any, token?: any): Promise<any> => {
     try {
         let result = await fetch(`https://api.godheranca.com${endpoint}/`, {
             method: 'POST',
@@ -42,7 +45,10 @@ export const PostAuth = async (endpoint: string, data: any, contentType:any, tok
             body: data
         })
 
-        return result.json();
+        return {
+            'status': result.status,
+            'data': result.json()
+        }
     } catch (error) {
         throw error;
     }

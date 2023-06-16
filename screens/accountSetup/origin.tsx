@@ -30,7 +30,7 @@ export default function OriginScreen({ navigation }: any): any {
   const handleBtnPress = async (): Promise<void | null> => {
     // console.log(detailsObj);
 
-    if(detailsObj.account_type !== 'Customer'){
+    if(detailsObj.account_type !== 'Buyer'){
       navigation.navigate('Guarantor');
       return;
     }
@@ -54,7 +54,7 @@ export default function OriginScreen({ navigation }: any): any {
       setLoading(true);
       let data = await PostAuth('/user/addinfo', formData, 'multipart/form-data', token);
 
-      console.log(data);
+      console.log(await data.data);
       setLoading(false);
     } catch (error) {
       console.error(error);
@@ -99,11 +99,12 @@ export default function OriginScreen({ navigation }: any): any {
         <DropDown
           placeholder="Select State"
           lists={[{ id: 1, title: "Coming Soon!" }]}
-          onChange={(choice: string) => {
+          onChange={(choice: string, id:any) => {
             setDetailsObj((detailsObj: any) => ({
               ...detailsObj,
-              state: choice,
+              state: id,
             }));
+            // console.log(id);
           }}
           value={detailsObj.state}
         />
@@ -113,10 +114,10 @@ export default function OriginScreen({ navigation }: any): any {
         <DropDown
           placeholder="Select City"
           lists={[{ id: 1, title: "Coming Soon!" }]}
-          onChange={(choice: string) => {
+          onChange={(choice: string, id:any) => {
             setDetailsObj((detailsObj: any) => ({
               ...detailsObj,
-              city: choice,
+              city: id,
             }));
           }}
           value={detailsObj.city}
