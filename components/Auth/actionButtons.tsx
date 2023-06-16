@@ -1,9 +1,13 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { AuthLayout_Style, SetupStyle } from "../../styles/Auth";
 import { Button } from "../common";
 import { AppContext } from "../../contexts";
 import { Post } from "../../utils/requests";
 import FlashMessage, { showMessage } from "react-native-flash-message";
+import { FontAwesome5 } from '@expo/vector-icons';
+import { ActivityIndicator, Text } from "react-native";
+import tw from 'twrnc';
+import Animated, { Easing, useAnimatedStyle, useSharedValue, withRepeat, withTiming } from "react-native-reanimated";
 
 interface Prop {
   section: string;
@@ -21,6 +25,26 @@ export default function ActionButtons({
   const { username, password, setUsername, setPassword, saveToken, setLoggedIn } = useContext<any>(AppContext);
   const [loading, setLoading] = useState<boolean>(false);
   const flashRef = useRef<any>();
+
+  const spinrotation = useSharedValue(0);
+
+  const loaderAnimation = useAnimatedStyle(() => {
+    return {
+      transform: [{
+        rotateZ: `${spinrotation.value}deg`
+      }]
+    }
+  });
+
+  const Animation = () => {
+    spinrotation.value = withRepeat(
+      withTiming(360, {
+        duration: 1000,
+        easing: Easing.linear
+      }),
+    )
+    // return () => cancelAnimation(rotation);
+  }
 
   const handleSignup = async (): Promise<any> => {
     try {
@@ -100,6 +124,7 @@ export default function ActionButtons({
   }
 
   const handleLogin = async (): Promise<any> => {
+    Animation();
     try {
       setLoading(true);
       let result = await Post('/user/login', JSON.stringify({
@@ -163,13 +188,17 @@ export default function ActionButtons({
           section == "Signup" ? handleSignup() : handleLogin();
         }}
         disabled={active}
-        style={
+        style={[
           active
             ? AuthLayout_Style.actionButton
             : [AuthLayout_Style.actionButton, AuthLayout_Style.InactiveBtn]
-        }
+        ]}
       >
-        {(loading) ? 'Loading...' : section == "Login" ? "LOG IN" : "SIGN UP"}
+        {(loading)
+          ?
+            <ActivityIndicator color={"#fff"} size={'small'} />
+          :
+          section == "Login" ? "LOG IN" : "SIGN UP"}
       </Button>
     </>
   );

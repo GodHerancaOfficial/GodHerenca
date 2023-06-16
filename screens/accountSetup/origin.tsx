@@ -1,4 +1,4 @@
-import { Text, TextInput, View, TouchableWithoutFeedback } from "react-native";
+import { Text, TextInput, View, TouchableWithoutFeedback, ActivityIndicator } from "react-native";
 import { AccountSetupLayout } from "../../layouts";
 import { SetupStyle } from "../../styles/Auth";
 import DropDown from "../../components/dropdown/dropdown";
@@ -143,7 +143,7 @@ export default function OriginScreen({ navigation }: any): any {
           disabled={btnActive}
         >
           {
-            (detailsObj.account_type == "Rider") ? "Next" : (loading)? "Loading..." : "Finish"
+            (detailsObj.account_type == "Rider") ? "Next" : (loading)? <ActivityIndicator color={'#fff'} size={'small'} /> : "Finish"
           }
         </Button>
       </View>

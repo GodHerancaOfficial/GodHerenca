@@ -1,4 +1,4 @@
-import { TouchableWithoutFeedback, Text, StyleSheet } from "react-native";
+import { TouchableWithoutFeedback, Text, StyleSheet, Easing } from "react-native";
 
 interface ButtonProps {
     children: any,
@@ -8,8 +8,22 @@ interface ButtonProps {
 }
 
 const Button = ({ children, disabled, onPress, style }: ButtonProps): any => {
+    const handlePress = () => {
+        if (disabled) {
+            return;
+        }
+
+        // rotationVal.value = withRepeat(
+        //     withTiming(360, {
+        //         duration: 1000,
+        //         easing: Easing.linear
+        //     }),-1
+        // )
+        onPress();
+    }
+
     return (
-        <TouchableWithoutFeedback onPress={() => {(disabled) ? null : onPress()}}>
+        <TouchableWithoutFeedback onPress={()=>{handlePress()}}>
             <Text style={[style || ButtonStyle.button, { opacity: (disabled) ? 0.5 : 1 }]}>
                 {children}
             </Text>
